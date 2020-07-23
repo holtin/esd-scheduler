@@ -1,0 +1,536 @@
+[
+    {
+        "StartTime": "8:00",
+        "JobName": "Distribute upsurge reminder letter issued to users via email (Remarks: RE:COPM 28)",
+        "Server": "m5ppc01/02",
+        "Rules": "daily"
+    },
+    {
+        "StartTime": "8:00",
+        "JobName": "Check PPS daily backup, take off the last day offsite tape PPSPRD-L4-GEN4, PPSPRD-R16-GEN4 (Remarks: PPS COPM 6.5 & 9.1.2)",
+        "Server": "PPSPRD-SVR1",
+        "Rules": "daily"
+    },
+    {
+        "StartTime": "8:00",
+        "JobName": "Insert two new blank LTO5 tapes into PCC Tape Library for Copy of Month End Backup, format and name as - (Remarks: run at 05:00 on 1st day of every month)",
+        "Server": "MSL4048_m5pdp01_library",
+        "Rules": "lastday/1"
+    },
+    {
+        "StartTime": "8:00",
+        "JobName": "Check Copy of Month-End Backup Tapes whether successfully completed, -  screen capture source DB, put it on network drive   □ -  dismount from PCC Tape Library and filing   □ -  update & send \"Production Tape Location.xls\" to API/IS2 and SCOp/IS2   □ (Remarks : COPM 10.4)",
+        "Server": "MSL4048_m5pdp01_library",
+        "Rules": "month/1"
+    },
+    {
+        "StartTime": "8:15",
+        "JobName": "Dismount last month UX IMG and WINS from Tape Library; VMS02 and VMS04 LTO5 backup tapes from Tape Drives",
+        "Server": "MSL4048_m5pdp01_library,  u5dVMS02 & 04 tape drives",
+        "Rules": "month/2"
+    },
+    {
+        "StartTime": "8:15",
+        "JobName": "Check the status of 4 LOs' Health Check Monitoring PC (Remarks :   Re: Operation Notice 041/10)",
+        "Server": "TDOA",
+        "Rules": "daily"
+    },
+    {
+        "StartTime": "8:30",
+        "JobName": "Download GPMIS file from V5",
+        "Server": "m5ppc02",
+        "Rules": "week/1,2,3,4,5,6?ph"
+    },
+    {
+        "StartTime": "8:40",
+        "JobName": "Upload GFMIS file to Treasury Remarks : Must before 20:00 for Mon - Fri, 14:30 for Sat)",
+        "Server": "m5ppc02",
+        "Rules": "week/1,2,3,4,5,,6?ph"
+    },
+    {
+        "StartTime": "8:40",
+        "JobName": "Check VRMS daily backup",
+        "Server": "VRMSVR101W",
+        "Rules": "daily"
+    },
+    {
+        "StartTime": "8:45",
+        "JobName": "Perform \"Special Operation Arrangement\" of File Upload to Judiciary'sPassive Gateway (Remarks : Re:COPM 10.7)",
+        "Server": "m5ppc01",
+        "Rules": "ph/a1?ph/b1!=week/6"
+    },
+    {
+        "StartTime": "9:00",
+        "JobName": "Update the escalation contact list of EMSD for urgent fault",
+        "Server": "",
+        "Rules": "year/15Jan"
+    },
+    {
+        "StartTime": "9:30",
+        "JobName": "Collect 3PAR Log Files (Both PCC and SCC) and then send email to SPWeekly@hpe.com (Remarks :  Re : COPM 19.3.4)",
+        "Server": "m5ppc01",
+        "Rules": "week/1"
+    },
+    {
+        "StartTime": "10:00",
+        "JobName": "Mount PPS backup tape GEN:(Remarks : Re: PPS COPM 9.1.1)",
+        "Server": "PPSPRD-SVR1",
+        "Rules": "week/1"
+    },
+    {
+        "StartTime": "10:00",
+        "JobName": "Sent last WK of PPS backup tapes to SCC and take back another set of tapes to PCC (Remarks :  Re : PPS COPM 6.5.5)",
+        "Server": "",
+        "Rules": "week/1"
+    },
+    {
+        "StartTime": "10:00",
+        "JobName": "Mount VRMS backup tape GEN:",
+        "Server": "VRMSVR101W",
+        "Rules": "week/1"
+    },
+    {
+        "StartTime": "10:00",
+        "JobName": "Check Daily DB backup on PCC Data Protector Manager DB-VALIDPRO-u5pdb01-FRI   □ DB-VALIDPRO-u5pdb02-FRI   □ Oracle8 VALIDPRO-ONLINE-FRI   □ IDB DP-IDB-FRI   □",
+        "Server": "m5ppc01",
+        "Rules": "daily"
+    },
+    {
+        "StartTime": "10:00",
+        "JobName": "Synchronize the wall clock and CCTV System clock in SCC against HK Observatory (Within 1 min deviation is tolerated) (Remarks : (Re: Operation Notice 025/08) www.hko.gov.hk/nts/ntime.htm)",
+        "Server": "",
+        "Rules": "week/1"
+    },
+    {
+        "StartTime": "10:00",
+        "JobName": "Refer to last Sunday inventory, order stocks from related parties when items touch minimum level",
+        "Server": "",
+        "Rules": "wk/workingday/1"
+    },
+    {
+        "StartTime": "10:00",
+        "JobName": "Counter-check the generation number and quantity of all backup tapes that offsite to SCC",
+        "Server": "",
+        "Rules": "week/1"
+    },
+    {
+        "StartTime": "10:00",
+        "JobName": "Perform scheduled Offline Duties of PCC / SCC Opeartion",
+        "Server": "",
+        "Rules": "week/0"
+    },
+    {
+        "StartTime": "10:00",
+        "JobName": "Check Daily DB backup on SCC Data Protector Manager DB-VALIDPRO-u5ddb01-FRI   □ DB-NONPRO-u5ddb0a_db0b_FRI   □ Oracle8 NP-U5DDB-ORACLE-FRI   □ IDB SCC-DP-IDB-FRI   □ Time completed at : _____:_____",
+        "Server": "remote to m5dpc01",
+        "Rules": "daily"
+    },
+    {
+        "StartTime": "10:00",
+        "JobName": "Data Centre Maintenance follow-up",
+        "Server": "",
+        "Rules": "week/2?ph->week/3"
+    },
+    {
+        "StartTime": "10:00",
+        "JobName": "Sent last WK of VRMS backup tapes to SCC and take back another set of tapes to PCC",
+        "Server": "",
+        "Rules": "week/1"
+    },
+    {
+        "StartTime": "10:00",
+        "JobName": "Mount two monthly LTO5 system backup tapes into PCC Tape Library and scan on Data Protector Manager 1. MONTHLY-UX-pvms02-04-IMG-02 2. MONTHLY-WINS-FS-02-01 (Remarks : Set 1-4 Re:COPM 10.1.1)",	
+        "Server": "MSL4048_m5pdp01_library",
+        "Rules": "month/27"
+    },
+    {
+        "StartTime": "10:00",
+        "JobName": "Mount two monthly LTO5 backup tapes into related Tape Drives in PCC 1. V5-UX-u5pvms02-02 2. V5-UX-u5pvms04-02 (Remarks : Set 1-4 Re : COPM 10.1.3)",
+        "Server": "u5pVMS02 & 04 Tape Drives",
+        "Rules": "month/27"
+    },
+    {
+        "StartTime": "10:00",
+        "JobName": "Mount daily DB backup LTO5 tapes Mon-Sun (Remarks : Re: COPM 10.2 Mount Mon - Sun into Slot 1 - 7 and Mon - Sun Mirror into Slot 13 - 19 respectively) ",
+        "Server": "MSL4048_m5pdp01_library",
+        "Rules": "week/1"
+    },
+    {
+        "StartTime": "10:00",
+        "JobName": "Check Date of SAV Virus Definitions File for both PCC / SCC VALID V Servers on IE (Remarks : Re COPM 15.2)",
+        "Server": "m5ppc01 or m5ppc02",
+        "Rules": "daily"
+    },
+    {
+        "StartTime": "10:00",
+        "JobName": "Offsite the previous Month-End Backup tape to SCC & update \"Production Tape Location.xls\"",
+        "Server": "",
+        "Rules": "month/1"
+    },
+    {
+        "StartTime": "10:00",
+        "JobName": "Offsite PCC DB backup LTO5 tapes Mon-Sun mirror to SCC, then take back another set of tapes to PCC",
+        "Server": "MSL4048_m5pdp01_library",
+        "Rules": "week/1"
+    },
+    {
+        "StartTime": "10:00",
+        "JobName": "Take SCC DB backup LTO5 tapes Mon-Sun to SCC and bring back previous week tapes to PCC",
+        "Server": "",
+        "Rules": "week/1"
+    },
+    {
+        "StartTime": "10:00",
+        "JobName": "Offsite previous month UX IMG and WINS tapes to SCC, take back another set of tapes to PCC",
+        "Server": "",
+        "Rules": "week/1?month/1"
+    },
+    {
+        "StartTime": "10:00",
+        "JobName": "Offsite previous month VMS02 and VMS04 tapes to SCC, take back another set of tapes to PCC",
+        "Server": "",
+        "Rules": "week/1?month/1"
+    },
+    {
+        "StartTime": "10:00",
+        "JobName": "Take SCC monthly Non-Prod DB tapes to SCC and bring back previous month tapes to PCC",
+        "Server": "",
+        "Rules": "week/1?month/1"
+    },
+    {
+        "StartTime": "10:00",
+        "JobName": "Take SCC monthly UX IMG and WINS tapes to SCC and bring back previous month tapes to PCC",
+        "Server": "",
+        "Rules": "week/1?month/1"
+    },
+    {
+        "StartTime": "10:00",
+        "JobName": "Take SCC monthly VMS02 and VMS04 tapes to SCC and bring back previous month tapes to PCC",
+        "Server": "",
+        "Rules": "week/1?month/1"
+    },
+    {
+        "StartTime": "10:00",
+        "JobName": "Check SCC AHUs auto-switch to CRAC",
+        "Server": "",
+        "Rules": "week/1"
+    },
+    {
+        "StartTime": "10:00",
+        "JobName": "Mount SCC daily database LTO 5 backup tapes Mon - Sun (Remarks : Mount Mon - Sun into Slot 1 - 7 )",
+        "Server": "SCC MSL4048_m5pdp01_library",
+        "Rules": "week/1"
+    },
+    {
+        "StartTime": "11:30",
+        "JobName": "Dismount last month UX IMG and WINS tapes from SCC LTO Tape Library ; Mount SCC monthly UX IMG and WINS LTO5 tapes (Remarks : Mount into Slot 30)",
+        "Server": "SCC MSL4048_m5pdp01_library",
+        "Rules": "week/1?month/1"
+    },
+    {
+        "StartTime": "11:30",
+        "JobName": "Dismount last month VMS02 and VMS04 tapes from SCC Tape Drives ; Mount SCC monthly VMS02 and VMS04 LTO5 tapes (Remarks : Mount into Slot 29)",
+        "Server": "SCC u5dVMS02 & 04 Tape Drives",
+        "Rules": "week/1?month/1"
+    },
+    {
+        "StartTime": "11:30",
+        "JobName": "Replace VEOS II weekly backup tape and Check the system LED of VEOS2DAS1 and VEOS2DDB1 Set :",
+        "Server": "SCC IS5-2 veos2das1 veos2ddb1",
+        "Rules": "week/1"
+    },
+    {
+        "StartTime": "11:30",
+        "JobName": "Perform SCC Equipment Checking",
+        "Server": "",
+        "Rules": "week/1"
+    },
+    {
+        "StartTime": "11:30",
+        "JobName": "Dismount last month Non-Prod DB tapes from SCC LTO Tape Library ; Mount SCC monthly Non-Prod DB LTO5 tape Set :            (Remarks : Mount into Slot 31)",
+        "Server": "SCC MSL4048_m5pdp01_library",
+        "Rules": "week/1?month/1"
+    },
+    {
+        "StartTime": "11:30",
+        "JobName": "Counter-check the generation number and quantity of all backup tapes that take back from SCC",
+        "Server": "",
+        "Rules": "week/1"
+    },
+    {
+        "StartTime": "11:30",
+        "JobName": "Ensuring no data restore work performing by V5 Support Team during offsite,  take out all ad-hoc mounted backup tapes from SCC tape library and lay back",
+        "Server": "",
+        "Rules": "week/1"
+    },
+    {
+        "StartTime": "12:30",
+        "JobName": "Retrieve HP-UX server's login audit from syslog and send to related parties (Remarks :   (After System Deployment if any) Re: Operation Notice 049/11)",
+        "Server": "u5pweb01-4. u5pdb01-2, u5pvms01-6, u5papp01-4.",
+        "Rules": "week/6"
+    },
+    {
+        "StartTime": "12:30",
+        "JobName": "Fill in the meter reading sheet of copier and then fax to Kyocera (Remarks : Kyocera Fax no.  2423-2159)",	
+        "Server": "",
+        "Rules": "month/25"
+    },
+    {
+        "StartTime": "13:00",
+        "JobName": "Replenish blank papers into corresponding printer trays (Replace Toner Cartridge and Maintenance Kit when prompt)",
+        "Server": "",
+        "Rules": "daily"
+    },
+    {
+        "StartTime": "13:00",
+        "JobName": "Health check on operation equipment in PCC and SCC, including EMAS, VALID_V UPS, CCTV, WiFi",
+        "Server": "",
+        "Rules": "daily"
+    },
+    {
+        "StartTime":"13:00",
+        "JobName": "Relocate all forms from 9/F to Rm 242; stock check of Plain papers, Pre-print forms and other inventories in Rm 242 (Remarks :  (Order forms on next working day if required))",	
+        "Server": "",
+        "Rules": "week/0"
+    },
+    {
+        "StartTime": "13:00",
+        "JobName": "Run SQL \"generate_scheduled_task_list\" and \"generate_failed_running_task_list\"",
+        "Server": "m5ppc01",
+        "Rules": "week/1,2,3,4,5"
+    },
+    {
+        "StartTime": "13:00",
+        "JobName": "Copying CMIS report file from m5ppc02 to Q drive (Remarks : Re: SCOp1 Email 3/5/2019)",	
+        "Server": "m5ppc02",
+        "Rules": "daily"
+    },
+    {
+        "StartTime": "15:00",
+        "JobName": "Check monthly windows backup on m5ppc01 Data Protector Manager MONTHLY-UX-APP-WEBLOGIC  □  MONTHLY-UX-WEB-WEBLOGIC  □ MONTHLY-m5pale01  □  MONTHLY-m5pdc01  □  MONTHLY-m5pdc02  □  MONTHLY-m5pimc01  □ MONTHLY-m5pnnm01   □  MONTHLY-m5pom01  □  MONTHLY-m5prpt01   □   MONTHLY-m5pprt01  □  MONTHLY-m5pprt02   □  MONTHLY-m5psav01  □  MONTHLY-m5pshr01   □  MONTHLY-m5pvc01  □  MONTHLY-WINS-m5pdp01  □",
+        "Server": "m5ppc01",
+        "Rules": "month/28"
+    },
+    {
+        "StartTime": "16:00",
+        "JobName": "Check SCC monthly windows backup on m5dpc01 Data Protector Manager MONTHLY-UX-APP-WEBLOGIC   □   MONTHLY-UX-WEB-WEBLOGIC  □  MONTHLY-UX-NONPROD-DB □  MONTHLY-UX-EUC-WEBBI  □  MONTHLY-VM-m5drpt01 □ MONTHLY-WINS-m5ddp01  □  MONTHLY-VM-m5ddc01 □  MONTHLY-VM-m5ddc02  □  MONTHLY-VM-m5ddc0a □  MONTHLY-VM-m5dimc01  □  MONTHLY-VM-m5dnnm01 □ MONTHLY-VM-m5dom01  □  MONTHLY-VM-m5dprt01   □ MONTHLY-VM-m5dprt02  □  MONTHLY-VM-m5dsav01   □ MONTHLY-VM-m5dshr01  □  MONTHLY-VM-m5dvc01   □ MONTHLY-VM-m5dale01 □  MONTHLY-VM-m5drpt0a   □ MONTHLY-VM-m5drpt0b  □MONTHLY-VM-m5drpt0c   □ MONTHLY-VM-m5drpt0d  □",
+        "Server": "remote to m5dpc01",
+        "Rules": "month/28"
+    },
+    {
+        "StartTime": "17:30",
+        "JobName": "Check monthly HPUX machine and ignite image u5pweb01    □       u5pvms01    □        u5papp01    □  u5pweb02    □       u5pvms02      □        u5papp02    □  u5pweb03    □       u5pvms03      □       u5papp03   □  u5pweb04    □       u5pvms04      □       u5papp04   □  u5pdb01    □       u5pvms05      □       u5pdb02    □       u5pvms06      □  (Remarks : COPM 10.1.1)",
+        "Server": "u5pweb01-4. u5pdb01-2, u5pvms01-6, u5papp01-4.",
+        "Rules": "month/28"
+    },
+    {
+        "StartTime": "17:30",
+        "JobName": "Check SCC monthly HPUX machine and ignite image u5dvms01 □  u5dvms02  □  u5dvms03 □  u5dvms04 □ u5dvms05 □  u5dvms06  □  u5dvms07 □   u5peuc01 □ u5dweb01 □  u5dweb02  □  u5dweb0a  □  u5dweb0b □ u5dapp01  □  u5dapp02   □  u5dapp0a   □   u5dapp0b □ u5ddb01   □   u5ddb0a     □  u5ddb0b    □   u5deuc0a □ (Remarks : COPM 10.1.1)",
+        "Server": "u5dvms01-7, u5dweb01-2, u5dweb0a-b, u5dapp01-2, u5dapp0a-b, u5ddb01, u5ddb0a-b, u5peuc01, u5deuc0a.",
+        "Rules": "month/28"
+    },
+    {
+        "StartTime": "17:30",
+        "JobName": "Check: all lasejet print queue in \"ready\" status □ all line printer print queue in \"paused\" status □ report generator is ready in m5prpt01 □ DocQueFlow status □ (Remarks : Re: COPM 17.1)",
+        "Server": "msprpt01, m5pprt01",
+        "Rules": "daily"
+    },
+    {
+        "StartTime": "17:30",
+        "JobName": "Run SQL \"generate_scheduled_task_list\" and \"generate_failed_running_task_list\"",
+        "Server": "m5ppc01",
+        "Rules": "daily"
+    },
+    {
+        "StartTime": "18:00",
+        "JobName": "Run SQL \"generate_scheduled_task list\" report",
+        "Server": "m5ppc01",
+        "Rules": "daily"
+    },
+    {
+        "StartTime": "19:00",
+        "JobName": "Health check on operation equipment in PCC and SCC, including EMAS, VALID_V, UPS, CCTV, WiFi",
+        "Server": "",
+        "Rules": "week/1,2,3,4,5"
+    },
+    {
+        "StartTime": "20:00",
+        "JobName": "Prepare USB Drive for Payment Agent Files Download",
+        "Server": "",
+        "Rules": "week/1,2,3,4,5,6?ph"
+    },
+    {
+        "StartTime": "20:00",
+        "JobName": "To urge support team to provide completion date for each User Request Form by email",
+        "Server": "",
+        "Rules": "week/2"
+    },
+    {
+        "StartTime": "20:00",
+        "JobName": "Check dayend recon completed message from STLO",
+        "Server": "Communication Board",
+        "Rules": "week/1,2,3,4,5?ph"
+    },
+    {
+        "StartTime": "20:00",
+        "JobName": "Check dayend recon completed message from KTLO",
+        "Server": "Communication Board",
+        "Rules": "week/1,2,3,4,5?ph"
+    },
+    {
+        "StartTime": "20:30",
+        "JobName": "Check dayend recon completed message from KLO",
+        "Server": "Communication Board",
+        "Rules": "week/1,2,3,4,5?ph"
+    },
+    {
+        "StartTime": "20:30",
+        "JobName": "Check dayend recon completed message from HKLO",
+        "Server": "Communication Board",
+        "Rules": "week/1,2,3,4,5?ph"
+    },
+    {
+        "StartTime": "20:30",
+        "JobName": "Download transaction file from HKPost",
+        "Server": "m5pagt03",
+        "Rules": "week/1,2,3,4,5,6?ph"
+    },
+    {
+        "StartTime": "20:30",
+        "JobName": "Daily Batch job started.  Total number of batch job :_________",
+        "Server": "",
+        "Rules": "daily"
+    },
+    {
+        "StartTime": "20:30",
+        "JobName": "Download memo and transaction file from PPS",
+        "Server": "m5pagt02",
+        "Rules": "week/1,2,3,4,5?ph"
+    },
+    {
+        "StartTime": "21:00",
+        "JobName": "Download memo and transaction file from ATM",
+        "Server": "m5pagt02",
+        "Rules": "week/1,2,3,4,5,6?ph"
+    },
+    {
+        "StartTime": "21:30",
+        "JobName": "Download memo and transaction file from JETCO",
+        "Server": "m5pagt02",
+        "Rules": "week/1,2,3,4,5?ph"
+    },
+    {
+        "StartTime": "21:30",
+        "JobName": "Upload PPS memo  □  and transaction file  □ to VALID V Remarks : Must after batch job started and before 00:00",
+        "Server": "m5ppc02",
+        "Rules": "week/1,2,3,4,5?ph"
+    },
+    {
+        "StartTime": "21:30",
+        "JobName": "Upload ATM memo  □  and transaction file  □ to VALID V (Remarks : Must after batch job started and before 00:00)",	
+        "Server": "m5ppc02",
+        "Rules": "week/1,2,3,4,5,6?ph"
+    },
+    {
+        "StartTime": "21:45",
+        "JobName": "Upload JETCO memo  □ and transaction file  □ to VALID V (Remarks : Must after batch job started and before 00:00)",
+        "Server": "m5ppc02",
+        "Rules": "week/1,2,3,4,5?ph"
+    },
+    {
+        "StartTime": "21:45",
+        "JobName": "Upload HKPOST transaction file  □ to VALID V (Remarks : Must after batch job started and before 00:00)",
+        "Server": "m5ppc02",
+        "Rules": "week/1,2,3,4,5,6?ph"
+    },
+    {
+        "StartTime": "21:45",
+        "JobName": "Run SQL \"generate_payment_agents_success_upload_list\" & Backup Payment Agent Files to Network Drive (Remarks :  Re: COPM 10.6.6)",
+        "Server": "m5ppc01",
+        "Rules": "week/1,2,3,4,5,6?ph"
+    },
+    {
+        "StartTime": "21:45",
+        "JobName": "To ping IP addresses of ITS UPS at TDOA PC (Remarks :  Re: O/N #01/2019)",	
+        "Server": "TDOA",
+        "Rules": "daily"
+    },
+    {
+        "StartTime": "21:45",
+        "JobName": "Download file from Judiciary CASEMAN's Passive Gateway (Remarks : Re: COPM 10.7 Timeframe: 21:45 - 22:30 )",
+        "Server": "m5ppc02",
+        "Rules": "week/1,2,3,4,5,6?ph"
+    },
+    {
+        "StartTime": "21:45",
+        "JobName": "Check Passive Gateway File Download status whether change to  \"SUCCESS\" (Remarks : Re: COPM 10.7)",
+        "Server": "m5ppc02",
+        "Rules": "week/1,2,3,4,5,6?ph"
+    },
+    {
+        "StartTime": "21:45",
+        "JobName": "Check monthly UX-IMG backup on PCC Data Protector Manager MONTHLY-UX-u5pvms02-IMG  □ MONTHLY-UX-u5pvms04-IMG  □",	
+        "Server": "m5ppc01",
+        "Rules": "month/28"
+    },
+    {
+        "StartTime": "22:30",
+        "JobName": "Check monthly UX-IMG backup on SCC Data Protector Manager MONTHLY-UX-u5dvms02-IMG  □ MONTHLY-UX-u5dvms04-IMG  □",	
+        "Server": "remote to m5dpc01",
+        "Rules": "month/28"
+    },
+    {
+        "StartTime": "22:45",
+        "JobName": "Backup last month Payment Agent files to a CD (Remarks : Re:COPM 10.6.10)",
+        "Server": "Network Drive",
+        "Rules": "month/1"
+    },
+    {
+        "StartTime": "22:45",
+        "JobName": "Upload file to Judiciary CASEMAN's Passive Gateway (Remarks : Timeframe: 01:00 - 02:00 Re: COPM 10.7)",
+        "Server": "m5ppc02",
+        "Rules": "week/1,2,3,4,5?ph"
+    },
+    {
+        "StartTime": "23:15",
+        "JobName": "Send auto-generated log files of  EUC_exe_time_more_8minis.cmd, EUC_ret_more_than_8000.cmd and Get_EUC_exe_time_more_8mins_log.cmd on m5ppc02 to  related parties via email.(Remarks :  after 03:00 am)",
+        "Server": "m5ppc02",
+        "Rules": "week/0"
+    },
+    {
+        "StartTime": "01:00",
+        "JobName": "Run SQL \"generate_hard_copy_report_print_summary\" and check printing status",
+        "Server": "m5ppc01",
+        "Rules": "daily"
+    },
+    {
+        "StartTime": "03:10",
+        "JobName": "Perform VALID V Application Health Check *** heed msg \"MQ Status check - SUCCESS\" on OMI *** 1. Check Address Engine at https://valid5.td.hksarg/valid   □ 2. Check Online Report of Web Server 01 at https://u5pweb01:7011/valid   □ 3. Check Online Report of Web Server 02 at https://u5pweb02:7011/valid   □ 4. To ping IP addresses of ITS UPS at TDOA PC   □ (Remarks : Re: [1] - [3] COPM 17.2  [4] O/N #01/2019)",
+        "Server": "m5ppc02 & TDOA",
+        "Rules": "daily"
+    },
+    {
+        "StartTime": "(After Printing)",
+        "JobName": "Perform Dedicated Network Application Health Check 1. Check Online Report on A19 in HKLO                  □ 2. Check Address Engine on A19 in HKLO               □ 3. Check Online Report on C11 in KLO                     □ 4. Check Address Engine on C11 in KLO                  □ (Remarks : Re : COPM 17.4 A19 IP address : 172.16.242.102 C11 IP address : 172.16.193.127)",
+        "Server": "m5ppc02",
+        "Rules": "daily"
+    },
+    {
+        "StartTime": "06:05",
+        "JobName": "Health check on operation equipment in PCC and SCC, including EMAS, VALID_V UPS, CCTV, WiFi",
+        "Server": "",
+        "Rules": "daily"
+    },
+    {
+        "StartTime": "06:15",
+        "JobName": "Check & verify the Copy of Month-End Backup Tapes whether successfully completed (Remarks : COPM 10.4)",
+        "Server": "MSL4048_m5pdp01_library",
+        "Rules": "month/1"
+    },
+    {
+        "StartTime": "06:30",
+        "JobName": "Run SQL \"generate_scheduled_task_list\" and \"generate_failed_running_task_list\"",
+        "Server": "m5ppc01",
+        "Rules": "daily"
+    }
+]
