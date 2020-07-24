@@ -60,7 +60,29 @@ var data = [
     }
 ];
 
-
+var tempData = {
+    tasks : [{
+        StartTime: "8:00",
+        JobName: "Distribute upsurge reminder letter issued to users via email",
+        Server: "m5ppc01/02",
+        Remarks: "(Remarks: RE:COPM 28)",
+        Rules: "daily"
+    },
+    {
+        StartTime: "8:00",
+        JobName: "Check PPS daily backup, take off the last day offsite tape PPSPRD-L4-GEN4, PPSPRD-R16-GEN4",
+        Server: "PPSPRD-SVR1",
+        Remarks: "(Remarks: PPS COPM 6.5 & 9.1.2)",
+        Rules: "daily"
+    },
+    {
+        StartTime: "8:00",
+        JobName: "Perform PPS System Health Check and send comfirmed email to related parties. (https://pps.td.hksarg/pps/)",
+        Server: "TDOA",
+        Remarks: "(Re : PPS COPM 11)",
+        Rules: "daily"
+    }]
+};
 
 var http = require("http");
 const express = require("express");
@@ -75,14 +97,10 @@ app.use(express.urlencoded({extended : true})); // Parse URL-encoded bodies (as 
 app.use(express.json()); // Parse JSON bodies (as sent by API clients)
 app.post('/', function(req, res){ // Access the parse results as request.body
     date = req.body.date;
-    console.log("server received " + date.fullDate);
+    tempData.date = date;
+    carbone.render('template.docx', tempData, function (err, result) {
+        if (err) return console.log(err);
+        fs.writeFileSync('public/result.docx', result);
+        console.log("server generated report with date " + date.fullDate);
+    });    
 });
-// Generate a report using the sample template provided by carbone module
-// This LibreOffice template contains "Hello {d.firstname} {d.lastname} !"
-// Of course, you can create your own templates!
-carbone.render('./node_modules/carbone/examples/movies.docx', data, function (err, result) {
-    if (err) return console.log(err);
-    // write the result
-    fs.writeFileSync('public/result.docx', result);
-});
-
