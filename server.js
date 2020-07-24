@@ -1,7 +1,6 @@
 const fs = require('fs');
 const carbone = require('carbone');
 
-
 /* function to parse json file
 
 function jsonReader(filePath, cb) {
@@ -65,12 +64,23 @@ var data = [
 
 var http = require("http");
 const express = require("express");
+const bodyParser = require('body-parser');
 const app = express();
 const port = 3000;
 
 app.use(express.static(__dirname + "/public"));
 app.listen(port);
-console.log("server on " + port);
+console.log("server running on port " + port);
+/* Parse JSON data using body parser. */
+app.use(bodyParser.json());
+app.post('/data', function(req, res){
+
+    var obj = {};
+    console.log('body: ' + req.body);
+    res.send(req.body);
+
+});
+
 
 // Generate a report using the sample template provided by carbone module
 // This LibreOffice template contains "Hello {d.firstname} {d.lastname} !"
@@ -80,3 +90,4 @@ carbone.render('./node_modules/carbone/examples/movies.docx', data, function (er
     // write the result
     fs.writeFileSync('public/result.docx', result);
 });
+
