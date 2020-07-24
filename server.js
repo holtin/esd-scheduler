@@ -64,24 +64,19 @@ var data = [
 
 var http = require("http");
 const express = require("express");
-const bodyParser = require('body-parser');
 const app = express();
 const port = 3000;
 
 app.use(express.static(__dirname + "/public"));
 app.listen(port);
 console.log("server running on port " + port);
-/* Parse JSON data using body parser. */
-app.use(bodyParser.json());
-app.post('/data', function(req, res){
 
-    var obj = {};
-    console.log('body: ' + req.body);
-    res.send(req.body);
-
+app.use(express.urlencoded({extended : true})); // Parse URL-encoded bodies (as sent by HTML forms)
+app.use(express.json()); // Parse JSON bodies (as sent by API clients)
+app.post('/', function(req, res){ // Access the parse results as request.body
+    date = req.body.date;
+    console.log("server received " + date.fullDate);
 });
-
-
 // Generate a report using the sample template provided by carbone module
 // This LibreOffice template contains "Hello {d.firstname} {d.lastname} !"
 // Of course, you can create your own templates!

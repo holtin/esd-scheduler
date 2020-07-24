@@ -1,8 +1,26 @@
-console.log('Client-side code running');
+console.log('client running');
 
 $("#datepicker-submit").on("click", function() {
-    var datepicker = $("#datepicker").val();
+    var strDate = $("#datepicker").val();
+    var datepicker = new Date(strDate);
+    fetch('/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            date : {
+                fullDate : strDate,
+                day : datepicker.getDate(),
+                month : datepicker.getMonth()+1,
+                year : datepicker.getFullYear(),
+                weekday : datepicker.getDay()
+            }
+        })
+    });
+    console.log("client sent date " + strDate + " to server");
 
+    /*
     var xhr = new XMLHttpRequest();
     var data = {
         param1: datepicker
@@ -13,5 +31,5 @@ $("#datepicker-submit").on("click", function() {
     };
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.send(JSON.stringify(data));
-
+    */
 });
