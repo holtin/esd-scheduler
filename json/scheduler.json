@@ -158,7 +158,7 @@
         "JobName": "Data Centre Maintenance follow-up",
         "Server": "",
         "Remarks": "",
-        "Rules": "week/2;?ph->week/3;"
+        "Rules": "SC1"
     },
     {
         "StartTime": "10:00",

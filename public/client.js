@@ -18,6 +18,7 @@ $("#datepicker-submit").on("click", function() {
             }
         })
     });
+    document.getElementById("feedback").innerHTML = "<h3>Generated a report for " + strDate + "!</h3>"
     console.log("client sent date " + strDate + " to server");
 
     /*
