@@ -1,1 +1,0 @@
-[{"tasks":[{"StartTime":"06:30","JobName":"Run SQL \"generate_scheduled_task_list\" and \"generate_failed_running_task_list\"","Server":"m5ppc01","Remarks":"","Rules":"daily"}]}]
