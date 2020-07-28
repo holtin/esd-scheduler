@@ -1,0 +1,26 @@
+{
+  "name": "scheduler",
+  "version": "1.0.0",
+  "description": "scheduling system for TD",
+  "main": "server.js",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "carbone": "^2.0.1",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/javier-hui/scheduler.git"
+  },
+  "author": "Javier Hui",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/javier-hui/scheduler/issues"
+  },
+  "homepage": "https://github.com/javier-hui/scheduler#readme"
+}

@@ -11,13 +11,19 @@ console.log("server running on port " + port);
 app.use(express.urlencoded({ extended: true })); // Parse URL-encoded bodies (as sent by HTML forms)
 app.use(express.json()); // Parse JSON bodies (as sent by API clients)
 app.post('/', function (req, res) { // Access the parse results as request.body
+
     date = req.body.date;
     var scheduler = require("./json/scheduler.json");
+    var oneOff = require("./json/oneOff.json");
+    var todo = require("./json/ToDoList.json");
+    var loaded_task = 0;
     const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     let dateArray = [date.day, monthNames[date.month - 1], date.year, date.weekday]; //[date, month, year, day]
     const numberOfDayInFirstWeek = 3; //need edit every year
     filtering(scheduler, dateArray, numberOfDayInFirstWeek);
-    var todo = require("./json/ToDoList.json");
+    loaded_task += 1;
+    filtering(oneOff, dateArray, numberOfDayInFirstWeek, loaded_task);
+    todo[0].tasks.sort(getSortOrder("StartTime"));
     todo[0].date = date;
     console.log(todo);
     carbone.render('template.docx', todo, function (err, result) {
@@ -48,7 +54,7 @@ function append(task) {
     fs.writeFileSync("./json/ToDoList.json", JSON.stringify(oriJson), 'utf8');
 };
 
-function filtering(data, inputDate, firstWeek) {
+function filtering(data, inputDate, firstWeek, loaded_task) {
     var phs = require("./json/ph.json");
     const fs = require('fs');
     const numberOfData = Object.keys(data).length;
@@ -59,9 +65,11 @@ function filtering(data, inputDate, firstWeek) {
     var ph = false;
     const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
-    var reset = fs.readFileSync('./json/ToDoList.json', 'utf8');
-    reset = [{ "tasks": [] }];
-    fs.writeFileSync("./json/ToDoList.json", JSON.stringify(reset), 'utf8');
+    if (loaded_task == 0) {
+        var reset = fs.readFileSync('./json/ToDoList.json', 'utf8');
+        reset = [{ "tasks": [] }];
+        fs.writeFileSync("./json/ToDoList.json", JSON.stringify(reset), 'utf8');
+    };
 
     var datesOfMonths = [];
     if (year % 4 == 0) { datesOfMonths = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]; }
@@ -81,9 +89,16 @@ function filtering(data, inputDate, firstWeek) {
 
         var valid = false;
 
-        if (include == "daily") {
-            //console.log(task);
+        if (include.substring(0, 5) == "daily") {
             append(task);
+            //Eliminating the selected one-off Tasks
+            if (task["Rules"][task["Rules"].length - 1] == "@") {
+                console.log("oneoff");
+                var OOJson = fs.readFileSync('./json/oneOff.json', 'utf8');
+                OOJson = JSON.parse(OOJson);
+                OOJson.splice(i, 1);
+                fs.writeFileSync('./json/oneOff.json', JSON.stringify(OOJson), 'utf8');
+            };
             continue;
         };
 
@@ -146,7 +161,7 @@ function filtering(data, inputDate, firstWeek) {
                 for (k = 0; k < numberOfRules; ++k) {
                     for (x = 0; x < months.length; ++x) {
                         if (months[x] == month) {
-                            if (datesOfMonths[x] - Number(ldRules[k]) == date) {
+                            if (datesOfMonths[x] - Number(ldRules[k]) + 1 == date) {
                                 valid = true;
                                 break;
                             };
@@ -224,7 +239,7 @@ function filtering(data, inputDate, firstWeek) {
                         };
                     };
                 };
-                if (subConstraints[j].includes("workingday") && ph) {
+                if (subConstraints[j].includes("workingday") && !ph) {
                     const wdRules = subConstraints[j].substring(11,).split(",")
                     const numberOfRules = wdRules.length;
                     for (k = 0; k < numberOfRules; ++k) {
@@ -256,7 +271,7 @@ function filtering(data, inputDate, firstWeek) {
                 valid = true;
                 break;
             }
-        };
+        }
         //2Jan 29Jan 6Apr 14Apr 2May 26Jun 2Jul 3Oct 28Dec
         if (include == "SC2") {
             if ((day == "2" || day == "29") & month == "Jan") {
@@ -290,18 +305,34 @@ function filtering(data, inputDate, firstWeek) {
         };
         //Eliminating the selected one-off Tasks
         if (valid && task["Rules"][task["Rules"].length - 1] == "@") {
-
+            console.log("oneoff");
             var OOJson = fs.readFileSync('./json/scheduler.json', 'utf8');
             OOJson = JSON.parse(OOJson);
             OOJson.splice(i, 1);
-            fs.writeFileSync("./scheduler.json", JSON.stringify(OOJson), 'utf8');
+            fs.writeFileSync("./json/scheduler.json", JSON.stringify(OOJson), 'utf8');
 
             console.log("delete");
-        };
+        }
         //Append the task to ToDoList.json
         if (valid) {
             //console.log(task);
             append(task);
-        };
+        }
     };
+};
+
+function getSortOrder(prop) {
+    return function (a, b) {
+        if (Number(a[prop].split(":")[0]) > Number(b[prop].split(":")[0])) {
+            return 1;
+        } else if (Number(a[prop].split(":")[0]) < Number(b[prop].split(":")[0])) {
+            return -1;
+        } else {
+            if (Number(a[prop].split(":")[1]) > Number(b[prop].split(":")[1])) {
+                return 1;
+            } else if (Number(a[prop].split(":")[1]) < Number(b[prop].split(":")[1])) {
+                return -1;
+            }
+        }
+    }
 };
