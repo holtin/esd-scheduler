@@ -634,6 +634,6 @@
         "JobName": "testing",
         "Server": "testing",
         "Remarks": "",
-        "Rules": "biweekly/1;"
+        "Rules": "month/01;"
     }
 ]

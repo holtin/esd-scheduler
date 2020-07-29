@@ -22,13 +22,14 @@ app.post('/', function (req, res) { // Access the parse results as request.body
     date = req.body.date;
     var scheduler = require(schedulerPath);
     var oneOff = require(oneOffPath);
-    var loaded_task = 0;
-    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-    let dateArray = [date.day, monthNames[date.month - 1], date.year, date.weekday]; //[date, month, year, day]
+    var loaded_task = false;
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    let dateArray = [date.day, months[date.month - 1], date.year, date.weekday]; //[date, month, year, day]
     const numberOfDayInFirstWeek = 3; //need edit every year
     filtering(scheduler, dateArray, numberOfDayInFirstWeek, loaded_task);
-    loaded_task += 1;
+    loaded_task = !loaded_task;
     filtering(oneOff, dateArray, numberOfDayInFirstWeek, loaded_task);
+    loaded_task = !loaded_task;
     sortTodo();
     var todo = require(todoPath);
     todo[0].date = date;
@@ -68,7 +69,6 @@ function append(task) {
 
 function filtering(data, inputDate, firstWeek, loaded_task) {
     var phs = require(phPath);
-    const fs = require('fs');
     const numberOfData = Object.keys(data).length;
     const date = inputDate[0];
     const month = inputDate[1];
@@ -77,12 +77,11 @@ function filtering(data, inputDate, firstWeek, loaded_task) {
     var ph = false;
     const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
-    if (loaded_task == 0) {
-        var reset = fs.readFileSync(todoPath, 'utf8');
-        reset = [{ "tasks": [] }];
-        fs.writeFileSync(todoPath, JSON.stringify(reset), 'utf8');
-    };
-
+    if (!loaded_task) {
+        console.log("clearing ToDoList.json...")
+        var reset = '[{ "tasks": [] }]';
+        fs.writeFileSync(todoPath, reset, 'utf8');
+    }
     var datesOfMonths = [];
     if (year % 4 == 0) { datesOfMonths = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]; }
     else { datesOfMonths = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]; };
@@ -91,14 +90,13 @@ function filtering(data, inputDate, firstWeek, loaded_task) {
         if ((phs[i]["date"] == date && phs[i]["month"] == month) || day == "0") {
             ph = true;
             break;
-        };
-    };
+        }
+    }
     for (i = 0; i < numberOfData; ++i) {
         const task = data[i];
         const rules = task["Rules"].split("?");
         const include = rules[0];
         const exclude = rules[1];
-
         var valid = false;
 
         if (include.substring(0, 5) == "daily") {
@@ -152,7 +150,7 @@ function filtering(data, inputDate, firstWeek, loaded_task) {
                 for (k = 0; k < numberOfRules; ++k) {
                     var numberOfPh = 1;
                     var numberOfWd = 0;
-                    for (x = date - 1; x < date - day; --x) {
+                    for (x = date - 1; x > date - day; --x) {
                         for (y = 0; y < Object.keys(phs).length; ++y) {
                             if (phs[y]["date"] == x && phs[y]["month"] == month) {
                                 numberOfPh++;
@@ -262,54 +260,27 @@ function filtering(data, inputDate, firstWeek, loaded_task) {
                 };
             };
         };
-        //Speical Cases
+        //Special Cases
         if (include == "SC1") {
-            if (day == "2" && date != "28" && month != "Jan") {
-                valid = true;
-                break;
-            };
-            if (date == "29" && month == "Jan") {
-                valid = true;
-                break;
-            }
+            if (day == "2" && date != "28" && month != "Jan") valid = true;
+            if (date == "29" && month == "Jan") valid = true;
         };
         //2Jan 29Jan 6Apr 14Apr 2May 26Jun 2Jul 3Oct 28Dec
         if (include == "SC2") {
-            if ((day == "2" || day == "29") & month == "Jan") {
-                valid = true;
-                break;
-            };
-            if ((day == "6" || day == "14") & month == "Apr") {
-                valid = true;
-                break;
-            };
-            if ((day == "2") & month == "May") {
-                valid = true;
-                break;
-            };
-            if ((day == "26") & month == "Jun") {
-                valid = true;
-                break;
-            };
-            if ((day == "2") & month == "Jul") {
-                valid = true;
-                break;
-            };
-            if ((day == "3") & month == "Oct") {
-                valid = true;
-                break;
-            };
-            if ((day == "28") & month == "DEC") {
-                valid = true;
-                break;
-            }
+            if ((day == "2" || day == "29") & month == "Jan") valid = true;
+            if ((day == "6" || day == "14") & month == "Apr") valid = true;
+            if ((day == "2") & month == "May") valid = true;
+            if ((day == "26") & month == "Jun") valid = true;
+            if ((day == "2") & month == "Jul") valid = true;
+            if ((day == "3") & month == "Oct") valid = true;
+            if ((day == "28") & month == "DEC") valid = true;
         };
         //Eliminating the selected one-off Tasks
         if (valid && task["Rules"][task["Rules"].length - 1] == "@") {
-            var OOJson = fs.readFileSync(schedulerPath, 'utf8');
+            var OOJson = fs.readFileSync(oneOffPath, 'utf8');
             OOJson = JSON.parse(OOJson);
             OOJson.splice(i, 1);
-            fs.writeFileSync(schedulerPath, JSON.stringify(OOJson), 'utf8');
+            fs.writeFileSync(oneOffPath, JSON.stringify(OOJson), 'utf8');
 
         };
         //Append the task to ToDoList.json
