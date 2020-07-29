@@ -41,6 +41,7 @@ app.post('/', function (req, res) { // Access the parse results as request.body
     });
 });
 
+
 function sortTodo() {
     var final = fs.readFileSync(todoPath, 'utf8');
     final = JSON.parse(final);
@@ -81,6 +82,7 @@ function filtering(data, inputDate, firstWeek, loaded_task) {
         console.log("clearing ToDoList.json...")
         var reset = '[{ "tasks": [] }]';
         fs.writeFileSync(todoPath, reset, 'utf8');
+        //printTodo();
     }
     var datesOfMonths = [];
     if (year % 4 == 0) { datesOfMonths = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]; }
