@@ -1,0 +1,22 @@
+:root {
+    --primary: #3c1361;
+}
+
+body {
+    background-color: var(--primary);
+}
+
+header {
+    background-size: cover;    
+    color: white;
+}
+
+.page-section {
+    background-color: white;
+    padding: 2rem 2rem;
+}
+
+footer {
+    background-size: cover;
+    color: white;
+}

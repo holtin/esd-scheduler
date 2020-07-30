@@ -114,9 +114,9 @@ function filtering(data, inputDate, firstWeek, loaded_task) {
                 OOJson = JSON.parse(OOJson);
                 OOJson.splice(i, 1);
                 fs.writeFileSync(oneOffPath, JSON.stringify(OOJson), 'utf8');
-            };
+            }
             continue;
-        };
+        }
 
         const subrules = include.split(";");
         const numberOfRules = subrules.length;
@@ -128,9 +128,9 @@ function filtering(data, inputDate, firstWeek, loaded_task) {
                     if (weeklyRules[k] == day) {
                         valid = true;
                         break;
-                    };
-                };
-            };
+                    }
+                }
+            }
             if (subrules[j].includes("month")) {
                 const monthlyRules = subrules[j].substring(6,).split(",");
                 const numberOfRules = monthlyRules.length;
@@ -138,9 +138,9 @@ function filtering(data, inputDate, firstWeek, loaded_task) {
                     if (monthlyRules[k] == date) {
                         valid = true;
                         break;
-                    };
-                };
-            };
+                    }
+                }
+            }
             if (subrules[j].includes("year")) {
                 const yearlyRules = subrules[j].substring(5,).split(",")
                 const numberOfRules = yearlyRules.length;
@@ -148,9 +148,9 @@ function filtering(data, inputDate, firstWeek, loaded_task) {
                     if (yearlyRules[k].substring(0, 2) == date && yearlyRules[k].substring(2,) == month) {
                         valid = true;
                         break;
-                    };
-                };
-            };
+                    }
+                }
+            }
             if (subrules[j].includes("workingday") && !ph) {
                 const wdRules = subrules[j].substring(11,).split(",")
                 const numberOfRules = wdRules.length;
@@ -161,16 +161,16 @@ function filtering(data, inputDate, firstWeek, loaded_task) {
                         for (y = 0; y < Object.keys(phs).length; ++y) {
                             if (phs[y]["date"] == x && phs[y]["month"] == month) {
                                 numberOfPh++;
-                            };
-                        };
-                    };
+                            }
+                        }
+                    }
                     numberOfWd = Number(day) - numberOfPh + 1;
                     if (numberOfWd == wdRules[k]) {
                         valid = true;
                         break;
                     }
-                };
-            };
+                }
+            }
             if (subrules[j].includes("lastday")) {
                 const ldRules = subrules[j].substring(8,).split(",");
                 const numberOfRules = ldRules.length;
@@ -180,11 +180,11 @@ function filtering(data, inputDate, firstWeek, loaded_task) {
                             if (datesOfMonths[x] - Number(ldRules[k]) + 1 == date) {
                                 valid = true;
                                 break;
-                            };
-                        };
-                    };
-                };
-            };
+                            }
+                        }
+                    }
+                }
+            }
 
 
             if (subrules[j].includes("biweekly")) {
@@ -193,7 +193,7 @@ function filtering(data, inputDate, firstWeek, loaded_task) {
                 for (k = 0; k < months.length; ++k) {
                     if (months[k] == month) { numberOfDay -= firstWeek; break; }
                     else { numberOfDay += datesOfMonths[k]; };
-                };
+                }
                 if (numberOfDay / 7 % 2 == 0) { bw = true; };
                 if (bw) {
                     const bwRules = subrules[j].substring(9,).split(",");
@@ -203,10 +203,10 @@ function filtering(data, inputDate, firstWeek, loaded_task) {
                             valid = true;
                             break;
                         }
-                    };
-                };
-            };
-        };
+                    }
+                }
+            }
+        }
         if (exclude) {
             const subConstraints = exclude.split(";");
             const numberOfConstraint = subConstraints.length;
@@ -214,7 +214,7 @@ function filtering(data, inputDate, firstWeek, loaded_task) {
                 if (subConstraints[j].includes("ph") && ph) {
                     valid = false;
                     break;
-                };
+                }
                 if (subConstraints[j].includes("week")) {
                     const weeklyRules = subConstraints[j].substring(5,).split(",");
                     const numberOfRules = weeklyRules.length;
@@ -222,9 +222,9 @@ function filtering(data, inputDate, firstWeek, loaded_task) {
                         if (weeklyRules[k] == day) {
                             valid = false;
                             break;
-                        };
-                    };
-                };
+                        }
+                    }
+                }
                 if (subConstraints[j].includes("month")) {
                     const monthlyRules = subConstraints[j].substring(6,).split(",");
                     const numberOfRules = monthlyRules.length;
@@ -232,9 +232,9 @@ function filtering(data, inputDate, firstWeek, loaded_task) {
                         if (monthlyRules[k] == date) {
                             valid = false;
                             break;
-                        };
-                    };
-                };
+                        }
+                    }
+                }
                 if (subConstraints[j].includes("year")) {
                     const yearlyRules = subConstraints[j].substring(5,).split(",")
                     const numberOfRules = yearlyRules.length;
@@ -242,9 +242,9 @@ function filtering(data, inputDate, firstWeek, loaded_task) {
                         if (yearlyRules[k].substring(0, 2) == date && yearlyRules[k].substring(2,) == month) {
                             valid = false;
                             break;
-                        };
-                    };
-                };
+                        }
+                    }
+                }
                 if (subConstraints[j].includes("workingday") && !ph) {
                     const wdRules = subConstraints[j].substring(11,).split(",")
                     const numberOfRules = wdRules.length;
@@ -263,24 +263,42 @@ function filtering(data, inputDate, firstWeek, loaded_task) {
                             valid = true;
                             break;
                         }
-                    };
-                };
-            };
-        };
+                    }
+                }
+            }
+        }
         //Special Cases
-        if (include == "SC1") {
-            if (day == "2" && date != "28" && month != "Jan") valid = true;
-            if (date == "29" && month == "Jan") valid = true;
+        if(include == "SC1"){
+            if(date == "2" && date != "28" && month != "Jan"){
+                valid = true;
+            }
+            else if(date == "29" && month == "Jan"){
+                valid = true;
+            }
         };
         //2Jan 29Jan 6Apr 14Apr 2May 26Jun 2Jul 3Oct 28Dec
-        if (include == "SC2") {
-            if ((day == "2" || day == "29") & month == "Jan") valid = true;
-            if ((day == "6" || day == "14") & month == "Apr") valid = true;
-            if ((day == "2") & month == "May") valid = true;
-            if ((day == "26") & month == "Jun") valid = true;
-            if ((day == "2") & month == "Jul") valid = true;
-            if ((day == "3") & month == "Oct") valid = true;
-            if ((day == "28") & month == "DEC") valid = true;
+        if(include == "SC2"){
+            if((date == "2" || date == "29") & month == "Jan") valid = true;
+            else if((date == "6" || date == "14") & month == "Apr") valid = true;
+            else if((date == "2") & month == "May") valid = true;
+            else if((date == "26") & month == "Jun") valid = true;
+            else if((date == "2") & month == "Jul") valid = true;
+            else if((date == "3") & month == "Oct") valid = true;
+            else if((date == "28") & month == "Aug") valid = true;
+        };
+        //27Jan 24Feb 30Mar 27Apr 1Jun 29Jun 27Jul 31Aug 28Sep 26Oct 30Nov 28Dec
+        if(include == "SC3"){
+            if((date == "27") & month == "Jan") valid = true;
+            else if((date == "24") & month == "Feb") valid = true;
+            else if((date == "30") & month == "Mar") valid = true;
+            else if((date == "27") & month == "Apr") valid = true;
+            else if((date == "1" || date == "29") & month == "Jun") valid = true;
+            else if((date == "27") & month == "Jul") valid = true;
+            else if((date == "31") & month == "Aug") valid = true;
+            else if((date == "28") & month == "Sep") valid = true;
+            else if((date == "26") & month == "Oct") valid = true;
+            else if((date == "30") & month == "Nov") valid = true;
+            else if((date == "28") & month == "Dec") valid = true;
         };
         //Eliminating the selected one-off Tasks
         if (valid && task["Rules"][task["Rules"].length - 1] == "@") {

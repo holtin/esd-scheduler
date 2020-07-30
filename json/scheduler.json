@@ -1,20 +1,6 @@
 [
     {
         "StartTime": "8:00",
-        "JobName": "Distribute upsurge reminder letter issued to users via email",
-        "Server": "m5ppc01/02",
-        "Remarks": "(Remarks: RE:COPM 28)",
-        "Rules": "daily"
-    },
-    {
-        "StartTime": "8:00",
-        "JobName": "Check PPS daily backup, take off the last day offsite tape PPSPRD-L4-GEN4, PPSPRD-R16-GEN4",
-        "Server": "PPSPRD-SVR1",
-        "Remarks": "(Remarks: PPS COPM 6.5 & 9.1.2)",
-        "Rules": "daily"
-    },
-    {
-        "StartTime": "8:00",
         "JobName": "Perform PPS System Health Check and send comfirmed email to related parties. (https://pps.td.hksarg/pps/)",
         "Server": "TDOA",
         "Remarks": "(Re : PPS COPM 11)",
@@ -162,6 +148,20 @@
     },
     {
         "StartTime": "10:00",
+        "JobName": "Send last month of PPS backup tapes to SCC and take back another Set of tapes to PCC",
+        "Server": "",
+        "Remarks": "",
+        "Rules": "SC3"
+    },
+    {
+        "StartTime": "10:00",
+        "JobName": "Send last VRMS monthly backup tapes to SCC and take back another Set of tapes to PCC",
+        "Server": "",
+        "Remarks": "",
+        "Rules": "SC3"
+    },
+    {
+        "StartTime": "10:00",
         "JobName": "Sent last WK of VRMS backup tapes to SCC and take back another set of tapes to PCC",
         "Server": "",
         "Remarks": "",
@@ -169,7 +169,7 @@
     },
     {
         "StartTime": "10:00",
-        "JobName": "Mount two monthly LTO5 system backup tapes into PCC Tape Library and scan on Data Protector Manager 1. MONTHLY-UX-pvms02-04-IMG-02 2. MONTHLY-WINS-FS-02-01",	
+        "JobName": "Mount two monthly LTO5 system backup tapes into PCC Tape Library and scan on Data Protector Manager 1. MONTHLY-UX-pvms02-04-IMG-02 2. MONTHLY-WINS-FS-02-01",
         "Server": "MSL4048_m5pdp01_library",
         "Remarks": "(Remarks : Set 1-4 Re:COPM 10.1.1)",
         "Rules": "month/27;"
@@ -323,7 +323,7 @@
     },
     {
         "StartTime": "12:30",
-        "JobName": "Fill in the meter reading sheet of copier and then fax to Kyocera",	
+        "JobName": "Fill in the meter reading sheet of copier and then fax to Kyocera",
         "Server": "",
         "Remarks": "(Remarks : Kyocera Fax no.  2423-2159)",
         "Rules": "month/25;"
@@ -343,8 +343,8 @@
         "Rules": "daily"
     },
     {
-        "StartTime":"13:00",
-        "JobName": "Relocate all forms from 9/F to Rm 242; stock check of Plain papers, Pre-print forms and other inventories in Rm 242",	
+        "StartTime": "13:00",
+        "JobName": "Relocate all forms from 9/F to Rm 242; stock check of Plain papers, Pre-print forms and other inventories in Rm 242",
         "Server": "",
         "Remarks": "(Remarks :  (Order forms on next working day if required))",
         "Rules": "week/0;"
@@ -358,7 +358,7 @@
     },
     {
         "StartTime": "13:00",
-        "JobName": "Copying CMIS report file from m5ppc02 to Q drive",	
+        "JobName": "Copying CMIS report file from m5ppc02 to Q drive",
         "Server": "m5ppc02",
         "Remarks": "(Remarks : Re: SCOp1 Email 3/5/2019)",
         "Rules": "daily"
@@ -505,7 +505,7 @@
     },
     {
         "StartTime": "21:30",
-        "JobName": "Upload ATM memo  □  and transaction file  □ to VALID V",	
+        "JobName": "Upload ATM memo  □  and transaction file  □ to VALID V",
         "Server": "m5ppc02",
         "Remarks": "(Remarks : Must after batch job started and before 00:00)",
         "Rules": "week/1,2,3,4,5,6;?ph;"
@@ -533,7 +533,7 @@
     },
     {
         "StartTime": "21:45",
-        "JobName": "To ping IP addresses of ITS UPS at TDOA PC",	
+        "JobName": "To ping IP addresses of ITS UPS at TDOA PC",
         "Server": "TDOA",
         "Remarks": "(Remarks :  Re: O/N #01/2019)",
         "Rules": "daily"
@@ -554,14 +554,14 @@
     },
     {
         "StartTime": "21:45",
-        "JobName": "Check monthly UX-IMG backup on PCC Data Protector Manager MONTHLY-UX-u5pvms02-IMG  □ MONTHLY-UX-u5pvms04-IMG  □",	
+        "JobName": "Check monthly UX-IMG backup on PCC Data Protector Manager MONTHLY-UX-u5pvms02-IMG  □ MONTHLY-UX-u5pvms04-IMG  □",
         "Server": "m5ppc01",
         "Remarks": "",
         "Rules": "month/28;"
     },
     {
         "StartTime": "22:30",
-        "JobName": "Check monthly UX-IMG backup on SCC Data Protector Manager MONTHLY-UX-u5dvms02-IMG  □ MONTHLY-UX-u5dvms04-IMG  □",	
+        "JobName": "Check monthly UX-IMG backup on SCC Data Protector Manager MONTHLY-UX-u5dvms02-IMG  □ MONTHLY-UX-u5dvms04-IMG  □",
         "Server": "remote to m5dpc01",
         "Remarks": "",
         "Rules": "month/28;"
@@ -628,12 +628,5 @@
         "Server": "m5ppc01",
         "Remarks": "",
         "Rules": "daily"
-    },
-    {
-        "StartTime": "10:00",
-        "JobName": "testing",
-        "Server": "testing",
-        "Remarks": "",
-        "Rules": "month/01;"
     }
 ]
