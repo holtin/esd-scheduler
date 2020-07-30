@@ -31,9 +31,11 @@ app.post('/', function (req, res) { // Access the parse results as request.body
     filtering(oneOff, dateArray, numberOfDayInFirstWeek, loaded_task);
     loaded_task = !loaded_task;
     sortTodo();
-    var todo = require(todoPath);
+    var todo = fs.readFileSync(todoPath, 'utf8');
+    todo = JSON.parse(todo);
     todo[0].date = date;
     console.log(todo);
+    console.log("number of tasks: " + todo[0].tasks.length);
     carbone.render(templatePath, todo, function (err, result) {
         if (err) return console.log(err);
         fs.writeFileSync(resultPath, result);
@@ -77,13 +79,16 @@ function filtering(data, inputDate, firstWeek, loaded_task) {
     const day = inputDate[3];
     var ph = false;
     const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-
+    
     if (!loaded_task) {
         console.log("clearing ToDoList.json...")
         var reset = '[{ "tasks": [] }]';
         fs.writeFileSync(todoPath, reset, 'utf8');
-        //printTodo();
     }
+    var oriJson = fs.readFileSync(todoPath, 'utf8');
+    oriJson = JSON.parse(oriJson);
+    console.log("before filtering: " + oriJson[0].tasks.length);
+
     var datesOfMonths = [];
     if (year % 4 == 0) { datesOfMonths = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]; }
     else { datesOfMonths = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]; };
@@ -290,6 +295,9 @@ function filtering(data, inputDate, firstWeek, loaded_task) {
             append(task);
         };
     };
+    var oriJson = fs.readFileSync(todoPath, 'utf8');
+    oriJson = JSON.parse(oriJson);
+    console.log("after filtering: " + oriJson[0].tasks.length);
 };
 
 function getSortOrder(prop) {    
