@@ -16,6 +16,10 @@ header {
     padding: 2rem 2rem;
 }
 
+#scheduler .border {
+    border-radius: 0.25rem;
+}
+
 footer {
     background-size: cover;
     color: white;

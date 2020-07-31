@@ -16,8 +16,14 @@ $("#datepicker-submit").on("click", function() {
                 year : datepicker.getFullYear(),
                 weekday : datepicker.getDay()
             }
-        })
-    });
-    document.getElementById("feedback").innerHTML = "<h3>Generated a report for " + strDate + "!</h3>"
-    console.log("client sent date " + strDate + " to server");
+        }),
+        success: console.log("client sent date " + strDate + " to server")
+    })
+        .then(data => console.log(data));
+
+    let fileName = 'VALID V Daily Job Schedule.docx';
+    let feedback = '<div class="row border mx-auto px-2 py-2 my-2"><div class="col-9 py-2">' + fileName;
+    feedback += '</div><div class="col-3"><a href="' + fileName;
+    feedback += '" class="btn btn-success">Download</a></div></div>';
+    document.getElementById("forms").innerHTML = feedback;
 });

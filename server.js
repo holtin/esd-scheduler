@@ -1,6 +1,7 @@
 const fs = require("fs");
 const carbone = require("carbone");
 const express = require("express");
+const { resolveNaptr } = require("dns");
 const app = express();
 const port = 3000;
 
@@ -9,7 +10,7 @@ const oneOffPath = "./json/oneOff.json";
 const todoPath = "./json/toDoList.json";
 const phPath = "./json/ph.json";
 const templatePath = "template.docx";
-const resultPath = 'public/result.docx';
+const resultPath = 'public/VALID V Daily Job Schedule';
 
 app.use(express.static(__dirname + "/public"));
 app.listen(port);
@@ -38,9 +39,11 @@ app.post('/', function (req, res) { // Access the parse results as request.body
     console.log("number of tasks: " + todo[0].tasks.length);
     carbone.render(templatePath, todo, function (err, result) {
         if (err) return console.log(err);
-        fs.writeFileSync(resultPath, result);
+        fs.writeFileSync(resultPath + ".docx", result);
         console.log("server generated report with date " + date.fullDate);
     });
+    res.write("hello from server");
+    res.end();
 });
 
 
@@ -326,16 +329,16 @@ function getSortOrder(prop) {
         let b_min = Number(b[prop].split(":")[1]);
 
         if (a_hr < 8){a_hr += 24};
-        if (b_hr < 8){b_hr += 24};    
-        if (a_hr > b_hr) {    
-            return 1;    
+        if (b_hr < 8){b_hr += 24};
+        if (a_hr > b_hr) {
+            return 1;
         } else if (a_hr < b_hr) {    
-            return -1;    
+            return -1;
         } else {
             if (a_min > b_min) {    
-                return 1;    
+                return 1;
             } else if (a_min < b_min) {    
-                return -1;    
+                return -1;
             }
         }
     }    
