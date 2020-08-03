@@ -7,9 +7,9 @@ const port = 3000;
 
 const schedulerPath = "./json/scheduler.json";
 const oneOffPath = "./json/oneOff.json";
-const todoPath = "./json/toDoList.json";
+const todoPath = "./tmp/toDoList.json";
 const phPath = "./json/ph.json";
-const templatePath = "template.docx";
+const templatePath = "./tmp/template.docx";
 const resultPath = 'public/VALID V Daily Job Schedule';
 
 app.use(express.static(__dirname + "/public"));
@@ -18,8 +18,11 @@ console.log("server running on port " + port);
 
 app.use(express.urlencoded({ extended: true })); // Parse URL-encoded bodies (as sent by HTML forms)
 app.use(express.json()); // Parse JSON bodies (as sent by API clients)
+app.use(function (err, req, res, next) {
+    console.error(err.stack);
+    res.status(500).send('Something broke!');
+});
 app.post('/', function (req, res) { // Access the parse results as request.body
-
     date = req.body.date;
     var scheduler = require(schedulerPath);
     var oneOff = require(oneOffPath);
@@ -42,8 +45,6 @@ app.post('/', function (req, res) { // Access the parse results as request.body
         fs.writeFileSync(resultPath + ".docx", result);
         console.log("server generated report with date " + date.fullDate);
     });
-    res.write("hello from server");
-    res.end();
 });
 
 
