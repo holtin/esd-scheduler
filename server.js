@@ -10,7 +10,7 @@ const oneOffPath = "./json/oneOff.json";
 const todoPath = "./tmp/toDoList.json";
 const phPath = "./json/ph.json";
 const templatePath = "./tmp/template.docx";
-const resultPath = 'public/VALID V Daily Job Schedule';
+const resultPath = './public/VALID V Daily Job Schedule.docx';
 
 app.use(express.static(__dirname + "/public"));
 app.listen(port);
@@ -23,7 +23,7 @@ app.use(function (err, req, res, next) {
     res.status(500).send('Something broke!');
 });
 app.post('/', function (req, res) { // Access the parse results as request.body
-    date = req.body.date;
+    var date = req.body;
     var scheduler = require(schedulerPath);
     var oneOff = require(oneOffPath);
     var loaded_task = false;
@@ -42,9 +42,11 @@ app.post('/', function (req, res) { // Access the parse results as request.body
     console.log("number of tasks: " + todo[0].tasks.length);
     carbone.render(templatePath, todo, function (err, result) {
         if (err) return console.log(err);
-        fs.writeFileSync(resultPath + ".docx", result);
+        fs.writeFileSync(resultPath, result);
         console.log("server generated report with date " + date.fullDate);
     });
+    req.body.forms.push(resultPath.split("/")[2]);
+    res.json(req.body);
 });
 
 
@@ -343,4 +345,368 @@ function getSortOrder(prop) {
             }
         }
     }    
+};
+
+function formAppend(task, path, destination, type, freq) {
+    const fs = require('fs');
+
+    var oriJson = fs.readFileSync(path, 'utf8');
+    oriJson = JSON.parse(oriJson);
+    var to_append = "";
+    if (destination == "SCC") {
+        to_append = { ToSCC: task };
+    }
+    else if (destination == "PCC") {
+        to_append = { ToPCC: task };
+    };
+    if (freq == "weekly") {
+        if (type == "V5") {
+            oriJson[0]["weekly"][0]["V5"].push(to_append);
+        }
+        else if (type == "VRMS") {
+            oriJson[0]["weekly"][2]["VRMS"].push(to_append);
+        }
+        else if (type == "PPS") {
+            oriJson[0]["weekly"][1]["PPS"].push(to_append);
+        }
+        else if (type == "backup") {
+            oriJson[0]["weekly"][3]["Copy"].push(to_append);
+        }
+    }
+    else if (freq == "monthly") {
+        oriJson[1]["monthly"].push(to_append);
+    };
+    fs.writeFileSync(path, JSON.stringify(oriJson), 'utf8');
+};
+function formFiltering(data_1, data_2, data_3, inputDate, firstWeek) {
+    const fs = require('fs');
+    const date = inputDate[0];
+    const month = inputDate[1];
+    const year = inputDate[2];
+    const day = inputDate[3];
+
+    var datesOfMonths = [];
+    if (year % 4 == 0) { datesOfMonths = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]; }
+    else { datesOfMonths = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]; };
+
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    var numberOfDay = Number(date);
+    for (k = 0; k < months.length; ++k) {
+        if (months[k] == month) {
+            numberOfDay -= firstWeek; break;
+        }
+        else {
+            numberOfDay += datesOfMonths[k];
+        };
+    };
+    var numberOfMon = Math.floor(numberOfDay / 7);
+    if (firstWeek >= 6) { numberOfMon++; };
+    if (day >= 1) { numberOfMon++; };
+    console.log(numberOfMon);
+
+    var reset_1 = fs.readFileSync(OTCL_path, 'utf8');
+    reset_1 = [{ "weekly": [{ "V5": [] }, { "PPS": [] }, { "VRMS": [] }, { "Copy": [] }] }, { "monthly": [] }];
+    fs.writeFileSync(OTCL_path, JSON.stringify(reset_1), 'utf8');
+
+    var reset_2 = fs.readFileSync(delivery_path, 'utf8');
+    reset_2 = [];
+    fs.writeFileSync(delivery_path, JSON.stringify(reset_2), 'utf8');
+
+    const numberOfData_1 = Object.keys(data_1).length;
+    var delivery_scc = [];
+    var delivery_pcc = [];
+    for (i = 0; i < numberOfData_1; ++i) {
+        let task = data_1[i];
+        let rules = task["Rules"].split("/");
+        let rule = rules[0];
+        let destination = rules[1]
+        let to_be_append_OFF = [];
+        let to_be_append_ON = [];
+        if (rule == "weekly" && day == "1") {
+            if (numberOfMon % 5 == 2) {
+                if (destination == "SCC") {
+                    to_be_append_OFF = (task["Tapes"][0]);
+                    to_be_append_ON = (task["Tapes"][4]);
+                    delivery_scc.push("1-mirror");
+                    delivery_pcc.push("5-mirror");
+                    formAppend(to_be_append_OFF, OTCL_path, "SCC", "V5", rule);
+                    formAppend(to_be_append_ON, OTCL_path, "PCC", "V5", rule);
+                }
+                else if (destination == "PCC") {
+                    to_be_append_OFF = (task["Tapes"][4]);
+                    to_be_append_ON = (task["Tapes"][0]);
+                    delivery_scc.push("5");
+                    delivery_pcc.push("1");
+                    formAppend(to_be_append_OFF, OTCL_path, "SCC", "V5", rule);
+                    formAppend(to_be_append_ON, OTCL_path, "PCC", "V5", rule);
+                }
+            }
+            else if (numberOfMon % 5 == 3) {
+                if (destination == "SCC") {
+                    to_be_append_OFF = (task["Tapes"][1]);
+                    to_be_append_ON = (task["Tapes"][0]);
+                    delivery_scc.push("2-mirror");
+                    delivery_pcc.push("1-mirror");
+                    formAppend(to_be_append_OFF, OTCL_path, "SCC", "V5", rule);
+                    formAppend(to_be_append_ON, OTCL_path, "PCC", "V5", rule);
+                }
+                else if (destination == "PCC") {
+                    to_be_append_OFF = (task["Tapes"][0]);
+                    to_be_append_ON = (task["Tapes"][1]);
+                    delivery_scc.push("1");
+                    delivery_pcc.push("2");
+                    formAppend(to_be_append_OFF, OTCL_path, "SCC", "V5", rule);
+                    formAppend(to_be_append_ON, OTCL_path, "PCC", "V5", rule);
+                }
+            }
+            else if (numberOfMon % 5 == 4) {
+                if (destination == "SCC") {
+                    to_be_append_OFF = (task["Tapes"][2]);
+                    to_be_append_ON = (task["Tapes"][1]);
+                    delivery_scc.push("3-mirror");
+                    delivery_pcc.push("2-mirror");
+                    formAppend(to_be_append_OFF, OTCL_path, "SCC", "V5", rule);
+                    formAppend(to_be_append_ON, OTCL_path, "PCC", "V5", rule);
+                }
+                else if (destination == "PCC") {
+                    to_be_append_OFF = (task["Tapes"][1]);
+                    to_be_append_ON = (task["Tapes"][2]);
+                    delivery_scc.push("2");
+                    delivery_pcc.push("3");
+                    formAppend(to_be_append_OFF, OTCL_path, "SCC", "V5", rule);
+                    formAppend(to_be_append_ON, OTCL_path, "PCC", "V5", rule);
+                }
+            }
+            else if (numberOfMon % 5 == 0) {
+                if (destination == "SCC") {
+                    to_be_append_OFF = (task["Tapes"][3]);
+                    to_be_append_ON = (task["Tapes"][2]);
+                    delivery_scc.push("4-mirror");
+                    delivery_pcc.push("3-mirror");
+                    formAppend(to_be_append_OFF, OTCL_path, "SCC", "V5", rule);
+                    formAppend(to_be_append_ON, OTCL_path, "PCC", "V5", rule);
+                }
+                else if (destination == "PCC") {
+                    to_be_append_OFF = (task["Tapes"][2]);
+                    to_be_append_ON = (task["Tapes"][3]);
+                    delivery_scc.push("3");
+                    delivery_pcc.push("4");
+                    formAppend(to_be_append_OFF, OTCL_path, "SCC", "V5", rule);
+                    formAppend(to_be_append_ON, OTCL_path, "PCC", "V5", rule);
+                }
+            }
+            else if (numberOfMon % 5 == 1) {
+                if (destination == "SCC") {
+                    to_be_append_OFF = (task["Tapes"][4]);
+                    to_be_append_ON = (task["Tapes"][3]);
+                    delivery_scc.push("5-mirror");
+                    delivery_pcc.push("4-mirror");
+                    formAppend(to_be_append_OFF, OTCL_path, "SCC", "V5", rule);
+                    formAppend(to_be_append_ON, OTCL_path, "PCC", "V5", rule);
+                }
+                else if (destination == "PCC") {
+                    to_be_append_OFF = (task["Tapes"][3]);
+                    to_be_append_ON = (task["Tapes"][4]);
+                    delivery_scc.push("4");
+                    delivery_pcc.push("5");
+                    formAppend(to_be_append_OFF, OTCL_path, "SCC", "V5", rule);
+                    formAppend(to_be_append_ON, OTCL_path, "PCC", "V5", rule);
+                }
+            };
+        }
+        else if (rule == "monthly" && day == "1" && date != "1" && Number(date) < 9) {
+            const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+            var numberOfMonth = 0;
+            for (j = 0; j < months.length; ++j) {
+                if (months[j] == month) {
+                    numberOfMonth = j + 1;
+                }
+            };
+            if (numberOfMonth % 4 == 1) {
+                if (destination == "SCC") {
+                    to_be_append_OFF = task["Tapes"][2];
+                    to_be_append_ON = task["Tapes"][1];
+                    delivery_scc.push("3", "3", "3");
+                    delivery_pcc.push("2", "2", "2");
+                    formAppend(to_be_append_OFF, OTCL_path, "SCC", "", rule);
+                    formAppend(to_be_append_ON, OTCL_path, "PCC", "", rule);
+                }
+                else if (destination == "PCC") {
+                    to_be_append_OFF = task["Tapes"][1];
+                    to_be_append_ON = task["Tapes"][2];
+                    delivery_scc.push("2", "2", "2");
+                    delivery_pcc.push("3", "3", "3");
+                    formAppend(to_be_append_OFF, OTCL_path, "SCC", "", rule);
+                    formAppend(to_be_append_ON, OTCL_path, "PCC", "", rule);
+                }
+            }
+            else if (numberOfMonth % 4 == 2) {
+                if (destination == "SCC") {
+                    to_be_append_OFF = task["Tapes"][3];
+                    to_be_append_ON = task["Tapes"][2];
+                    delivery_scc.push("4", "4", "4");
+                    delivery_pcc.push("3", "3", "3");
+                    formAppend(to_be_append_OFF, OTCL_path, "SCC", "", rule);
+                    formAppend(to_be_append_ON, OTCL_path, "PCC", "", rule);
+                }
+                else if (destination == "PCC") {
+                    to_be_append_OFF = task["Tapes"][2];
+                    to_be_append_ON = task["Tapes"][3];
+                    delivery_scc.push("3", "3", "3");
+                    delivery_pcc.push("4", "4", "4");
+                    formAppend(to_be_append_OFF, OTCL_path, "SCC", "", rule);
+                    formAppend(to_be_append_ON, OTCL_path, "PCC", "", rule);
+                }
+            }
+            else if (numberOfMonth % 4 == 3) {
+                if (destination == "SCC") {
+                    to_be_append_OFF = task["Tapes"][0];
+                    to_be_append_ON = task["Tapes"][3];
+                    delivery_scc.push("1", "1", "1");
+                    delivery_pcc.push("4", "4", "4");
+                    formAppend(to_be_append_OFF, OTCL_path, "SCC", "", rule);
+                    formAppend(to_be_append_ON, OTCL_path, "PCC", "", rule);
+                }
+                else if (destination == "PCC") {
+                    to_be_append_OFF = task["Tapes"][3];
+                    to_be_append_ON = task["Tapes"][0];
+                    delivery_scc.push("4", "4", "4");
+                    delivery_pcc.push("1", "1", "1");
+                    formAppend(to_be_append_OFF, OTCL_path, "SCC", "", rule);
+                    formAppend(to_be_append_ON, OTCL_path, "PCC", "", rule);
+                }
+            }
+            else if (numberOfMonth % 4 == 0) {
+                if (destination == "SCC") {
+                    to_be_append_OFF = task["Tapes"][1];
+                    to_be_append_ON = task["Tapes"][0];
+                    delivery_scc.push("2", "2", "2");
+                    delivery_pcc.push("1", "1", "1");
+                    formAppend(to_be_append_OFF, OTCL_path, "SCC", "", rule);
+                    formAppend(to_be_append_ON, OTCL_path, "PCC", "", rule);
+                }
+                else if (destination == "PCC") {
+                    to_be_append_OFF = task["Tapes"][0];
+                    to_be_append_ON = task["Tapes"][1];
+                    delivery_scc.push("1", "1", "1");
+                    delivery_pcc.push("2", "2", "2");
+                    formAppend(to_be_append_OFF, OTCL_path, "SCC", "", rule);
+                    formAppend(to_be_append_ON, OTCL_path, "PCC", "", rule);
+                }
+            }
+        }
+        else if (rule == "backup") {
+            var month_number = "";
+            for (j = 0; j < months.length; ++j) {
+                if (months[j] == month) {
+                    month_number = j + 1;
+                    month_number = "0" + month_number.toString();
+                }
+            };
+            to_be_append = (task["Tapes"][0]);
+            to_be_append[0] = to_be_append[0].replace('YYYY', year.toString());
+            to_be_append[0] = to_be_append[0].replace('MM', month_number.toString());
+            formAppend(to_be_append[0], OTCL_path, "SCC", rule, "weekly");
+            delivery_scc.push(year.toString() + month_number.toString());
+        }
+    };
+    const numberOfData_2 = Object.keys(data_2).length;
+    for (i = 0; i < numberOfData_2; ++i) {
+        let task = data_2[i];
+        let rule = task["Rules"];
+        let to_be_append_OFF = [];
+        let to_be_append_ON = [];
+        if (rule == "weekly" && day == "1") {
+            if (numberOfMon % 5 == 0) {
+                to_be_append_OFF = (task["Tapes"][0]);
+                to_be_append_ON = (task["Tapes"][2]);
+                delivery_scc.push("1-OFF");
+                delivery_pcc.push("3-OFF");
+                formAppend(to_be_append_OFF, OTCL_path, "SCC", "VRMS", rule);
+                formAppend(to_be_append_ON, OTCL_path, "PCC", "VRMS", rule);
+            }
+            else if (numberOfMon % 5 == 1) {
+                to_be_append_OFF = (task["Tapes"][1]);
+                to_be_append_ON = (task["Tapes"][3]);
+                delivery_scc.push("2-OFF");
+                delivery_pcc.push("4-OFF");
+                formAppend(to_be_append_OFF, OTCL_path, "SCC", "VRMS", rule);
+                formAppend(to_be_append_ON, OTCL_path, "PCC", "VRMS", rule);
+            }
+            else if (numberOfMon % 5 == 2) {
+                to_be_append_OFF = (task["Tapes"][2]);
+                to_be_append_ON = (task["Tapes"][4]);
+                delivery_scc.push("3-OFF");
+                delivery_pcc.push("5-OFF");
+                formAppend(to_be_append_OFF, OTCL_path, "SCC", "VRMS", rule);
+                formAppend(to_be_append_ON, OTCL_path, "PCC", "VRMS", rule);
+            }
+            else if (numberOfMon % 5 == 3) {
+                to_be_append_OFF = (task["Tapes"][3]);
+                to_be_append_ON = (task["Tapes"][0]);
+                delivery_scc.push("4-OFF");
+                delivery_pcc.push("1-OFF");
+                formAppend(to_be_append_OFF, OTCL_path, "SCC", "VRMS", rule);
+                formAppend(to_be_append_ON, OTCL_path, "PCC", "VRMS", rule);
+            }
+            else if (numberOfMon % 5 == 4) {
+                to_be_append_OFF = (task["Tapes"][0]);
+                to_be_append_ON = (task["Tapes"][1]);
+                delivery_scc.push("1-OFF");
+                delivery_pcc.push("2-OFF");
+                formAppend(to_be_append_OFF, OTCL_path, "SCC", "VRMS", rule);
+                formAppend(to_be_append_ON, OTCL_path, "PCC", "VRMS", rule);
+            }
+        }
+    };
+    const numberOfData_3 = Object.keys(data_3).length;
+    for (i = 0; i < numberOfData_3; ++i) {
+        let task = data_3[i];
+        let rule = task["Rules"];
+        let to_be_append_OFF = [];
+        let to_be_append_ON = [];
+        if (rule == "weekly" && day == "1") {
+            if (numberOfMon % 4 == 1) {
+                to_be_append_OFF = (task["Tapes"][3]);
+                to_be_append_ON = (task["Tapes"][1]);
+                delivery_scc.push("4");
+                delivery_pcc.push("2");
+                formAppend(to_be_append_OFF, OTCL_path, "SCC", "PPS", rule);
+                formAppend(to_be_append_ON, OTCL_path, "PCC", "PPS", rule);
+            }
+            else if (numberOfMon % 4 == 2) {
+                to_be_append_OFF = (task["Tapes"][0]);
+                to_be_append_ON = (task["Tapes"][2]);
+                delivery_scc.push("1");
+                delivery_pcc.push("3");
+                formAppend(to_be_append_OFF, OTCL_path, "SCC", "PPS", rule);
+                formAppend(to_be_append_ON, OTCL_path, "PCC", "PPS", rule);
+            }
+            else if (numberOfMon % 4 == 3) {
+                to_be_append_OFF = (task["Tapes"][1]);
+                to_be_append_ON = (task["Tapes"][3]);
+                delivery_scc.push("2");
+                delivery_pcc.push("4");
+                formAppend(to_be_append_OFF, OTCL_path, "SCC", "PPS", rule);
+                formAppend(to_be_append_ON, OTCL_path, "PCC", "PPS", rule);
+            }
+            else if (numberOfMon % 4 == 0) {
+                to_be_append_OFF = (task["Tapes"][2]);
+                to_be_append_ON = (task["Tapes"][0]);
+                delivery_scc.push("3");
+                delivery_pcc.push("1");
+                formAppend(to_be_append_OFF, OTCL_path, "SCC", "PPS", rule);
+                formAppend(to_be_append_ON, OTCL_path, "PCC", "PPS", rule);
+            }
+        }
+    };
+    // console.log(delivery_scc);
+    // console.log(delivery_pcc);
+    var oriJson = fs.readFileSync(delivery_path, 'utf8');
+    oriJson = JSON.parse(oriJson);
+    var to_append_1 = { ToScc: delivery_scc };
+    var to_append_2 = { ToPcc: delivery_pcc };
+    oriJson.push(to_append_1);
+    oriJson.push(to_append_2);
+    fs.writeFileSync(delivery_path, JSON.stringify(oriJson), 'utf8');
 };
