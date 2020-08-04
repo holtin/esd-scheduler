@@ -291,7 +291,7 @@
         "JobName": "Perform SCC Equipment Checking",
         "Server": "",
         "Remarks": "",
-        "Rules": "week/1;"
+        "Rules": "week/1;print/SCC_Site_checking_list.xls;"
     },
     {
         "StartTime": "11:30",
