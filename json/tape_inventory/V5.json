@@ -1,0 +1,62 @@
+[
+    {
+        "Title": "PCC-onsite backup tapes (All keep in PCC)",
+        "Tapes":[
+            ["V5-WK01-MON", "V5-WK01-TUE", "V5-WK01-WED", "V5-WK01-THU", "V5-WK01-FRI", "V5-WK01-SAT", "V5-WK01-SUN"],
+            ["V5-WK02-MON", "V5-WK02-TUE", "V5-WK02-WED", "V5-WK02-THU", "V5-WK02-FRI", "V5-WK02-SAT", "V5-WK02-SUN"],        
+            ["V5-WK03-MON", "V5-WK03-TUE", "V5-WK03-WED", "V5-WK03-THU", "V5-WK03-FRI", "V5-WK03-SAT", "V5-WK03-SUN"],
+            ["V5-WK04-MON", "V5-WK04-TUE", "V5-WK04-WED", "V5-WK04-THU", "V5-WK04-FRI", "V5-WK04-SAT", "V5-WK04-SUN"],
+            ["V5-WK05-MON", "V5-WK05-TUE", "V5-WK05-WED", "V5-WK05-THU", "V5-WK05-FRI", "V5-WK05-SAT", "V5-WK05-SUN"]
+        ],
+        "Rules": "constant"
+    },
+    {
+        "Title": "PCC-offsite backup tapes (Offsite to SCC)",
+        "Tapes":[
+            ["V5-WK01-MON-mirror", "V5-WK01-TUE-mirror", "V5-WK01-WED-mirror", "V5-WK01-THU-mirror", "V5-WK01-FRI-mirror", "V5-WK01-SAT-mirror", "V5-WK01-SUN-mirror"],
+            ["V5-WK02-MON-mirror", "V5-WK02-TUE-mirror", "V5-WK02-WED-mirror", "V5-WK02-THU-mirror", "V5-WK02-FRI-mirror", "V5-WK02-SAT-mirror", "V5-WK02-SUN-mirror"],
+            ["V5-WK03-MON-mirror", "V5-WK03-TUE-mirror", "V5-WK03-WED-mirror", "V5-WK03-THU-mirror", "V5-WK03-FRI-mirror", "V5-WK03-SAT-mirror", "V5-WK03-SUN-mirror"],
+            ["V5-WK04-MON-mirror", "V5-WK04-TUE-mirror", "V5-WK04-WED-mirror", "V5-WK04-THU-mirror", "V5-WK04-FRI-mirror", "V5-WK04-SAT-mirror", "V5-WK04-SUN-mirror"],        
+            ["V5-WK05-MON-mirror", "V5-WK05-TUE-mirror", "V5-WK05-WED-mirror", "V5-WK05-THU-mirror", "V5-WK05-FRI-mirror", "V5-WK05-SAT-mirror", "V5-WK05-SUN-mirror"]
+        ],
+        "Rules": "weekly/PCC"
+    },
+    {
+        "Title": "SCC backup tapes (Offsite to PCC)",
+        "Tapes":[
+            ["SCC-V5-WK01-MON", "SCC-V5-WK01-TUE", "SCC-V5-WK01-WED", "SCC-V5-WK01-THU", "SCC-V5-WK01-FRI", "SCC-V5-WK01-SAT", "SCC-V5-WK01-SUN"],
+            ["SCC-V5-WK02-MON", "SCC-V5-WK02-TUE", "SCC-V5-WK02-WED", "SCC-V5-WK02-THU", "SCC-V5-WK02-FRI", "SCC-V5-WK02-SAT", "SCC-V5-WK02-SUN"],
+            ["SCC-V5-WK03-MON", "SCC-V5-WK03-TUE", "SCC-V5-WK03-WED", "SCC-V5-WK03-THU", "SCC-V5-WK03-FRI", "SCC-V5-WK03-SAT", "SCC-V5-WK03-SUN"],
+            ["SCC-V5-WK04-MON", "SCC-V5-WK04-TUE", "SCC-V5-WK04-WED", "SCC-V5-WK04-THU", "SCC-V5-WK04-FRI", "SCC-V5-WK04-SAT", "SCC-V5-WK04-SUN"],
+            ["SCC-V5-WK05-MON", "SCC-V5-WK05-TUE", "SCC-V5-WK05-WED", "SCC-V5-WK05-THU", "SCC-V5-WK05-FRI", "SCC-V5-WK05-SAT", "SCC-V5-WK05-SUN"]
+        ],
+        "Rules": "weekly/SCC"
+    },
+    {
+        "Title": "PCC-monthly tapes",
+        "Tapes":[
+            ["MONTHLY-WINS-FS-01-01", "MONTHLY-UX-PVMS02-04-IMG-01", "V5-UX-u5pvms02-01", "V5-UX-u5pvms04-01"],
+            ["MONTHLY-WINS-FS-02-01", "MONTHLY-UX-PVMS02-04-IMG-02", "V5-UX-u5pvms02-02", "V5-UX-u5pvms04-02"],
+            ["MONTHLY-WINS-FS-03-01", "MONTHLY-UX-PVMS02-04-IMG-03", "V5-UX-u5pvms02-03", "V5-UX-u5pvms04-03"],
+            ["MONTHLY-WINS-FS-04-01", "MONTHLY-UX-PVMS02-04-IMG-04", "V5-UX-u5pvms02-04", "V5-UX-u5pvms04-04"]
+        ],
+        "Rules": "monthly/PCC"
+    },
+    {
+        "Title": "SCC-monthly tapes",
+        "Tapes":[
+            ["SCC-MONTHLY-WINS-FS-01", "SCC-MONTHLY-UX-DVMS02-04-IMG-01", "SCC-V5-UX-u5dvms02-01", "SCC-V5-UX-u5dvms04-01", "SCC-MONTHLY-NONPROD-DB-01"],
+            ["SCC-MONTHLY-WINS-FS-02", "SCC-MONTHLY-UX-DVMS02-04-IMG-02", "SCC-V5-UX-u5dvms02-02", "SCC-V5-UX-u5dvms04-02", "SCC-MONTHLY-NONPROD-DB-02"],
+            ["SCC-MONTHLY-WINS-FS-03", "SCC-MONTHLY-UX-DVMS02-04-IMG-03", "SCC-V5-UX-u5dvms02-03", "SCC-V5-UX-u5dvms04-03", "SCC-MONTHLY-NONPROD-DB-03"],
+            ["SCC-MONTHLY-WINS-FS-04", "SCC-MONTHLY-UX-DVMS02-04-IMG-04", "SCC-V5-UX-u5dvms02-04", "SCC-V5-UX-u5dvms04-04", "SCC-MONTHLY-NONPROD-DB-04"]
+        ],
+        "Rules": "monthly/SCC"
+    },
+    {
+        "Title": "Month-End backup for Oracle Database (The retention period for the database is \"Permanent\")",
+        "Tapes":[
+            ["V5-MTH-YYYYMM (E2)"]
+        ],
+        "Rules": "backup"
+    }
+]

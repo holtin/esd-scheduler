@@ -88,7 +88,7 @@
         "JobName": "Sent last WK of PPS backup tapes to SCC and take back another set of tapes to PCC",
         "Server": "",
         "Remarks": "(Remarks :  Re : PPS COPM 6.5.5)",
-        "Rules": "week/1;"
+        "Rules": "week/1;print/Offsite_Tapes_Check_List.docx;"
     },
     {
         "StartTime": "10:00",
