@@ -62,12 +62,13 @@ app.post('/', function (req, res) { // Access the parse results as request.body
     if (date.weekday == 0) forms.push(stockCheckListPath.split("/")[3]);
     forms.push(resultPath.split("/")[3]);
 
+    var pps = require(pps_path);
+    var v5 = require(v5_path);
+    var vrms = require(vrms_path);
+    formFiltering(v5, vrms, pps, dateArray, numberOfDayInFirstWeek);
+
     for (let i = 0; i < forms.length; ++i) {
         if (forms[i].includes(OTCL_resultPath.split("/")[3])) {
-            var pps = require(pps_path);
-            var v5 = require(v5_path);
-            var vrms = require(vrms_path);
-            formFiltering(v5, vrms, pps, dateArray, numberOfDayInFirstWeek);
             var otcl = fs.readFileSync(OTCL_path, 'utf8');
             otcl = JSON.parse(otcl);
             otcl.push(date);
@@ -79,6 +80,9 @@ app.post('/', function (req, res) { // Access the parse results as request.body
         }
     }
 
+    var loc = fs.readFileSync(location_path, 'utf8');
+    loc = JSON.parse(loc);
+    req.body.location = {location: loc};
     req.body.forms = forms;
     res.json(req.body);
 });

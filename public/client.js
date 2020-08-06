@@ -13,7 +13,8 @@ $("#datepicker-submit").on("click", function () {
             month: datepicker.getMonth() + 1,
             year: datepicker.getFullYear(),
             weekday: datepicker.getDay(),
-            forms: [""]
+            forms: [""],
+            location: [""]
         },
         dataType: 'json',
     }).done((data) => {
@@ -28,6 +29,16 @@ $("#datepicker-submit").on("click", function () {
             document.getElementById("forms").innerHTML += feedback;
         }
 
+        document.getElementById("location").innerHTML = '<h4 class="text-center">Tape location for ' + data.day + '/' + data.month + '</h4>';
+        let SCC = data.location[0].SCC;
+        let PCC = data.location[1].PCC;
+        let feedback = '<h5 class="text-center">SCC:<h5>';
+        for (let i = 0; i < SCC.length; ++i) {
 
+        }
+        for (let i = 0; i < PCC.length; ++i) {
+
+        }
+        document.getElementById("location").innerHTML += feedback;
     });
 });
