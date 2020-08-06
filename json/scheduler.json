@@ -88,7 +88,7 @@
         "JobName": "Sent last WK of PPS backup tapes to SCC and take back another set of tapes to PCC",
         "Server": "",
         "Remarks": "(Remarks :  Re : PPS COPM 6.5.5)",
-        "Rules": "week/1;print/Offsite_Tapes_Check_List.docx;"
+        "Rules": "week/1;print/Offsite Tapes Check List.docx;"
     },
     {
         "StartTime": "10:00",
@@ -291,7 +291,7 @@
         "JobName": "Perform SCC Equipment Checking",
         "Server": "",
         "Remarks": "",
-        "Rules": "week/1;print/SCC_Site_checking_list.xls;"
+        "Rules": "week/1;print/Stock Check List.docx;"
     },
     {
         "StartTime": "11:30",
@@ -628,5 +628,12 @@
         "Server": "m5ppc01",
         "Remarks": "",
         "Rules": "daily"
+    },
+    {
+        "StartTime": "10:00",
+        "JobName": "Delivery service (collection form)",
+        "Server": "",
+        "Remarks": "",
+        "Rules": "week/1,3,5;print/Collection Form.docx;"
     }
 ]

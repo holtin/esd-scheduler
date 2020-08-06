@@ -19,10 +19,13 @@ const OTCL_path = './tmp/forms/OTCL.json';
 const delivery_path = './tmp/forms/tape_delivery.json';
 const location_path = './tmp/forms/tape_location.json';
 const OTCL_templatePath = "./tmp/offsite_tapes_check_list_template.docx";
+const stockCheckList_templatePath = './tmp/stock_check_list_template.docx';
+const collection_templatePath = './tmp/collection_form_template.docx';
 
 const resultPath = './public/doc/VALID V Daily Job Schedule.docx';
-const OTCL_resultPath = "./public/doc/Offsite_Tapes_Check_List.docx";
-const stockCheckListPath = './public/doc/stock_check_list.xlsx';
+const OTCL_resultPath = "./public/doc/Offsite Tapes Check List.docx";
+const stockCheckList_resultPath = './public/doc/Stock Check List.docx';
+const collection_resultPath = './public/doc/Collection Form.docx';
 
 var forms = [];
 
@@ -43,7 +46,7 @@ app.post('/', function (req, res) { // Access the parse results as request.body
     var loaded_task = false;
     const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     let dateArray = [date.day, months[date.month - 1], date.year, date.weekday]; //[date, month, year, day]
-
+    if (date.weekday == 0) forms.push(stockCheckList_resultPath.split("/")[3]);
     forms = [];
     filtering(scheduler, dateArray, numberOfDayInFirstWeek, loaded_task);
     loaded_task = !loaded_task;
@@ -59,7 +62,6 @@ app.post('/', function (req, res) { // Access the parse results as request.body
         fs.writeFileSync(resultPath, result);
         console.log("server generated schedule with date " + date.fullDate);
     });
-    if (date.weekday == 0) forms.push(stockCheckListPath.split("/")[3]);
     forms.push(resultPath.split("/")[3]);
 
     var pps = require(pps_path);
@@ -76,6 +78,20 @@ app.post('/', function (req, res) { // Access the parse results as request.body
                 if (err) return console.log(err);
                 fs.writeFileSync(OTCL_resultPath, result);
                 console.log("server generated OTCL with date " + date.fullDate);
+            });
+        }
+        if (forms[i].includes(collection_resultPath.split("/")[3])) {
+            carbone.render(collection_templatePath, date, function (err, result) {
+                if (err) return console.log(err);
+                fs.writeFileSync(collection_resultPath, result);
+                console.log("server generated collection form with date " + date.fullDate);
+            });
+        }
+        if (forms[i].includes(stockCheckList_resultPath.split("/")[3])) {
+            carbone.render(stockCheckList_templatePath, date, function (err, result) {
+                if (err) return console.log(err);
+                fs.writeFileSync(stockCheckList_resultPath, result);
+                console.log("server generated stock check list with date " + date.fullDate);
             });
         }
     }
