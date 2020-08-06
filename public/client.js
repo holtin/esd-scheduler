@@ -16,8 +16,7 @@ $("#datepicker-submit").on("click", function () {
             forms: [""]
         },
         dataType: 'json',
-    }).done(function (data) {
-        //data.forms.splice(0, 1);
+    }).done((data) => {
         console.log(data);
         document.getElementById("forms").innerHTML = '<h5 class="text-center">[' + strDate + ']</h5>';
 
@@ -28,5 +27,7 @@ $("#datepicker-submit").on("click", function () {
             feedback += '" class="btn btn-success">Download</a></div></div>';
             document.getElementById("forms").innerHTML += feedback;
         }
+
+
     });
 });

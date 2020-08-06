@@ -140,8 +140,6 @@ function filtering(data, inputDate, firstWeek, loaded_task) {
     }
     var oriJson = fs.readFileSync(todoPath, 'utf8');
     oriJson = JSON.parse(oriJson);
-    console.log("before filtering: " + oriJson[0].tasks.length);
-
     var datesOfMonths = [];
     if (year % 4 == 0) { datesOfMonths = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]; }
     else { datesOfMonths = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]; };
@@ -368,7 +366,6 @@ function filtering(data, inputDate, firstWeek, loaded_task) {
     };
     var oriJson = fs.readFileSync(todoPath, 'utf8');
     oriJson = JSON.parse(oriJson);
-    console.log("after filtering: " + oriJson[0].tasks.length);
 };
 
 function getSortOrder(prop) {
