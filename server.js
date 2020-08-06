@@ -82,7 +82,7 @@ app.post('/', function (req, res) { // Access the parse results as request.body
 
     var loc = fs.readFileSync(location_path, 'utf8');
     loc = JSON.parse(loc);
-    req.body.location = {location: loc};
+    req.body.location = loc;
     req.body.forms = forms;
     res.json(req.body);
 });
