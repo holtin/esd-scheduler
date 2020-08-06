@@ -23,11 +23,12 @@ $("#datepicker-submit").on("click", function () {
 
         for (let i = 0; i < data.forms.length; ++i) {
             let fileName = data.forms[i];
-            let feedback = '<div class="row border mx-auto px-2 py-2 my-2"><div class="col-9 py-2">' + fileName;
+            let feedback = '<div class="row border mx-auto px-2 py-2 my-2"><div class="col-9 py-2">' + fileName.split(".")[0];
             feedback += '</div><div class="col-3"><a href="' + './doc/' + fileName;
             feedback += '" class="btn btn-success">Download</a></div></div>';
             document.getElementById("forms").innerHTML += feedback;
         }
+        return;
         document.getElementById("location").innerHTML = '<div class="row"><div id="scc" class="col-12 col-md-6"></div><div id="pcc" class="col-12 col-md-6"></div></div>';
         document.getElementById("location").innerHTML = '<h4 class="text-center">Tape location for ' + data.day + '/' + data.month + '</h4>' + document.getElementById("location").innerHTML;
         let SCC = data.location[0].SCC;
