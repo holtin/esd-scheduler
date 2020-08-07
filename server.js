@@ -10,7 +10,6 @@ const schedulerPath = "./json/scheduler.json";
 const oneOffPath = "./json/oneOff.json";
 const todoPath = "./tmp/toDoList.json";
 const phPath = "./json/ph.json";
-const schedule_templatePath = "./tmp/schedule_template.docx";
 
 const pps_path = './json/tape_inventory/PPS.json';
 const v5_path = './json/tape_inventory/V5.json';
@@ -18,16 +17,18 @@ const vrms_path = './json/tape_inventory/VRMS.json';
 const OTCL_path = './tmp/forms/OTCL.json';
 const delivery_path = './tmp/forms/tape_delivery.json';
 const location_path = './tmp/forms/tape_location.json';
+
+const schedule_templatePath = "./tmp/schedule_template.docx";
 const OTCL_templatePath = "./tmp/offsite_tapes_check_list_template.docx";
 const stockCheckList_templatePath = './tmp/stock_check_list_template.docx';
 const collection_templatePath = './tmp/collection_form_template.docx';
-const sscCheckList_templatePath = './tmp/ssc_attendance_check_list_template.docx';
+const sccCheckList_templatePath = './tmp/scc_attendance_check_list_template.docx';
 
 const resultPath = './public/doc/VALID V Daily Job Schedule.docx';
 const OTCL_resultPath = "./public/doc/Offsite Tapes Check List.docx";
 const stockCheckList_resultPath = './public/doc/Stock Check List.docx';
 const collection_resultPath = './public/doc/Collection Form.docx';
-const sscCheckList_resultPath = './public/doc/SSC Attendance Check List.docx';
+const sccCheckList_resultPath = './public/doc/SCC Attendance Check List.docx';
 
 var forms = [];
 
@@ -37,15 +38,14 @@ console.log("server running on port " + port);
 
 app.use(express.urlencoded({ extended: true })); // Parse URL-encoded bodies (as sent by HTML forms)
 app.use(express.json()); // Parse JSON bodies (as sent by API clients)
-app.use(function (err, req, res, next) {
-    console.error(err.stack);
-    res.status(500).send('Something broke!');
-});
 app.post('/', function (req, res) { // Access the parse results as request.body
     var date = req.body;
     var scheduler = require(schedulerPath);
     var oneOff = require(oneOffPath);
     var loaded_task = false;
+    //var options = {
+    //    convertTo: 'pdf' //can be docx, txt, ...
+    //};
     const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     let dateArray = [date.day, months[date.month - 1], date.year, date.weekday]; //[date, month, year, day]
     forms = [];
@@ -63,6 +63,7 @@ app.post('/', function (req, res) { // Access the parse results as request.body
         if (err) return console.log(err);
         fs.writeFileSync(resultPath, result);
         console.log("server generated schedule with date " + date.fullDate);
+        //process.exit();
     });
     forms.push(resultPath.split("/")[3]);
 
@@ -96,10 +97,10 @@ app.post('/', function (req, res) { // Access the parse results as request.body
                 console.log("server generated stock check list with date " + date.fullDate);
             });
         }
-        if (forms[i].includes(sscCheckList_resultPath.split("/")[3])) {
-            carbone.render(sscCheckList_templatePath, date, function (err, result) {
+        if (forms[i].includes(sccCheckList_resultPath.split("/")[3])) {
+            carbone.render(sccCheckList_templatePath, date, function (err, result) {
                 if (err) return console.log(err);
-                fs.writeFileSync(sscCheckList_resultPath, result);
+                fs.writeFileSync(sccCheckList_resultPath, result);
                 console.log("server generated ssc attendance check list with date " + date.fullDate);
             });
         }
@@ -424,7 +425,7 @@ function formAppend(task, path, destination, type, freq) {
     const fs = require('fs');
     var objectList = [];
     if ((type == "backup") && (freq == "weekly")) {
-        objectList.push({name: task});
+        objectList.push({ name: task });
     } else {
         for (let i = 0; i < task.length; ++i) {
             objectList.push({ name: task[i] });
