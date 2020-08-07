@@ -1,5 +1,10 @@
 console.log('client running');
 
+function printFile(fileName) {
+    console.log("issued command to print " + fileName);
+}
+
+
 $("#datepicker-submit").on("click", function () {
     var strDate = $("#datepicker").val();
     var datepicker = new Date(strDate);
@@ -23,9 +28,11 @@ $("#datepicker-submit").on("click", function () {
 
         for (let i = 0; i < data.forms.length; ++i) {
             let fileName = data.forms[i];
-            let feedback = '<div class="row border mx-auto px-2 py-2 my-2"><div class="col-9 py-2">' + fileName.split(".")[0];
-            feedback += '</div><div class="col-3"><a href="' + './doc/' + fileName;
-            feedback += '" class="btn btn-success">Download</a></div></div>';
+            let feedback = '<div class="row border mx-auto px-2 py-2 my-2">';
+            feedback += '<div class="col-6 py-2">' + fileName.split(".")[0] + '</div>';
+            feedback += '<div class="col-3"><a href="' + './doc/' + fileName + '" class="btn btn-success w-100 px-0 text-center">Download</a></div>';
+            feedback += '<div class="col-3"><a onclick="printFile(\'./doc/'+ fileName + '\')" class="btn btn-primary w-100 px-0 text-center">Print</a></div>';
+            feedback += '</div>';
             document.getElementById("forms").innerHTML += feedback;
         }
         return;

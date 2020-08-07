@@ -21,11 +21,13 @@ const location_path = './tmp/forms/tape_location.json';
 const OTCL_templatePath = "./tmp/offsite_tapes_check_list_template.docx";
 const stockCheckList_templatePath = './tmp/stock_check_list_template.docx';
 const collection_templatePath = './tmp/collection_form_template.docx';
+const sscCheckList_templatePath = './tmp/ssc_attendance_check_list_template.docx';
 
 const resultPath = './public/doc/VALID V Daily Job Schedule.docx';
 const OTCL_resultPath = "./public/doc/Offsite Tapes Check List.docx";
 const stockCheckList_resultPath = './public/doc/Stock Check List.docx';
 const collection_resultPath = './public/doc/Collection Form.docx';
+const sscCheckList_resultPath = './public/doc/SSC Attendance Check List.docx';
 
 var forms = [];
 
@@ -46,8 +48,8 @@ app.post('/', function (req, res) { // Access the parse results as request.body
     var loaded_task = false;
     const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     let dateArray = [date.day, months[date.month - 1], date.year, date.weekday]; //[date, month, year, day]
-    if (date.weekday == 0) forms.push(stockCheckList_resultPath.split("/")[3]);
     forms = [];
+    if (date.weekday == 0) forms.push(stockCheckList_resultPath.split("/")[3]);
     filtering(scheduler, dateArray, numberOfDayInFirstWeek, loaded_task);
     loaded_task = !loaded_task;
     filtering(oneOff, dateArray, numberOfDayInFirstWeek, loaded_task);
@@ -92,6 +94,13 @@ app.post('/', function (req, res) { // Access the parse results as request.body
                 if (err) return console.log(err);
                 fs.writeFileSync(stockCheckList_resultPath, result);
                 console.log("server generated stock check list with date " + date.fullDate);
+            });
+        }
+        if (forms[i].includes(sscCheckList_resultPath.split("/")[3])) {
+            carbone.render(sscCheckList_templatePath, date, function (err, result) {
+                if (err) return console.log(err);
+                fs.writeFileSync(sscCheckList_resultPath, result);
+                console.log("server generated ssc attendance check list with date " + date.fullDate);
             });
         }
     }
