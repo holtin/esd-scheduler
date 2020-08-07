@@ -38,7 +38,7 @@ console.log("server running on port " + port);
 
 app.use(express.urlencoded({ extended: true })); // Parse URL-encoded bodies (as sent by HTML forms)
 app.use(express.json()); // Parse JSON bodies (as sent by API clients)
-app.post('/', function (req, res) { // Access the parse results as request.body
+app.post('/', function (req, res) { // Access the parse results as req.body
     var date = req.body;
     var scheduler = require(schedulerPath);
     var oneOff = require(oneOffPath);
@@ -63,7 +63,6 @@ app.post('/', function (req, res) { // Access the parse results as request.body
         if (err) return console.log(err);
         fs.writeFileSync(resultPath, result);
         console.log("server generated schedule with date " + date.fullDate);
-        //process.exit();
     });
     forms.push(resultPath.split("/")[3]);
 
@@ -137,9 +136,9 @@ function append(task) {
     var rules2 = rules.split("?");
     var subrules = rules2[0].split(";");
     for (let j = 0; j < subrules.length; ++j) {
-        if (subrules[j].includes("print")) { // for printing static forms
+        if (subrules[j].includes("print")) { // for printing forms
             const printPath = subrules[j].substring(6,);
-            duplicate = false;
+            let duplicate = false;
             for (let i = 0; i < forms.length; ++i) {
                 if (forms[i].includes(printPath)) {
                     duplicate = true;
@@ -226,7 +225,7 @@ function filtering(data, inputDate, firstWeek, loaded_task) {
                 const yearlyRules = subrules[j].substring(5,).split(",")
                 const numberOfRules = yearlyRules.length;
                 for (k = 0; k < numberOfRules; ++k) {
-                    if (yearlyRules[k].substring(0, 2) == date && yearlyRules[k].substring(2,) == month) {
+                    if (yearlyRules[k].substring(0, 2) == date && yearlyRules[k].substring(2,5) == month && (yearlyRules[k].substring(5,) == year || !yearlyRules[k].substring(5,))) {
                         valid = true;
                         break;
                     }
@@ -275,7 +274,7 @@ function filtering(data, inputDate, firstWeek, loaded_task) {
                     if (months[k] == month) { numberOfDay -= firstWeek; break; }
                     else { numberOfDay += datesOfMonths[k]; };
                 }
-                if (numberOfDay / 7 % 2 == 0) { bw = true; };
+                if (Math.floor(numberOfDay / 7) % 2 == 1) { bw = true; };
                 if (bw) {
                     const bwRules = subrules[j].substring(9,).split(",");
                     const numberOfRules = bwRules.length;
@@ -320,7 +319,7 @@ function filtering(data, inputDate, firstWeek, loaded_task) {
                     const yearlyRules = subConstraints[j].substring(5,).split(",")
                     const numberOfRules = yearlyRules.length;
                     for (k = 0; k < numberOfRules; ++k) {
-                        if (yearlyRules[k].substring(0, 2) == date && yearlyRules[k].substring(2,) == month) {
+                        if (yearlyRules[k].substring(0, 2) == date && yearlyRules[k].substring(2,5) == month && (yearlyRules[k].substring(5,) == year || !yearlyRules[k].substring(5,))) {
                             valid = false;
                             break;
                         }
@@ -380,14 +379,6 @@ function filtering(data, inputDate, firstWeek, loaded_task) {
             else if ((date == "26") & month == "Oct") valid = true;
             else if ((date == "30") & month == "Nov") valid = true;
             else if ((date == "28") & month == "Dec") valid = true;
-        };
-        //Eliminating the selected one-off Tasks
-        if (valid && task["Rules"][task["Rules"].length - 1] == "@") {
-            var OOJson = fs.readFileSync(oneOffPath, 'utf8');
-            OOJson = JSON.parse(OOJson);
-            OOJson.splice(i, 1);
-            fs.writeFileSync(oneOffPath, JSON.stringify(OOJson), 'utf8');
-
         };
         //Append the task to ToDoList.json
         if (valid) {

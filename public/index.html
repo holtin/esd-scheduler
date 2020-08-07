@@ -40,8 +40,32 @@
             </div>
         </div>
     </div>
-    <div id="location" class="page-section"></div>
-    <div id="print"></div>
+    <div id="location" class="page-section">
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+                aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarText">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item mx-5">
+                        <a class="nav-link" onclick="openLocationPage('pcc', this)" id="defaultOpen">PCC Location</a>
+                    </li>
+                    <li class="nav-item mx-5">
+                        <a class="nav-link" onclick="openLocationPage('scc', this)">SCC Location</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div class="container">
+            <div id="pcc" class="location-content px-2 py-3">
+
+            </div>
+            <div id="scc" class="location-content px-2 py-3">
+    
+            </div>
+        </div>
+    </div>
     <footer class="footer py-auto">
         <div class="container">
 

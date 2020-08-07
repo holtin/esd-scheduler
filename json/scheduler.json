@@ -635,5 +635,33 @@
         "Server": "",
         "Remarks": "",
         "Rules": "week/1,3,5;print/Collection Form.docx;"
+    },
+    {
+        "StartTime": "8:00",
+        "JobName": "testing_2",
+        "Server": "testing_2",
+        "Remarks": "testing_2",
+        "Rules": "biweekly/1;"
+    },
+    {
+        "StartTime": "8:00",
+        "JobName": "testing_3",
+        "Server": "testing_3",
+        "Remarks": "testing_3",
+        "Rules": "workingday/1;"
+    },
+    {
+        "StartTime": "8:00",
+        "JobName": "testing_4",
+        "Server": "testing_4",
+        "Remarks": "testing_4",
+        "Rules": "workingday/2;"
+    },
+    {
+        "StartTime": "8:00",
+        "JobName": "testing_5",
+        "Server": "testing_5",
+        "Remarks": "testing_5",
+        "Rules": "lastday/2;"
     }
 ]
