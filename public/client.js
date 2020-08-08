@@ -16,9 +16,11 @@ function openLocationPage(pageName, element) {
     for (i = 0; i < navLinks.length; i++) {
         navLinks[i].style.fontWeight = 400;
         navLinks[i].style.borderWidth = "0px";
+        navLinks[i].classList.remove("active");
     }
 
     document.getElementById(pageName).style.display = "block";
+    element.classList.add("active");
     element.style.fontWeight = 700;
     element.style.borderWidth = "10px";
 }
@@ -56,27 +58,16 @@ $("#datepicker-submit").on("click", function () {
 
         let SCC = data.location[0].SCC;
         let PCC = data.location[1].PCC;
-        let feedback = '<h5 class="text-center">SCC:</h5>';
-        for (let i = 0; i < SCC.length; ++i) {
-            let key = Object.keys(SCC[i])[0];
-            if (SCC[i][key].length == 0) continue;
-            feedback += '<h6>' + Object.keys(SCC[i])[0] + '</h6>';
-            feedback += '<ul>';
-            for (let j = 0; j < SCC[i][key].length; ++j) {
-                feedback += '<li>' + SCC[i][key][j] + '</li>';
-            }
-            feedback += '</ul>';
-        }
-        document.getElementById("scc").innerHTML = feedback;
-        feedback = '<h5 class="text-center">PCC:</h5>';
+        let feedback = '';
+        let empty = false;
         for (let i = 0; i < PCC.length; ++i) {
             let key = Object.keys(PCC[i])[0];
             if (PCC[i][key].length == 0) continue;
-            feedback += '<div class="location-box my-3 px-3">';
+            feedback += '<div class="location-box my-3 px-3 py-3">';
             feedback += '<h5>' + Object.keys(PCC[i])[0] + '</h5>';
             feedback += '<div class="row">';
             for (let j = 0; j < PCC[i][key].length; ++j) {
-                feedback += '<div class="col-3"><ul>';
+                feedback += '<div class="col-md"><ul>';
                 for (let k = 0; k < PCC[i][key][j].length; ++k) {
                     feedback += '<li>'+ PCC[i][key][j][k] + '</li>';
                 }
@@ -85,5 +76,27 @@ $("#datepicker-submit").on("click", function () {
             feedback += '</div></div>';
         }
         document.getElementById("pcc").innerHTML = feedback;
+        feedback = '';
+        empty = true;
+        for (let i = 0; i < SCC.length; ++i) {
+            let key = Object.keys(SCC[i])[0];
+            if (SCC[i][key].length == 0) continue;
+            empty = false;
+            feedback += '<div class="location-box my-3 px-3 py-3">';
+            feedback += '<h5>' + Object.keys(SCC[i])[0] + '</h5>';
+            feedback += '<div class="row">';
+            for (let j = 0; j < SCC[i][key].length; ++j) {
+                feedback += '<div class="col-md"><ul>';
+                for (let k = 0; k < SCC[i][key][j].length; ++k) {
+                    feedback += '<li>'+ SCC[i][key][j][k] + '</li>';
+                }
+                feedback += '</ul></div>';
+            }
+            feedback += '</div></div>';
+        }
+        if (empty) {
+            feedback += '<h5 class="text-center">No tapes here</h5>';
+        }
+        document.getElementById("scc").innerHTML = feedback;
     });
 });

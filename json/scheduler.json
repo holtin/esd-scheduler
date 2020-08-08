@@ -663,5 +663,12 @@
         "Server": "testing_5",
         "Remarks": "testing_5",
         "Rules": "lastday/2;"
+    },
+    {
+        "StartTime": "8:00",
+        "JobName": "testing_6",
+        "Server": "testing_6",
+        "Remarks": "testing_6",
+        "Rules": "lastday/4;"
     }
 ]

@@ -340,11 +340,30 @@ function filtering(data, inputDate, firstWeek, loaded_task) {
                         };
                         numberOfWd = Number(day) - numberOfPh + 1;
                         if (numberOfWd == wdRules[k]) {
-                            valid = true;
+                            valid = false;
                             break;
                         }
                     }
                 }
+                if (subConstraints[j].includes("biweekly")) {
+                  let bw = false;
+                  let numberOfDay = Number(date);
+                  for (k = 0; k < months.length; ++k) {
+                      if (months[k] == month) { numberOfDay -= firstWeek; break; }
+                      else { numberOfDay += datesOfMonths[k]; };
+                  }
+                  if (Math.floor(numberOfDay / 7) % 2 == 1) { bw = true; };
+                  if (bw) {
+                      const bwRules = subConstraints[j].substring(9,).split(",");
+                      const numberOfRules = bwRules.length;
+                      for (k = 0; k < numberOfRules; ++k) {
+                          if (bwRules[k] == day) {
+                              valid = false;
+                              break;
+                          }
+                      }
+                  }
+              }
             }
         }
         //Special Cases
