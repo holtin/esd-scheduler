@@ -67,11 +67,16 @@ $("#datepicker-submit").on("click", function () {
             feedback += '<h5>' + Object.keys(PCC[i])[0] + '</h5>';
             feedback += '<div class="row">';
             for (let j = 0; j < PCC[i][key].length; ++j) {
-                feedback += '<div class="col-md"><ul>';
-                for (let k = 0; k < PCC[i][key][j].length; ++k) {
-                    feedback += '<li>'+ PCC[i][key][j][k] + '</li>';
+                if (typeof PCC[i][key][j] === 'string') {
+                    feedback += '<div class="row">' + PCC[i][key][j] + '</div>';
                 }
-                feedback += '</ul></div>';
+                else {
+                    feedback += '<div class="col-md"><ul>';
+                    for (let k = 0; k < PCC[i][key][j].length; ++k) {
+                        feedback += '<li>' + PCC[i][key][j][k] + '</li>';
+                    }
+                    feedback += '</ul></div>';
+                }
             }
             feedback += '</div></div>';
         }
@@ -86,11 +91,16 @@ $("#datepicker-submit").on("click", function () {
             feedback += '<h5>' + Object.keys(SCC[i])[0] + '</h5>';
             feedback += '<div class="row">';
             for (let j = 0; j < SCC[i][key].length; ++j) {
-                feedback += '<div class="col-md"><ul>';
-                for (let k = 0; k < SCC[i][key][j].length; ++k) {
-                    feedback += '<li>'+ SCC[i][key][j][k] + '</li>';
+                if (typeof PCC[i][key][j] === 'string') {
+                    feedback += '<div class="row">' + SCC[i][key][j] + '</div>';
                 }
-                feedback += '</ul></div>';
+                else {
+                    feedback += '<div class="col-md"><ul>';
+                    for (let k = 0; k < SCC[i][key][j].length; ++k) {
+                        feedback += '<li>' + SCC[i][key][j][k] + '</li>';
+                    }
+                    feedback += '</ul></div>';
+                }
             }
             feedback += '</div></div>';
         }
