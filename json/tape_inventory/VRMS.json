@@ -1,6 +1,6 @@
 [
     {
-        "Title": "VRMS Onsite backup tapes",
+        "Title": "VRMS Daily Backup Tapes",
         "Tapes":[
             ["D00101L6 (V-WK01-MON-ON)", "D00102L6 (V-WK01-TUE-ON)", "D00103L6 (V-WK01-WED-ON)", "D00104L6 (V-WK01-THU-ON)", "D00105L6 (V-WK01-FRI-ON)", "D00106L6 (V-WK01-SAT-ON)", "W00107L7 (V-WK01-SUN-ON)"],
             ["D00201L6 (V-WK02-MON-ON)", "D00202L6 (V-WK02-TUE-ON)", "D00203L6 (V-WK02-WED-ON)", "D00204L6 (V-WK02-THU-ON)", "D00205L6 (V-WK02-FRI-ON)", "D00206L6 (V-WK02-SAT-ON)", "W00207L7 (V-WK02-SUN-ON)"],
@@ -11,18 +11,18 @@
         "Rules": "constant"
     },
     {
-        "Title": "VRMS Offsite backup tapes",
+        "Title": "VRMS Daily Backup Tapes",
         "Tapes":[
             ["D10116L6 (V-WK01-MON-OFF)", "D10117L6 (V-WK01-THU-OFF)", "D10118L6 (V-WK01-WED-OFF)", "D10119L6 (V-WK01-THU-OFF)", "D10120L6 (V-WK01-FRI-OFF)", "D10121L6 (V-WK01-SAT-OFF)", "W10122L7 (V-WK01-SUN-OFF)"],
             ["D10216L6 (V-WK02-MON-OFF)", "D10217L6 (V-WK02-THU-OFF)", "D10218L6 (V-WK02-WED-OFF)", "D10219L6 (V-WK02-THU-OFF)", "D10220L6 (V-WK02-FRI-OFF)", "D10221L6 (V-WK02-SAT-OFF)", "W10222L7 (V-WK02-SUN-OFF)"],
-            ["D10316L6 (V-WK03-MON-OFF)", "D10317L6 (V-WK02-THU-OFF)", "D10318L6 (V-WK03-WED-OFF)", "D10319L6 (V-WK03-THU-OFF)", "D10220L6 (V-WK03-FRI-OFF)", "D10321L6 (V-WK03-SAT-OFF)", "W10322L7 (V-WK03-SUN-OFF)"],
-            ["D10416L6 (V-WK04-MON-OFF)", "D10417L6 (V-WK02-THU-OFF)", "D10418L6 (V-WK04-WED-OFF)", "D10419L6 (V-WK04-THU-OFF)", "D10220L6 (V-WK04-FRI-OFF)", "D10421L6 (V-WK04-SAT-OFF)", "W10422L7 (V-WK04-SUN-OFF)"],
-            ["D10516L6 (V-WK05-MON-OFF)", "D10517L6 (V-WK02-THU-OFF)", "D10518L6 (V-WK05-WED-OFF)", "D10519L6 (V-WK05-THU-OFF)", "D10220L6 (V-WK05-FRI-OFF)", "D10521L6 (V-WK05-SAT-OFF)", "W10522L7 (V-WK05-SUN-OFF)"]
+            ["D10316L6 (V-WK03-MON-OFF)", "D10317L6 (V-WK02-THU-OFF)", "D10318L6 (V-WK03-WED-OFF)", "D10319L6 (V-WK03-THU-OFF)", "D10320L6 (V-WK03-FRI-OFF)", "D10321L6 (V-WK03-SAT-OFF)", "W10322L7 (V-WK03-SUN-OFF)"],
+            ["D10416L6 (V-WK04-MON-OFF)", "D10417L6 (V-WK02-THU-OFF)", "D10418L6 (V-WK04-WED-OFF)", "D10419L6 (V-WK04-THU-OFF)", "D10420L6 (V-WK04-FRI-OFF)", "D10421L6 (V-WK04-SAT-OFF)", "W10422L7 (V-WK04-SUN-OFF)"],
+            ["D10516L6 (V-WK05-MON-OFF)", "D10517L6 (V-WK02-THU-OFF)", "D10518L6 (V-WK05-WED-OFF)", "D10519L6 (V-WK05-THU-OFF)", "D10520L6 (V-WK05-FRI-OFF)", "D10521L6 (V-WK05-SAT-OFF)", "W10522L7 (V-WK05-SUN-OFF)"]
         ],
-        "Rules": "weekly/sCC"
+        "Rules": "weekly/SCC"
     },
     {
-        "Title": "OnSite Backup Tapes",
+        "Title": "VRMS Monthly Backup Tapes",
         "Tapes":[
             ["M00108L7 (V-MTH01-ON)"],
             ["M00208L7 (V-MTH02-ON)"],
@@ -31,7 +31,7 @@
         "Rules": "constant"
     },
     {
-        "Title": "OffSite Backup Tapes",
+        "Title": "VRMS Monthly Backup Tapes",
         "Tapes":[
             ["M10123L7 (V-MTH01-ON)"],
             ["M10223L7 (V-MTH02-ON)"],

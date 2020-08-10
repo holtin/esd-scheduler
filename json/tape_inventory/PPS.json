@@ -1,6 +1,6 @@
 [
     {
-        "Title": "onsite backup tapes (Keep In PCC)",
+        "Title": "PPS Daily Backup Tapes",
         "Tapes":[
             ["PPS-L1-GEN1", "PPS-L2-GEN1", "PPS-L3-GEN1", "PPS-L4-GEN1", "PPS-L5-GEN1", "PPS-L6-GEN1", "PPS-L7-GEN1"],
             ["PPS-L1-GEN2", "PPS-L2-GEN2", "PPS-L3-GEN2", "PPS-L4-GEN2", "PPS-L5-GEN2", "PPS-L6-GEN2", "PPS-L7-GEN2"],
@@ -11,7 +11,7 @@
         "Rules": "constant"
     },
     {
-        "Title": "offsite backup tapes (Offsite to SCC)",
+        "Title": "PPS Daily Backup Tapes",
         "Tapes":[
             ["PPS-R13-GEN1", "PPS-R14-GEN1", "PPS-R15-GEN1", "PPS-R16-GEN1", "PPS-R17-GEN1", "PPS-R18-GEN1", "PPS-R19-GEN1"],
             ["PPS-R13-GEN2", "PPS-R14-GEN2", "PPS-R15-GEN2", "PPS-R16-GEN2", "PPS-R17-GEN2", "PPS-R18-GEN2", "PPS-R19-GEN2"],
@@ -21,14 +21,14 @@
         "Rules": "weekly/PCC"
     },
     {
-        "Title": "Monthly backup tapes",
+        "Title": "PPS Monthly Backup Tapes",
         "Tapes": [
             ["PPS-L8-M1", "PPS-L8-M2", "PPS-L8-M3", "PPS-L8-M4", "PPS-L8-M5", "PPS-L8-M6", "PPS-L8-M7", "PPS-L8-M8", "PPS-L8-M9", "PPS-L8-M10", "PPS-L8-M11", "PPS-L8-M12"]
         ],
         "Rules": "constant"
     },
     {
-        "Title": "Monthly offsite backup tapes",
+        "Title": "PPS Monthly Backup Tapes",
         "Tapes": [
             ["PPS-R20-M1", "PPS-R20-M2", "PPS-R20-M3", "PPS-R20-M4", "PPS-R20-M5", "PPS-R20-M6", "PPS-R20-M7", "PPS-R20-M8", "PPS-R20-M9", "PPS-R20-M10", "PPS-R20-M11", "PPS-R20-M12"]
         ],

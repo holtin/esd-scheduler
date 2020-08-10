@@ -1,6 +1,6 @@
 [
     {
-        "Title": "PCC-onsite backup tapes (All keep in PCC)",
+        "Title": "PCC Daily VALID V Database LTO5 Tapes",
         "Tapes":[
             ["V5-WK01-MON", "V5-WK01-TUE", "V5-WK01-WED", "V5-WK01-THU", "V5-WK01-FRI", "V5-WK01-SAT", "V5-WK01-SUN"],
             ["V5-WK02-MON", "V5-WK02-TUE", "V5-WK02-WED", "V5-WK02-THU", "V5-WK02-FRI", "V5-WK02-SAT", "V5-WK02-SUN"],        
@@ -11,7 +11,7 @@
         "Rules": "constant"
     },
     {
-        "Title": "PCC-offsite backup tapes (Offsite to SCC)",
+        "Title": "PCC Daily VALID V Database LTO5 Tapes mirror copy",
         "Tapes":[
             ["V5-WK01-MON-mirror", "V5-WK01-TUE-mirror", "V5-WK01-WED-mirror", "V5-WK01-THU-mirror", "V5-WK01-FRI-mirror", "V5-WK01-SAT-mirror", "V5-WK01-SUN-mirror"],
             ["V5-WK02-MON-mirror", "V5-WK02-TUE-mirror", "V5-WK02-WED-mirror", "V5-WK02-THU-mirror", "V5-WK02-FRI-mirror", "V5-WK02-SAT-mirror", "V5-WK02-SUN-mirror"],
@@ -19,10 +19,10 @@
             ["V5-WK04-MON-mirror", "V5-WK04-TUE-mirror", "V5-WK04-WED-mirror", "V5-WK04-THU-mirror", "V5-WK04-FRI-mirror", "V5-WK04-SAT-mirror", "V5-WK04-SUN-mirror"],        
             ["V5-WK05-MON-mirror", "V5-WK05-TUE-mirror", "V5-WK05-WED-mirror", "V5-WK05-THU-mirror", "V5-WK05-FRI-mirror", "V5-WK05-SAT-mirror", "V5-WK05-SUN-mirror"]
         ],
-        "Rules": "weekly/PCC"
+        "Rules": "weekly/SCC"
     },
     {
-        "Title": "SCC backup tapes (Offsite to PCC)",
+        "Title": "SCC Daily VALID V Database LTO5 Tapes",
         "Tapes":[
             ["SCC-V5-WK01-MON", "SCC-V5-WK01-TUE", "SCC-V5-WK01-WED", "SCC-V5-WK01-THU", "SCC-V5-WK01-FRI", "SCC-V5-WK01-SAT", "SCC-V5-WK01-SUN"],
             ["SCC-V5-WK02-MON", "SCC-V5-WK02-TUE", "SCC-V5-WK02-WED", "SCC-V5-WK02-THU", "SCC-V5-WK02-FRI", "SCC-V5-WK02-SAT", "SCC-V5-WK02-SUN"],
@@ -30,10 +30,10 @@
             ["SCC-V5-WK04-MON", "SCC-V5-WK04-TUE", "SCC-V5-WK04-WED", "SCC-V5-WK04-THU", "SCC-V5-WK04-FRI", "SCC-V5-WK04-SAT", "SCC-V5-WK04-SUN"],
             ["SCC-V5-WK05-MON", "SCC-V5-WK05-TUE", "SCC-V5-WK05-WED", "SCC-V5-WK05-THU", "SCC-V5-WK05-FRI", "SCC-V5-WK05-SAT", "SCC-V5-WK05-SUN"]
         ],
-        "Rules": "weekly/SCC"
+        "Rules": "weekly/PCC"
     },
     {
-        "Title": "PCC-monthly tapes",
+        "Title": "VALID V Monthly Tapes",
         "Tapes":[
             ["MONTHLY-WINS-FS-01-01", "MONTHLY-UX-PVMS02-04-IMG-01", "V5-UX-u5pvms02-01", "V5-UX-u5pvms04-01"],
             ["MONTHLY-WINS-FS-02-01", "MONTHLY-UX-PVMS02-04-IMG-02", "V5-UX-u5pvms02-02", "V5-UX-u5pvms04-02"],
@@ -43,7 +43,7 @@
         "Rules": "monthly/PCC"
     },
     {
-        "Title": "SCC-monthly tapes",
+        "Title": "SCC Monthly VALID V Tapes",
         "Tapes":[
             ["SCC-MONTHLY-WINS-FS-01", "SCC-MONTHLY-UX-DVMS02-04-IMG-01", "SCC-V5-UX-u5dvms02-01", "SCC-V5-UX-u5dvms04-01", "SCC-MONTHLY-NONPROD-DB-01"],
             ["SCC-MONTHLY-WINS-FS-02", "SCC-MONTHLY-UX-DVMS02-04-IMG-02", "SCC-V5-UX-u5dvms02-02", "SCC-V5-UX-u5dvms04-02", "SCC-MONTHLY-NONPROD-DB-02"],

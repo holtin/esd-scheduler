@@ -65,21 +65,25 @@ $("#datepicker-submit").on("click", function () {
             if (PCC[i][key].length == 0) continue;
             feedback += '<div class="location-box my-3 px-3 py-3">';
             feedback += '<h5>' + Object.keys(PCC[i])[0] + '</h5>';
-            feedback += '<div class="row">';
             for (let j = 0; j < PCC[i][key].length; ++j) {
                 if (typeof PCC[i][key][j] === 'string') {
-                    feedback += '<div class="row">' + PCC[i][key][j] + '</div>';
+                    if (j == 0) feedback += '<ul>';
+                    feedback += '<li>' + PCC[i][key][j] + '</li>';
+                    if (j == PCC[i][key].length - 1) feedback += '</ul>';
                 }
                 else {
+                    if (j == 0) feedback += '<div class="row">';
                     feedback += '<div class="col-md"><ul>';
                     for (let k = 0; k < PCC[i][key][j].length; ++k) {
                         feedback += '<li>' + PCC[i][key][j][k] + '</li>';
                     }
                     feedback += '</ul></div>';
+                    if (j == PCC[i][key].length - 1) feedback += '</div>';
                 }
             }
-            feedback += '</div></div>';
+            feedback += '</div>';
         }
+        if (empty) feedback += '<h5 class="text-center">No tapes here</h5>';
         document.getElementById("pcc").innerHTML = feedback;
         feedback = '';
         empty = true;
@@ -89,24 +93,25 @@ $("#datepicker-submit").on("click", function () {
             empty = false;
             feedback += '<div class="location-box my-3 px-3 py-3">';
             feedback += '<h5>' + Object.keys(SCC[i])[0] + '</h5>';
-            feedback += '<div class="row">';
             for (let j = 0; j < SCC[i][key].length; ++j) {
-                if (typeof PCC[i][key][j] === 'string') {
-                    feedback += '<div class="row">' + SCC[i][key][j] + '</div>';
+                if (typeof SCC[i][key][j] === 'string') {
+                    if (j == 0) feedback += '<ul>';
+                    feedback += '<li>' + SCC[i][key][j] + '</li>';
+                    if (j == SCC[i][key].length - 1) feedback += '</ul>';
                 }
                 else {
+                    if (j == 0) feedback += '<div class="row">';
                     feedback += '<div class="col-md"><ul>';
                     for (let k = 0; k < SCC[i][key][j].length; ++k) {
                         feedback += '<li>' + SCC[i][key][j][k] + '</li>';
                     }
                     feedback += '</ul></div>';
+                    if (j == SCC[i][key].length - 1) feedback += '</div>';
                 }
             }
-            feedback += '</div></div>';
+            feedback += '</div>';
         }
-        if (empty) {
-            feedback += '<h5 class="text-center">No tapes here</h5>';
-        }
+        if (empty) feedback += '<h5 class="text-center">No tapes here</h5>';
         document.getElementById("scc").innerHTML = feedback;
     });
 });
