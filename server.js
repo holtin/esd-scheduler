@@ -508,7 +508,6 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek){
     var numberOfMon = Math.floor(numberOfDay/7);
     if(firstWeek >= 6){numberOfMon++;};
     if(day >= 1){numberOfMon++;};
-    console.log(numberOfMon);
 
     var reset_1 = fs.readFileSync(OTCL_path, 'utf8');
     reset_1 = [{"weekly":[{"V5":[]},{"PPS":[]},{"VRMS":[]},{"Copy":[]}]}, {"monthly":[]}];
@@ -1316,7 +1315,7 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek){
                 formAppend(to_be_append_OFF, OTCL_path, "SCC", "PPS", rule);
                 formAppend(to_be_append_ON, OTCL_path, "PCC", "PPS", rule);
             }
-            else if(numberOfMon % 4 == 3){
+            else if(numberOfMon % 4 == 0){
                 var to_be_append_location_pcc = [];
                 var to_be_append_location_scc = [];
                 let numberOfTapes = Object.keys(task["Tapes"]).length;
@@ -1371,7 +1370,6 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek){
             var date_index = 0;
             do{
                 date = Number(date) - date_index*7;
-                console.log(date_index);
                 if(Number(date) < 1){
                     for(k=0; k<months.length; ++k){
                         if(months[k] == month){
@@ -1381,8 +1379,6 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek){
                     };
                     date_index = 0;
                 };
-                console.log("date: " + date);
-                console.log("month: " + month);
                 if(date == "01" && month == "Jun"){
                     let keyss = 5;
                     if(destination == "SCC"){
@@ -1447,8 +1443,6 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek){
             while(!location_form)
         }
     };
-    // console.log(delivery_scc);
-    // console.log(delivery_pcc);
     var oriJson = fs.readFileSync(delivery_path, 'utf8');
     oriJson = JSON.parse(oriJson);
     var to_append_1 = {ToScc: delivery_scc};
