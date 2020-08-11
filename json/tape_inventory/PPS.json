@@ -18,7 +18,7 @@
             ["PPS-R13-GEN3", "PPS-R14-GEN3", "PPS-R15-GEN3", "PPS-R16-GEN3", "PPS-R17-GEN3", "PPS-R18-GEN3", "PPS-R19-GEN3"],
             ["PPS-R13-GEN4", "PPS-R14-GEN4", "PPS-R15-GEN4", "PPS-R16-GEN4", "PPS-R17-GEN4", "PPS-R18-GEN4", "PPS-R19-GEN4"]
         ],
-        "Rules": "weekly/SCC"
+        "Rules": "weekly/PCC"
     },
     {
         "Title": "PPS Monthly Backup Tapes (OnSite)",
