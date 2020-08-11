@@ -58,8 +58,72 @@
             </div>
         </nav>
         <div class="container">
-            <div id="pcc" class="location-content px-2 py-3"></div>
-            <div id="scc" class="location-content px-2 py-3"></div>
+            <div id="pcc" class="location-content px-2 py-3">
+                <nav class="navbar navbar-expand-sm navbar-dark">
+                    <div class="navbar-collapse" id="subNavbarText">
+                        <ul class="navbar-nav mx-auto">
+                            <li class="nav-item mx-5">
+                                <a class="sub-nav-link" onclick="openSubLocationPage('pcc-v5', this)"
+                                    id="defaultOpenSubPCC">VALID V</a>
+                            </li>
+                            <li class="nav-item mx-5">
+                                <a class="sub-nav-link" onclick="openSubLocationPage('pcc-vrms', this)">VRMS</a>
+                            </li>
+                            <li class="nav-item mx-5">
+                                <a class="sub-nav-link" onclick="openSubLocationPage('pcc-pps', this)">PPS</a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+                <div id="pcc-v5" class="location-subcontent">
+                    <div class="location-box my-3 px-3 py-3">
+                        <h6 class="text-center">Please press the "Generate" button to generate the current tape location for the specified date.</h6>
+                    </div>
+                </div>
+                <div id="pcc-vrms" class="location-subcontent">
+                    <div class="location-box my-3 px-3 py-3">
+                        <h6 class="text-center">Please press the "Generate" button to generate the current tape location for the specified date.</h6>
+                    </div>
+                </div>
+                <div id="pcc-pps" class="location-subcontent">
+                    <div class="location-box my-3 px-3 py-3">
+                        <h6 class="text-center">Please press the "Generate" button to generate the current tape location for the specified date.</h6>
+                    </div>
+                </div>
+            </div>
+            <div id="scc" class="location-content px-2 py-3">
+                <nav class="navbar navbar-expand-sm navbar-dark">
+                    <div class="navbar-collapse" id="subNavbarText">
+                        <ul class="navbar-nav mx-auto">
+                            <li class="nav-item mx-5">
+                                <a class="sub-nav-link" onclick="openSubLocationPage('scc-v5', this)"
+                                    id="defaultOpenSubSCC">VALID V</a>
+                            </li>
+                            <li class="nav-item mx-5">
+                                <a class="sub-nav-link" onclick="openSubLocationPage('scc-vrms', this)">VRMS</a>
+                            </li>
+                            <li class="nav-item mx-5">
+                                <a class="sub-nav-link" onclick="openSubLocationPage('scc-pps', this)">PPS</a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+                <div id="scc-v5" class="location-subcontent">
+                    <div class="location-box my-3 px-3 py-3">
+                        <h6 class="text-center">Please press the "Generate" button to generate the current tape location for the specified date.</h6>
+                    </div>
+                </div>
+                <div id="scc-vrms" class="location-subcontent">
+                    <div class="location-box my-3 px-3 py-3">
+                        <h6 class="text-center">Please press the "Generate" button to generate the current tape location for the specified date.</h6>
+                    </div>
+                </div>
+                <div id="scc-pps" class="location-subcontent">
+                    <div class="location-box my-3 px-3 py-3">
+                        <h6 class="text-center">Please press the "Generate" button to generate the current tape location for the specified date.</h6>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <footer class="footer py-auto">

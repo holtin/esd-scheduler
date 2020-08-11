@@ -33,14 +33,14 @@
         "Rules": "weekly/PCC"
     },
     {
-        "Title": "VALID V Monthly Tapes",
+        "Title": "PCC VALID V Monthly Tapes",
         "Tapes":[
             ["MONTHLY-WINS-FS-01-01", "MONTHLY-UX-PVMS02-04-IMG-01", "V5-UX-u5pvms02-01", "V5-UX-u5pvms04-01"],
             ["MONTHLY-WINS-FS-02-01", "MONTHLY-UX-PVMS02-04-IMG-02", "V5-UX-u5pvms02-02", "V5-UX-u5pvms04-02"],
             ["MONTHLY-WINS-FS-03-01", "MONTHLY-UX-PVMS02-04-IMG-03", "V5-UX-u5pvms02-03", "V5-UX-u5pvms04-03"],
             ["MONTHLY-WINS-FS-04-01", "MONTHLY-UX-PVMS02-04-IMG-04", "V5-UX-u5pvms02-04", "V5-UX-u5pvms04-04"]
         ],
-        "Rules": "monthly/PCC"
+        "Rules": "monthly/SCC"
     },
     {
         "Title": "SCC Monthly VALID V Tapes",
@@ -50,7 +50,7 @@
             ["SCC-MONTHLY-WINS-FS-03", "SCC-MONTHLY-UX-DVMS02-04-IMG-03", "SCC-V5-UX-u5dvms02-03", "SCC-V5-UX-u5dvms04-03", "SCC-MONTHLY-NONPROD-DB-03"],
             ["SCC-MONTHLY-WINS-FS-04", "SCC-MONTHLY-UX-DVMS02-04-IMG-04", "SCC-V5-UX-u5dvms02-04", "SCC-V5-UX-u5dvms04-04", "SCC-MONTHLY-NONPROD-DB-04"]
         ],
-        "Rules": "monthly/SCC"
+        "Rules": "monthly/PCC"
     },
     {
         "Title": "Month-End backup for Oracle Database (The retention period for the database is \"Permanent\")",

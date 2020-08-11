@@ -37,6 +37,10 @@ footer {
     cursor: pointer;
 }
 
+#location .sub-nav-link {
+    cursor: pointer;
+}
+
 #location .location-content {
     color: white;
     display: none;
@@ -56,7 +60,8 @@ footer {
     font-size: 0.9rem;
     text-align: center;
 }
-
+/*
 #location .location-box li {
     border: 1px rgba(0, 0, 0, 0.5) ridge;
 }
+*/

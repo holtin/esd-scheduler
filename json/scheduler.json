@@ -602,10 +602,10 @@
         "Rules": "daily"
     },
     {
-        "StartTime": "(After Printing)",
+        "StartTime": "17:00",
         "JobName": "Perform Dedicated Network Application Health Check 1. Check Online Report on A19 in HKLO                  □ 2. Check Address Engine on A19 in HKLO               □ 3. Check Online Report on C11 in KLO                     □ 4. Check Address Engine on C11 in KLO                  □ ",
         "Server": "m5ppc02",
-        "Remarks": "(Remarks : Re : COPM 17.4 A19 IP address : 172.16.242.102 C11 IP address : 172.16.193.127)",
+        "Remarks": "(Remarks : Re : COPM 17.4 A19 IP address : 172.16.242.102 C11 IP address : 172.16.193.127, After Printing)",
         "Rules": "daily"
     },
     {
