@@ -21,17 +21,17 @@
         "Rules": "weekly/PCC"
     },
     {
-        "Title": "PPS Monthly Backup Tapes",
+        "Title": "PPS Monthly Backup Tapes (OnSite)",
         "Tapes": [
             ["PPS-L8-M1", "PPS-L8-M2", "PPS-L8-M3", "PPS-L8-M4", "PPS-L8-M5", "PPS-L8-M6", "PPS-L8-M7", "PPS-L8-M8", "PPS-L8-M9", "PPS-L8-M10", "PPS-L8-M11", "PPS-L8-M12"]
         ],
         "Rules": "constant"
     },
     {
-        "Title": "PPS Monthly Backup Tapes",
+        "Title": "PPS Monthly Backup Tapes (OffSite)",
         "Tapes": [
             ["PPS-R20-M1", "PPS-R20-M2", "PPS-R20-M3", "PPS-R20-M4", "PPS-R20-M5", "PPS-R20-M6", "PPS-R20-M7", "PPS-R20-M8", "PPS-R20-M9", "PPS-R20-M10", "PPS-R20-M11", "PPS-R20-M12"]
         ],
-        "Rules": "monthly/PCC"
+        "Rules": "monthly/SCC"
     }
 ]
