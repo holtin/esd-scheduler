@@ -508,6 +508,7 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek){
     var numberOfMon = Math.floor(numberOfDay/7);
     if(firstWeek >= 6){numberOfMon++;};
     if(day >= 1){numberOfMon++;};
+    console.log(numberOfMon);
 
     var reset_1 = fs.readFileSync(OTCL_path, 'utf8');
     reset_1 = [{"weekly":[{"V5":[]},{"PPS":[]},{"VRMS":[]},{"Copy":[]}]}, {"monthly":[]}];
@@ -1369,6 +1370,7 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek){
             var location_form = false ;
             var date_index = 0;
             do{
+                var date    = inputDate[0];
                 date = Number(date) - date_index*7;
                 if(Number(date) < 1){
                     for(k=0; k<months.length; ++k){
@@ -1379,6 +1381,8 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek){
                     };
                     date_index = 0;
                 };
+                console.log("Date: "+date);
+                console.log("Month: "+month);
                 if(date == "01" && month == "Jun"){
                     let keyss = 5;
                     if(destination == "SCC"){
@@ -1407,7 +1411,8 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek){
                     if(months[k] == month){
                         if(Number(date) + 7 > datesOfMonths[k]){
                             let numberOfTapes = Object.keys(task["Tapes"][0]).length;
-                            let keyss = k;
+                            let keyss = k + 1;
+                            if(keyss == 13){keyss = 0};
                             if(destination == "SCC"){
                                 for(j=0; j<numberOfTapes; ++j){
                                     if(j == keyss){
@@ -1443,6 +1448,8 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek){
             while(!location_form)
         }
     };
+    // console.log(delivery_scc);
+    // console.log(delivery_pcc);
     var oriJson = fs.readFileSync(delivery_path, 'utf8');
     oriJson = JSON.parse(oriJson);
     var to_append_1 = {ToScc: delivery_scc};
