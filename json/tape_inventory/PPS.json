@@ -1,6 +1,6 @@
 [
     {
-        "Title": "PPS Daily Backup Tapes",
+        "Title": "PPS Daily Backup Tapes (OnSite)",
         "Tapes":[
             ["PPS-L1-GEN1", "PPS-L2-GEN1", "PPS-L3-GEN1", "PPS-L4-GEN1", "PPS-L5-GEN1", "PPS-L6-GEN1", "PPS-L7-GEN1"],
             ["PPS-L1-GEN2", "PPS-L2-GEN2", "PPS-L3-GEN2", "PPS-L4-GEN2", "PPS-L5-GEN2", "PPS-L6-GEN2", "PPS-L7-GEN2"],
@@ -11,14 +11,14 @@
         "Rules": "constant"
     },
     {
-        "Title": "PPS Daily Backup Tapes",
+        "Title": "PPS Daily Backup Tapes (OffSite)",
         "Tapes":[
             ["PPS-R13-GEN1", "PPS-R14-GEN1", "PPS-R15-GEN1", "PPS-R16-GEN1", "PPS-R17-GEN1", "PPS-R18-GEN1", "PPS-R19-GEN1"],
             ["PPS-R13-GEN2", "PPS-R14-GEN2", "PPS-R15-GEN2", "PPS-R16-GEN2", "PPS-R17-GEN2", "PPS-R18-GEN2", "PPS-R19-GEN2"],
             ["PPS-R13-GEN3", "PPS-R14-GEN3", "PPS-R15-GEN3", "PPS-R16-GEN3", "PPS-R17-GEN3", "PPS-R18-GEN3", "PPS-R19-GEN3"],
             ["PPS-R13-GEN4", "PPS-R14-GEN4", "PPS-R15-GEN4", "PPS-R16-GEN4", "PPS-R17-GEN4", "PPS-R18-GEN4", "PPS-R19-GEN4"]
         ],
-        "Rules": "weekly/PCC"
+        "Rules": "weekly/SCC"
     },
     {
         "Title": "PPS Monthly Backup Tapes (OnSite)",
