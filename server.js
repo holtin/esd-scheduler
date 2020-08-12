@@ -484,6 +484,7 @@ function append_location(title, task, path, destination){
     fs.writeFileSync(path, JSON.stringify(oriJson), 'utf8');
 }
 
+
 function formFiltering(data_1, data_2, data_3, inputDate, firstWeek){
     const fs = require('fs');
     var date    = inputDate[0];
@@ -507,6 +508,7 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek){
     };
     var numberOfMon = Math.floor(numberOfDay/7);
     if(firstWeek >= 6){numberOfMon++;};
+    if(day >= 1){numberOfMon++;};
     console.log(numberOfMon);
 
     var reset_1 = fs.readFileSync(OTCL_path, 'utf8');
