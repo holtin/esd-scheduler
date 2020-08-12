@@ -214,7 +214,7 @@ function filtering(data, inputDate, firstWeek, loaded_task) {
                 const monthlyRules = subrules[j].substring(6,).split(",");
                 const numberOfRules = monthlyRules.length;
                 for (k = 0; k < numberOfRules; ++k) {
-                    if (monthlyRules[k] == date) {
+                    if (parseInt(monthlyRules[k]) == date) {
                         valid = true;
                         break;
                     }
