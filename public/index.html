@@ -8,13 +8,13 @@
 
     <link rel="stylesheet" href="ext/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/styles.css">
-    <title>Testing</title>
+    <title>ESD Scheduler</title>
 </head>
 
 <body>
     <header class="header py-5">
         <div class="container">
-            <h1 class='text-center'>Schedule Generator</h1>
+            <h1 class="text-center">Schedule Generator</h1>
         </div>
     </header>
     <div id="scheduler" class="page-section">
@@ -24,12 +24,12 @@
                     <h4>Choose a date:</h4>
                     <form>
                         <div class="row my-5 mx-auto">
-                            <input type="date" id="datepicker" class='w-50 px-2' name="date" placeholder="yyyy-mm-dd"
+                            <input type="date" id="datepicker" class="w-50 px-2" name="date" placeholder="yyyy-mm-dd"
                                 required>
                         </div>
                         <div class="row my-5 mx-auto">
-                            <a id='datepicker-submit' class='btn btn-primary w-50' href='javascript:void(0)'
-                                role='button'>Generate</a>
+                            <a id="datepicker-submit" class="btn btn-primary w-50" href="javascript:void(0)"
+                                role="button">Generate</a>
                         </div>
                     </form>
                 </div>
@@ -135,7 +135,7 @@
     <script src="ext/js/bootstrap.min.js"></script>
     <script src="client.js"></script>
     <script>
-        document.getElementById('datepicker').valueAsDate = new Date(); //automatically reset default date to today
+        document.getElementById("datepicker").valueAsDate = new Date(); //automatically reset default date to today
     </script>
 </body>
 
