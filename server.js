@@ -507,7 +507,6 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek){
     };
     var numberOfMon = Math.floor(numberOfDay/7);
     if(firstWeek >= 6){numberOfMon++;};
-    if(day >= 1){numberOfMon++;};
     console.log(numberOfMon);
 
     var reset_1 = fs.readFileSync(OTCL_path, 'utf8');
@@ -947,7 +946,7 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek){
             append_location(task["Title"], to_be_append_location, location_path, "PCC");
         }
         else if(rule == "weekly"){
-            if(day =="0"){
+            if(day=="0"){
                 --numberOfMon;
             };
             var to_be_append_location_pcc = [];
@@ -1227,7 +1226,7 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek){
                 var to_be_append_location_pcc = [];
                 var to_be_append_location_scc = [];
                 let numberOfTapes = Object.keys(task["Tapes"]).length;
-                let keyss = 1;
+                let keyss = 3;
                 if(destination == "SCC"){
                     for(j=0; j<numberOfTapes; ++j){
                         if(j == keyss || j == keyss-1 ){
@@ -1295,7 +1294,7 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek){
                 var to_be_append_location_pcc = [];
                 var to_be_append_location_scc = [];
                 let numberOfTapes = Object.keys(task["Tapes"]).length;
-                let keyss = 2;
+                let keyss = 1;
                 if(destination == "SCC"){
                     for(j=0; j<numberOfTapes; ++j){
                         if(j == keyss || j == keyss-1 ){
@@ -1329,7 +1328,7 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek){
                 var to_be_append_location_pcc = [];
                 var to_be_append_location_scc = [];
                 let numberOfTapes = Object.keys(task["Tapes"]).length;
-                let keyss = 3;
+                let keyss = 2;
                 if(destination == "SCC"){
                     for(j=0; j<numberOfTapes; ++j){
                         if(j == keyss || j == keyss-1){
