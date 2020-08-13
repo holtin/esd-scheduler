@@ -151,260 +151,306 @@ function append(task) {
     fs.writeFileSync(todoPath, JSON.stringify(oriJson), 'utf8');
 };
 
-function filtering(data, inputDate, firstWeek, loaded_task) {
-    var phs = require(phPath);
+
+function filtering(data, inputDate, firstWeek, loaded_task){
+    var phs = require("./json/ph.json");
+    const fs = require('fs');
     const numberOfData = Object.keys(data).length;
-    const date = inputDate[0];
-    const month = inputDate[1];
-    const year = inputDate[2];
-    const day = inputDate[3];
-    var ph = false;
-    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const date    = inputDate[0];
+    const month   = inputDate[1];
+    const year    = inputDate[2];
+    const day     = inputDate[3];
+    var ph        = false;
+    const months  = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
-    if (!loaded_task) {
-        console.log("clearing ToDoList.json...")
-        var reset = '[{ "tasks": [] }]';
-        fs.writeFileSync(todoPath, reset, 'utf8');
-    }
-    var oriJson = fs.readFileSync(todoPath, 'utf8');
-    oriJson = JSON.parse(oriJson);
+    if(loaded_task == 0){
+        var reset = fs.readFileSync('./json/ToDoList.json', 'utf8');
+        reset = [{"tasks":[]}];
+        fs.writeFileSync("./json/ToDoList.json", JSON.stringify(reset), 'utf8');
+    };
+
     var datesOfMonths = [];
-    if (year % 4 == 0) { datesOfMonths = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]; }
-    else { datesOfMonths = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]; };
+    if(year%4 == 0){datesOfMonths=[31,29,31,30,31,30,31,31,30,31,30,31];}
+    else{datesOfMonths=[31,28,31,30,31,30,31,31,30,31,30,31];};
 
-    for (i = 0; i < Object.keys(phs).length; ++i) {
-        if ((phs[i]["date"] == date && phs[i]["month"] == month) || day == "0") {
+    for(i=0; i<Object.keys(phs).length; ++i){
+        if((phs[i]["date"] == date && phs[i]["month"] == month) || day == "0"){
             ph = true;
             break;
-        }
-    }
-    for (i = 0; i < numberOfData; ++i) {
-        const task = data[i];
-        const rules = task["Rules"].split("?");
+        };
+    };
+    for(i=0; i<numberOfData; ++i){
+        const task    = data[i];
+        const rules   = task["Rules"].split("?");
         const include = rules[0];
         const exclude = rules[1];
-        var valid = false;
+        
+        var valid     = false;
 
-        if (include.substring(0, 5) == "daily") {
+        if(include.substring(0,5) == "daily"){
             append(task);
+            console.log(rules);
             //Eliminating the selected one-off Tasks
-            if (task["Rules"][task["Rules"].length - 1] == "@") {
-                var OOJson = fs.readFileSync(oneOffPath, 'utf8');
+            if(task["Rules"][task["Rules"].length - 1] == "@"){
+                var OOJson = fs.readFileSync('./oneOff.json', 'utf8');
                 OOJson = JSON.parse(OOJson);
-                OOJson.splice(i, 1);
-                fs.writeFileSync(oneOffPath, JSON.stringify(OOJson), 'utf8');
-            }
+                OOJson.splice(i,1);
+                fs.writeFileSync('./oneOff.json', JSON.stringify(OOJson), 'utf8');
+            };
             continue;
-        }
+        };
 
         const subrules = include.split(";");
         const numberOfRules = subrules.length;
-        for (j = 0; j < numberOfRules - 1; ++j) {
-            if (subrules[j].includes("week")) {
+        for(j=0; j<numberOfRules-1; ++j){
+            if (subrules[j].includes("week")){
                 const weeklyRules = subrules[j].substring(5,).split(",");
                 const numberOfRules = weeklyRules.length;
-                for (k = 0; k < numberOfRules; ++k) {
-                    if (weeklyRules[k] == day) {
+                for(k=0; k<numberOfRules; ++k){
+                    if(weeklyRules[k] == day){
                         valid = true;
                         break;
-                    }
-                }
-            }
-            if (subrules[j].includes("month")) {
+                    };
+                };
+            };
+            if (subrules[j].includes("month")){
                 const monthlyRules = subrules[j].substring(6,).split(",");
                 const numberOfRules = monthlyRules.length;
-                for (k = 0; k < numberOfRules; ++k) {
-                    if (parseInt(monthlyRules[k]) == date) {
+                for(k=0; k<numberOfRules; ++k){
+                    if(monthlyRules[k] == date){
                         valid = true;
                         break;
-                    }
-                }
-            }
-            if (subrules[j].includes("year")) {
+                    };
+                };
+            };
+            if (subrules[j].includes("year")){
                 const yearlyRules = subrules[j].substring(5,).split(",")
                 const numberOfRules = yearlyRules.length;
-                for (k = 0; k < numberOfRules; ++k) {
-                    if (yearlyRules[k].substring(0, 2) == date && yearlyRules[k].substring(2,5) == month && (yearlyRules[k].substring(5,) == year || !yearlyRules[k].substring(5,))) {
+                for(k=0; k<numberOfRules; ++k){
+                    if(yearlyRules[k].substring(0,2) == date && yearlyRules[k].substring(2,5) == month && (yearlyRules[k].substring(5,) == year || !yearlyRules[k].substring(5,))){
                         valid = true;
                         break;
-                    }
-                }
-            }
-            if (subrules[j].includes("workingday") && !ph) {
+                    };
+                };
+            };
+            if (subrules[j].includes("workingday") && !ph){ 
                 const wdRules = subrules[j].substring(11,).split(",")
                 const numberOfRules = wdRules.length;
-                for (k = 0; k < numberOfRules; ++k) {
+                for(k=0; k<numberOfRules; ++k){
                     var numberOfPh = 1;
                     var numberOfWd = 0;
-                    for (x = date - 1; x > date - day; --x) {
-                        for (y = 0; y < Object.keys(phs).length; ++y) {
-                            if (phs[y]["date"] == x && phs[y]["month"] == month) {
+                    for(x=date - 1; x>date - day; --x){
+                        for(y=0; y<Object.keys(phs).length; ++y){
+                            if(phs[y]["date"] == x && phs[y]["month"] == month){
                                 numberOfPh++;
-                            }
-                        }
-                    }
-                    numberOfWd = Number(day) - numberOfPh + 1;
-                    if (numberOfWd == wdRules[k]) {
+                            };
+                        };
+                    };
+                    numberOfWd = Number(day)-numberOfPh+1;
+                    if(numberOfWd == wdRules[k]){
                         valid = true;
                         break;
                     }
-                }
-            }
-            if (subrules[j].includes("lastday")) {
+                };
+            };
+            if (subrules[j].includes("lastday")){
                 const ldRules = subrules[j].substring(8,).split(",");
                 const numberOfRules = ldRules.length;
-                for (k = 0; k < numberOfRules; ++k) {
-                    for (x = 0; x < months.length; ++x) {
-                        if (months[x] == month) {
-                            if (datesOfMonths[x] - Number(ldRules[k]) + 1 == date) {
+                for (k=0; k<numberOfRules; ++k){
+                    for(x=0; x<months.length; ++x){
+                        if(months[x] == month){
+                            if(datesOfMonths[x]-Number(ldRules[k]) + 1 == date){
                                 valid = true;
                                 break;
-                            }
-                        }
-                    }
-                }
-            }
+                            };
+                        };
+                    };
+                };
+            };
+            
 
-
-            if (subrules[j].includes("biweekly")) {
+            if(subrules[j].includes("biweekly")){
                 let bw = false;
                 let numberOfDay = Number(date);
-                for (k = 0; k < months.length; ++k) {
-                    if (months[k] == month) { numberOfDay -= firstWeek; break; }
-                    else { numberOfDay += datesOfMonths[k]; };
-                }
-                if (Math.floor(numberOfDay / 7) % 2 == 1) { bw = true; };
-                if (bw) {
+                for(k=0; k<months.length; ++k){
+                     if(months[k] == month){numberOfDay-=firstWeek;break;}
+                     else{numberOfDay += datesOfMonths[k];};
+                };
+                if(Math.floor(numberOfDay/7)%2 == 1){bw=true;};
+                if(bw){
                     const bwRules = subrules[j].substring(9,).split(",");
                     const numberOfRules = bwRules.length;
-                    for (k = 0; k < numberOfRules; ++k) {
-                        if (bwRules[k] == day) {
+                    for(k=0; k<numberOfRules; ++k){
+                        if(bwRules[k] == day){
                             valid = true;
                             break;
                         }
-                    }
-                }
-            }
-        }
-        if (exclude) {
+                    };
+                };
+            };
+        };
+        if(exclude){
             const subConstraints = exclude.split(";");
             const numberOfConstraint = subConstraints.length;
-            for (j = 0; j < numberOfConstraint - 1; ++j) {
-                if (subConstraints[j].includes("ph") && ph) {
+            for(j=0; j<numberOfConstraint-1; ++j){
+                if (subConstraints[j].includes("ph") && ph){
                     valid = false;
                     break;
-                }
-                if (subConstraints[j].includes("week")) {
+                };
+                if (subConstraints[j].includes("week")){
                     const weeklyRules = subConstraints[j].substring(5,).split(",");
                     const numberOfRules = weeklyRules.length;
-                    for (k = 0; k < numberOfRules; ++k) {
-                        if (weeklyRules[k] == day) {
+                    for(k=0; k<numberOfRules; ++k){
+                        if(weeklyRules[k] == day){
                             valid = false;
                             break;
-                        }
-                    }
-                }
-                if (subConstraints[j].includes("month")) {
+                        };
+                    };
+                };
+                if (subConstraints[j].includes("month")){
                     const monthlyRules = subConstraints[j].substring(6,).split(",");
                     const numberOfRules = monthlyRules.length;
-                    for (k = 0; k < numberOfRules; ++k) {
-                        if (monthlyRules[k] == date) {
+                    for(k=0; k<numberOfRules; ++k){
+                        if(monthlyRules[k] == date){
                             valid = false;
                             break;
-                        }
-                    }
-                }
-                if (subConstraints[j].includes("year")) {
+                        };
+                    };
+                };
+                if (subConstraints[j].includes("year")){
                     const yearlyRules = subConstraints[j].substring(5,).split(",")
                     const numberOfRules = yearlyRules.length;
-                    for (k = 0; k < numberOfRules; ++k) {
-                        if (yearlyRules[k].substring(0, 2) == date && yearlyRules[k].substring(2,5) == month && (yearlyRules[k].substring(5,) == year || !yearlyRules[k].substring(5,))) {
+                    for(k=0; k<numberOfRules; ++k){
+                        if(yearlyRules[k].substring(0,2) == date && yearlyRules[k].substring(2,) == month && (yearlyRules[k].substring(5,) == year || !yearlyRules[k].substring(5,))){
                             valid = false;
                             break;
-                        }
-                    }
-                }
-                if (subConstraints[j].includes("workingday") && !ph) {
+                        };
+                    };
+                };
+                if (subConstraints[j].includes("workingday") && !ph){
                     const wdRules = subConstraints[j].substring(11,).split(",")
                     const numberOfRules = wdRules.length;
-                    for (k = 0; k < numberOfRules; ++k) {
+                    for(k=0; k<numberOfRules; ++k){
                         var numberOfPh = 1;
                         var numberOfWd = 0;
-                        for (x = date - 1; x < date - day; --x) {
-                            for (y = 0; y < Object.keys(phs).length; ++y) {
-                                if (phs[y]["date"] == x && phs[y]["month"] == month) {
+                        for(x=date - 1; x<date - day; --x){
+                            for(y=0; y<Object.keys(phs).length; ++y){
+                                if(phs[y]["date"] == x && phs[y]["month"] == month){
                                     numberOfPh++;
                                 };
                             };
                         };
-                        numberOfWd = Number(day) - numberOfPh + 1;
-                        if (numberOfWd == wdRules[k]) {
+                        numberOfWd = Number(day)-numberOfPh+1;
+                        if(numberOfWd == wdRules[k]){
                             valid = false;
                             break;
                         }
-                    }
-                }
-                if (subConstraints[j].includes("biweekly")) {
-                  let bw = false;
-                  let numberOfDay = Number(date);
-                  for (k = 0; k < months.length; ++k) {
-                      if (months[k] == month) { numberOfDay -= firstWeek; break; }
-                      else { numberOfDay += datesOfMonths[k]; };
-                  }
-                  if (Math.floor(numberOfDay / 7) % 2 == 1) { bw = true; };
-                  if (bw) {
-                      const bwRules = subConstraints[j].substring(9,).split(",");
-                      const numberOfRules = bwRules.length;
-                      for (k = 0; k < numberOfRules; ++k) {
-                          if (bwRules[k] == day) {
-                              valid = false;
-                              break;
-                          }
-                      }
-                  }
-              }
-            }
-        }
-        //Special Cases
-        if (include == "SC1") {
-            if (date == "2" && date != "28" && month != "Jan") {
+                    };
+                };
+                if(subConstraints[j].includes("biweekly")){
+                    let bw = false;
+                    let numberOfDay = Number(date);
+                    for(k=0; k<months.length; ++k){
+                         if(months[k] == month){numberOfDay-=firstWeek;break;}
+                         else{numberOfDay += datesOfMonths[k];};
+                    };
+                    if(Math.floor(numberOfDay/7)%2 == 1){bw=true;};
+                    if(bw){
+                        const bwRules = subConstraints[j].substring(9,).split(",");
+                        const numberOfRules = bwRules.length;
+                        for(k=0; k<numberOfRules; ++k){
+                            if(bwRules[k] == day){
+                                valid = false;
+                                break;
+                            }
+                        };
+                    };
+                };
+            };
+        };
+        //Speical Cases
+        if(include == "SC1"){
+            if(date == "2" && date != "28" && month != "Jan"){
                 valid = true;
             }
-            else if (date == "29" && month == "Jan") {
+            else if(date == "29" && month == "Jan"){
                 valid = true;
             }
         };
         //2Jan 29Jan 6Apr 14Apr 2May 26Jun 2Jul 3Oct 28Dec
-        if (include == "SC2") {
-            if ((date == "2" || date == "29") & month == "Jan") valid = true;
-            else if ((date == "6" || date == "14") & month == "Apr") valid = true;
-            else if ((date == "2") & month == "May") valid = true;
-            else if ((date == "26") & month == "Jun") valid = true;
-            else if ((date == "2") & month == "Jul") valid = true;
-            else if ((date == "3") & month == "Oct") valid = true;
-            else if ((date == "28") & month == "Aug") valid = true;
+        if(include == "SC2"){
+            if((date == "02" || date == "29") & month == "Jan"){
+                valid = true;
+            }
+            else if((date == "06" || date == "14") & month == "Apr"){
+                valid = true;
+            }
+            else if((date == "02") & month == "May"){
+                valid = true;
+            }
+            else if((date == "26") & month == "Jun"){
+                valid = true;
+            }
+            else if((date == "02") & month == "Jul"){
+                valid = true;
+            }
+            else if((date == "03") & month == "Oct"){
+                valid = true;
+            }
+            else if((date == "28") & month == "AUG"){
+                valid = true;
+            }
         };
         //27Jan 24Feb 30Mar 27Apr 1Jun 29Jun 27Jul 31Aug 28Sep 26Oct 30Nov 28Dec
-        if (include == "SC3") {
-            if ((date == "27") & month == "Jan") valid = true;
-            else if ((date == "24") & month == "Feb") valid = true;
-            else if ((date == "30") & month == "Mar") valid = true;
-            else if ((date == "27") & month == "Apr") valid = true;
-            else if ((date == "1" || date == "29") & month == "Jun") valid = true;
-            else if ((date == "27") & month == "Jul") valid = true;
-            else if ((date == "31") & month == "Aug") valid = true;
-            else if ((date == "28") & month == "Sep") valid = true;
-            else if ((date == "26") & month == "Oct") valid = true;
-            else if ((date == "30") & month == "Nov") valid = true;
-            else if ((date == "28") & month == "Dec") valid = true;
+        if(include == "SC3"){
+            if((date == "27") & month == "Jan"){
+                valid = true;
+            }
+            else if((date == "24") & month == "Feb"){
+                valid = true;
+            }
+            else if((date == "30") & month == "Mar"){
+                valid = true;
+            }
+            else if((date == "27") & month == "Apr"){
+                valid = true;
+            }
+            else if((date == "01" || date == "29") & month == "Jun"){
+                valid = true;
+            }
+            else if((date == "27") & month == "Jul"){
+                valid = true;
+            }
+            else if((date == "31") & month == "Aug"){
+                valid = true;
+            }
+            else if((date == "28") & month == "SEP"){
+                valid = true;
+            }
+            else if((date == "26") & month == "Oct"){
+                valid = true;
+            }
+            else if((date == "30") & month == "Nov"){
+                valid = true;
+            }
+            else if((date == "28") & month == "Dec"){
+                valid = true;
+            }
+        };
+        //Eliminating the selected one-off Tasks
+        if(valid && task["Rules"][task["Rules"].length - 1] == "@"){
+            var OOJson = fs.readFileSync('./json/oneOff.json', 'utf8');
+            OOJson = JSON.parse(OOJson);
+            OOJson.splice(i,1);
+            fs.writeFileSync("./json/oneOff.json", JSON.stringify(OOJson), 'utf8');
+
         };
         //Append the task to ToDoList.json
-        if (valid) {
+        if(valid){
             append(task);
+            console.log(rules);
         };
     };
-    var oriJson = fs.readFileSync(todoPath, 'utf8');
-    oriJson = JSON.parse(oriJson);
 };
 
 function getSortOrder(prop) {
