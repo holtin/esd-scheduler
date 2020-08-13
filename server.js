@@ -179,7 +179,7 @@ function filtering(data, inputDate, firstWeek, loaded_task) {
             break;
         };
     };
-    for (i = 0; i < numberOfData; ++i) {
+    for (let i = 0; i < numberOfData; ++i) {
         const task = data[i];
         const rules = task["Rules"].split("?");
         const include = rules[0];
@@ -189,7 +189,6 @@ function filtering(data, inputDate, firstWeek, loaded_task) {
 
         if (include.substring(0, 5) == "daily") {
             append(task);
-            console.log(rules);
             //Eliminating the selected one-off Tasks
             if (task["Rules"][task["Rules"].length - 1] == "@") {
                 var OOJson = fs.readFileSync(oneOffPath, 'utf8');
@@ -202,11 +201,11 @@ function filtering(data, inputDate, firstWeek, loaded_task) {
 
         const subrules = include.split(";");
         const numberOfRules = subrules.length;
-        for (j = 0; j < numberOfRules - 1; ++j) {
+        for (let j = 0; j < numberOfRules - 1; ++j) {
             if (subrules[j].includes("week")) {
                 const weeklyRules = subrules[j].substring(5,).split(",");
                 const numberOfRules = weeklyRules.length;
-                for (k = 0; k < numberOfRules; ++k) {
+                for (let k = 0; k < numberOfRules; ++k) {
                     if (weeklyRules[k] == day) {
                         valid = true;
                         break;
@@ -216,7 +215,7 @@ function filtering(data, inputDate, firstWeek, loaded_task) {
             if (subrules[j].includes("month")) {
                 const monthlyRules = subrules[j].substring(6,).split(",");
                 const numberOfRules = monthlyRules.length;
-                for (k = 0; k < numberOfRules; ++k) {
+                for (let k = 0; k < numberOfRules; ++k) {
                     if (parseInt(monthlyRules[k]) == date) {
                         valid = true;
                         break;
@@ -226,7 +225,7 @@ function filtering(data, inputDate, firstWeek, loaded_task) {
             if (subrules[j].includes("year")) {
                 const yearlyRules = subrules[j].substring(5,).split(",")
                 const numberOfRules = yearlyRules.length;
-                for (k = 0; k < numberOfRules; ++k) {
+                for (let k = 0; k < numberOfRules; ++k) {
                     if (yearlyRules[k].substring(0, 2) == date && yearlyRules[k].substring(2, 5) == month && (yearlyRules[k].substring(5,) == year || !yearlyRules[k].substring(5,))) {
                         valid = true;
                         break;
@@ -236,11 +235,11 @@ function filtering(data, inputDate, firstWeek, loaded_task) {
             if (subrules[j].includes("workingday") && !ph) {
                 const wdRules = subrules[j].substring(11,).split(",")
                 const numberOfRules = wdRules.length;
-                for (k = 0; k < numberOfRules; ++k) {
+                for (let k = 0; k < numberOfRules; ++k) {
                     var numberOfPh = 1;
                     var numberOfWd = 0;
-                    for (x = date - 1; x > date - day; --x) {
-                        for (y = 0; y < Object.keys(phs).length; ++y) {
+                    for (let x = date - 1; x > date - day; --x) {
+                        for (let y = 0; y < Object.keys(phs).length; ++y) {
                             if (phs[y]["date"] == x && phs[y]["month"] == month) {
                                 numberOfPh++;
                             };
@@ -256,8 +255,8 @@ function filtering(data, inputDate, firstWeek, loaded_task) {
             if (subrules[j].includes("lastday")) {
                 const ldRules = subrules[j].substring(8,).split(",");
                 const numberOfRules = ldRules.length;
-                for (k = 0; k < numberOfRules; ++k) {
-                    for (x = 0; x < months.length; ++x) {
+                for (let k = 0; k < numberOfRules; ++k) {
+                    for (let x = 0; x < months.length; ++x) {
                         if (months[x] == month) {
                             if (datesOfMonths[x] - Number(ldRules[k]) + 1 == date) {
                                 valid = true;
@@ -272,7 +271,7 @@ function filtering(data, inputDate, firstWeek, loaded_task) {
             if (subrules[j].includes("biweekly")) {
                 let bw = false;
                 let numberOfDay = Number(date);
-                for (k = 0; k < months.length; ++k) {
+                for (let k = 0; k < months.length; ++k) {
                     if (months[k] == month) { numberOfDay -= firstWeek; break; }
                     else { numberOfDay += datesOfMonths[k]; };
                 };
@@ -280,7 +279,7 @@ function filtering(data, inputDate, firstWeek, loaded_task) {
                 if (bw) {
                     const bwRules = subrules[j].substring(9,).split(",");
                     const numberOfRules = bwRules.length;
-                    for (k = 0; k < numberOfRules; ++k) {
+                    for (let k = 0; k < numberOfRules; ++k) {
                         if (bwRules[k] == day) {
                             valid = true;
                             break;
@@ -292,7 +291,7 @@ function filtering(data, inputDate, firstWeek, loaded_task) {
         if (exclude) {
             const subConstraints = exclude.split(";");
             const numberOfConstraint = subConstraints.length;
-            for (j = 0; j < numberOfConstraint - 1; ++j) {
+            for (let j = 0; j < numberOfConstraint - 1; ++j) {
                 if (subConstraints[j].includes("ph") && ph) {
                     valid = false;
                     break;
@@ -300,7 +299,7 @@ function filtering(data, inputDate, firstWeek, loaded_task) {
                 if (subConstraints[j].includes("week")) {
                     const weeklyRules = subConstraints[j].substring(5,).split(",");
                     const numberOfRules = weeklyRules.length;
-                    for (k = 0; k < numberOfRules; ++k) {
+                    for (let k = 0; k < numberOfRules; ++k) {
                         if (weeklyRules[k] == day) {
                             valid = false;
                             break;
@@ -310,7 +309,7 @@ function filtering(data, inputDate, firstWeek, loaded_task) {
                 if (subConstraints[j].includes("month")) {
                     const monthlyRules = subConstraints[j].substring(6,).split(",");
                     const numberOfRules = monthlyRules.length;
-                    for (k = 0; k < numberOfRules; ++k) {
+                    for (let k = 0; k < numberOfRules; ++k) {
                         if (monthlyRules[k] == date) {
                             valid = false;
                             break;
@@ -320,7 +319,7 @@ function filtering(data, inputDate, firstWeek, loaded_task) {
                 if (subConstraints[j].includes("year")) {
                     const yearlyRules = subConstraints[j].substring(5,).split(",")
                     const numberOfRules = yearlyRules.length;
-                    for (k = 0; k < numberOfRules; ++k) {
+                    for (let k = 0; k < numberOfRules; ++k) {
                         if (yearlyRules[k].substring(0, 2) == date && yearlyRules[k].substring(2,) == month && (yearlyRules[k].substring(5,) == year || !yearlyRules[k].substring(5,))) {
                             valid = false;
                             break;
@@ -330,11 +329,11 @@ function filtering(data, inputDate, firstWeek, loaded_task) {
                 if (subConstraints[j].includes("workingday") && !ph) {
                     const wdRules = subConstraints[j].substring(11,).split(",")
                     const numberOfRules = wdRules.length;
-                    for (k = 0; k < numberOfRules; ++k) {
+                    for (let k = 0; k < numberOfRules; ++k) {
                         var numberOfPh = 1;
                         var numberOfWd = 0;
-                        for (x = date - 1; x < date - day; --x) {
-                            for (y = 0; y < Object.keys(phs).length; ++y) {
+                        for (let x = date - 1; x < date - day; --x) {
+                            for (let y = 0; y < Object.keys(phs).length; ++y) {
                                 if (phs[y]["date"] == x && phs[y]["month"] == month) {
                                     numberOfPh++;
                                 };
@@ -350,7 +349,7 @@ function filtering(data, inputDate, firstWeek, loaded_task) {
                 if (subConstraints[j].includes("biweekly")) {
                     let bw = false;
                     let numberOfDay = Number(date);
-                    for (k = 0; k < months.length; ++k) {
+                    for (let k = 0; k < months.length; ++k) {
                         if (months[k] == month) { numberOfDay -= firstWeek; break; }
                         else { numberOfDay += datesOfMonths[k]; };
                     };
@@ -358,7 +357,7 @@ function filtering(data, inputDate, firstWeek, loaded_task) {
                     if (bw) {
                         const bwRules = subConstraints[j].substring(9,).split(",");
                         const numberOfRules = bwRules.length;
-                        for (k = 0; k < numberOfRules; ++k) {
+                        for (let k = 0; k < numberOfRules; ++k) {
                             if (bwRules[k] == day) {
                                 valid = false;
                                 break;
@@ -448,7 +447,6 @@ function filtering(data, inputDate, firstWeek, loaded_task) {
         //Append the task to ToDoList.json
         if (valid) {
             append(task);
-            console.log(rules);
         };
     };
 };
@@ -544,7 +542,7 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek) {
 
     const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     var numberOfDay = Number(date);
-    for (k = 0; k < months.length; ++k) {
+    for (let k = 0; k < months.length; ++k) {
         if (months[k] == month) {
             numberOfDay -= firstWeek; break;
         }
@@ -555,7 +553,6 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek) {
     var numberOfMon = Math.floor(numberOfDay / 7);
     if (firstWeek >= 6) { numberOfMon++; };
     if (day >= 1) { numberOfMon++; };
-    console.log(numberOfMon);
 
     var reset_1 = fs.readFileSync(OTCL_path, 'utf8');
     reset_1 = [{ "weekly": [{ "V5": [] }, { "PPS": [] }, { "VRMS": [] }, { "Copy": [] }] }, { "monthly": [] }];
@@ -572,7 +569,7 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek) {
     const numberOfData_1 = Object.keys(data_1).length;
     var delivery_scc = [];
     var delivery_pcc = [];
-    for (i = 0; i < numberOfData_1; ++i) {
+    for (let i = 0; i < numberOfData_1; ++i) {
         let task = data_1[i];
         let rules = task["Rules"].split("/");
         let rule = rules[0];
@@ -583,7 +580,7 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek) {
         if (rule == "constant") {
             let numberOfTapes = Object.keys(task["Tapes"]).length;
             var to_be_append_location = [];
-            for (j = 0; j < numberOfTapes; ++j) {
+            for (let j = 0; j < numberOfTapes; ++j) {
                 to_be_append_location.push(task["Tapes"][j])
             };
             append_location(task["Title"], to_be_append_location, location_path, "PCC");
@@ -599,7 +596,7 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek) {
             if (numberOfMon % 5 == 2) {
                 if (destination == "SCC") {
                     let keyss = 0;
-                    for (j = 0; j < numberOfTapes; ++j) {
+                    for (let j = 0; j < numberOfTapes; ++j) {
                         if (j == keyss) {
                             to_be_append_location_scc.push(task["Tapes"][j]);
                         }
@@ -616,7 +613,7 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek) {
                 }
                 else if (destination == "PCC") {
                     let keyss = 0;
-                    for (j = 0; j < numberOfTapes; ++j) {
+                    for (let j = 0; j < numberOfTapes; ++j) {
                         if (j != keyss) {
                             to_be_append_location_scc.push(task["Tapes"][j]);
                         }
@@ -635,7 +632,7 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek) {
             else if (numberOfMon % 5 == 3) {
                 if (destination == "SCC") {
                     let keyss = 1;
-                    for (j = 0; j < numberOfTapes; ++j) {
+                    for (let j = 0; j < numberOfTapes; ++j) {
                         if (j == keyss) {
                             to_be_append_location_scc.push(task["Tapes"][j]);
                         }
@@ -652,7 +649,7 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek) {
                 }
                 else if (destination == "PCC") {
                     let keyss = 1;
-                    for (j = 0; j < numberOfTapes; ++j) {
+                    for (let j = 0; j < numberOfTapes; ++j) {
                         if (j != keyss) {
                             to_be_append_location_scc.push(task["Tapes"][j]);
                         }
@@ -671,7 +668,7 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek) {
             else if (numberOfMon % 5 == 4) {
                 if (destination == "SCC") {
                     let keyss = 2;
-                    for (j = 0; j < numberOfTapes; ++j) {
+                    for (let j = 0; j < numberOfTapes; ++j) {
                         if (j == keyss) {
                             to_be_append_location_scc.push(task["Tapes"][j]);
                         }
@@ -688,7 +685,7 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek) {
                 }
                 else if (destination == "PCC") {
                     let keyss = 2;
-                    for (j = 0; j < numberOfTapes; ++j) {
+                    for (let j = 0; j < numberOfTapes; ++j) {
                         if (j != keyss) {
                             to_be_append_location_scc.push(task["Tapes"][j]);
                         }
@@ -707,7 +704,7 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek) {
             else if (numberOfMon % 5 == 0) {
                 if (destination == "SCC") {
                     let keyss = 3;
-                    for (j = 0; j < numberOfTapes; ++j) {
+                    for (let j = 0; j < numberOfTapes; ++j) {
                         if (j == keyss) {
                             to_be_append_location_scc.push(task["Tapes"][j]);
                         }
@@ -724,7 +721,7 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek) {
                 }
                 else if (destination == "PCC") {
                     let keyss = 3;
-                    for (j = 0; j < numberOfTapes; ++j) {
+                    for (let j = 0; j < numberOfTapes; ++j) {
                         if (j != keyss) {
                             to_be_append_location_scc.push(task["Tapes"][j]);
                         }
@@ -743,7 +740,7 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek) {
             else if (numberOfMon % 5 == 1) {
                 if (destination == "SCC") {
                     let keyss = 4;
-                    for (j = 0; j < numberOfTapes; ++j) {
+                    for (let j = 0; j < numberOfTapes; ++j) {
                         if (j == keyss) {
                             to_be_append_location_scc.push(task["Tapes"][j]);
                         }
@@ -760,7 +757,7 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek) {
                 }
                 else if (destination == "PCC") {
                     let keyss = 4;
-                    for (j = 0; j < numberOfTapes; ++j) {
+                    for (let j = 0; j < numberOfTapes; ++j) {
                         if (j != keyss) {
                             to_be_append_location_scc.push(task["Tapes"][j]);
                         }
@@ -783,7 +780,7 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek) {
             const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
             var numberOfMonth = 0;
             var numberOfMonth_loc = 0;
-            for (j = 0; j < months.length; ++j) {
+            for (let j = 0; j < months.length; ++j) {
                 if (months[j] == month) {
                     numberOfMonth = j + 1;
                     numberOfMonth_loc = j + 1;
@@ -798,7 +795,7 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek) {
             if (numberOfMonth_loc % 4 == 1) {
                 let keyss = 2;
                 if (destination == "SCC") {
-                    for (j = 0; j < numberOfTapes; ++j) {
+                    for (let j = 0; j < numberOfTapes; ++j) {
                         if (j == keyss) {
                             to_be_append_location_scc.push(task["Tapes"][j]);
                         }
@@ -808,7 +805,7 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek) {
                     };
                 }
                 else if (destination == "PCC") {
-                    for (j = 0; j < numberOfTapes; ++j) {
+                    for (let j = 0; j < numberOfTapes; ++j) {
                         if (j != keyss) {
                             to_be_append_location_scc.push(task["Tapes"][j]);
                         }
@@ -821,7 +818,7 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek) {
             else if (numberOfMonth_loc % 4 == 2) {
                 let keyss = 3;
                 if (destination == "SCC") {
-                    for (j = 0; j < numberOfTapes; ++j) {
+                    for (let j = 0; j < numberOfTapes; ++j) {
                         if (j == keyss) {
                             to_be_append_location_scc.push(task["Tapes"][j]);
                         }
@@ -831,7 +828,7 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek) {
                     };
                 }
                 else if (destination == "PCC") {
-                    for (j = 0; j < numberOfTapes; ++j) {
+                    for (let j = 0; j < numberOfTapes; ++j) {
                         if (j != keyss) {
                             to_be_append_location_scc.push(task["Tapes"][j]);
                         }
@@ -844,7 +841,7 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek) {
             else if (numberOfMonth_loc % 4 == 3) {
                 let keyss = 0;
                 if (destination == "SCC") {
-                    for (j = 0; j < numberOfTapes; ++j) {
+                    for (let j = 0; j < numberOfTapes; ++j) {
                         if (j == keyss) {
                             to_be_append_location_scc.push(task["Tapes"][j]);
                         }
@@ -854,7 +851,7 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek) {
                     };
                 }
                 else if (destination == "PCC") {
-                    for (j = 0; j < numberOfTapes; ++j) {
+                    for (let j = 0; j < numberOfTapes; ++j) {
                         if (j != keyss) {
                             to_be_append_location_scc.push(task["Tapes"][j]);
                         }
@@ -867,7 +864,7 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek) {
             else if (numberOfMonth_loc % 4 == 0) {
                 let keyss = 1;
                 if (destination == "SCC") {
-                    for (j = 0; j < numberOfTapes; ++j) {
+                    for (let j = 0; j < numberOfTapes; ++j) {
                         if (j == keyss) {
                             to_be_append_location_scc.push(task["Tapes"][j]);
                         }
@@ -877,7 +874,7 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek) {
                     };
                 }
                 else if (destination == "PCC") {
-                    for (j = 0; j < numberOfTapes; ++j) {
+                    for (let j = 0; j < numberOfTapes; ++j) {
                         if (j != keyss) {
                             to_be_append_location_scc.push(task["Tapes"][j]);
                         }
@@ -964,7 +961,7 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek) {
         }
         else if (rule == "backup") {
             var month_number = "";
-            for (j = 0; j < months.length; ++j) {
+            for (let j = 0; j < months.length; ++j) {
                 if (months[j] == month) {
                     month_number = j + 1;
                     month_number = "0" + month_number.toString();
@@ -978,7 +975,7 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek) {
         }
     };
     const numberOfData_2 = Object.keys(data_2).length;
-    for (i = 0; i < numberOfData_2; ++i) {
+    for (let i = 0; i < numberOfData_2; ++i) {
         let task = data_2[i];
         let rules = task["Rules"].split("/");
         let rule = rules[0];
@@ -988,7 +985,7 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek) {
         if (rule == "constant") {
             let numberOfTapes = Object.keys(task["Tapes"]).length;
             var to_be_append_location = [];
-            for (j = 0; j < numberOfTapes; ++j) {
+            for (let j = 0; j < numberOfTapes; ++j) {
                 to_be_append_location.push(task["Tapes"][j])
             };
             append_location(task["Title"], to_be_append_location, location_path, "PCC");
@@ -1003,7 +1000,7 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek) {
             if (numberOfMon % 5 == 0) {
                 let keyss = 0;
                 if (destination == "SCC") {
-                    for (j = 0; j < numberOfTapes; ++j) {
+                    for (let j = 0; j < numberOfTapes; ++j) {
                         if (j == keyss || j == keyss + 3 || j == keyss + 4) {
                             to_be_append_location_scc.push(task["Tapes"][j]);
                         }
@@ -1013,7 +1010,7 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek) {
                     };
                 }
                 else if (destination == "PCC") {
-                    for (j = 0; j < numberOfTapes; ++j) {
+                    for (let j = 0; j < numberOfTapes; ++j) {
                         if (!(j == keyss || j == keyss + 3 || j == keyss + 4)) {
                             to_be_append_location_scc.push(task["Tapes"][j]);
                         }
@@ -1032,7 +1029,7 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek) {
             else if (numberOfMon % 5 == 1) {
                 let keyss = 1;
                 if (destination == "SCC") {
-                    for (j = 0; j < numberOfTapes; ++j) {
+                    for (let j = 0; j < numberOfTapes; ++j) {
                         if (j == keyss || j == keyss + 2 || j == keyss + 3) {
                             to_be_append_location_scc.push(task["Tapes"][j]);
                         }
@@ -1042,7 +1039,7 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek) {
                     };
                 }
                 else if (destination == "PCC") {
-                    for (j = 0; j < numberOfTapes; ++j) {
+                    for (let j = 0; j < numberOfTapes; ++j) {
                         if (!(j == keyss || j == keyss + 2 || j == keyss + 3)) {
                             to_be_append_location_scc.push(task["Tapes"][j]);
                         }
@@ -1061,7 +1058,7 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek) {
             else if (numberOfMon % 5 == 2) {
                 let keyss = 2;
                 if (destination == "SCC") {
-                    for (j = 0; j < numberOfTapes; ++j) {
+                    for (let j = 0; j < numberOfTapes; ++j) {
                         if (j == keyss || j == keyss - 1 || j == keyss - 2) {
                             to_be_append_location_scc.push(task["Tapes"][j]);
                         }
@@ -1071,7 +1068,7 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek) {
                     };
                 }
                 else if (destination == "PCC") {
-                    for (j = 0; j < numberOfTapes; ++j) {
+                    for (let j = 0; j < numberOfTapes; ++j) {
                         if (!(j == keyss || j == keyss - 1 || j == keyss - 2)) {
                             to_be_append_location_scc.push(task["Tapes"][j]);
                         }
@@ -1090,7 +1087,7 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek) {
             else if (numberOfMon % 5 == 3) {
                 let keyss = 3;
                 if (destination == "SCC") {
-                    for (j = 0; j < numberOfTapes; ++j) {
+                    for (let j = 0; j < numberOfTapes; ++j) {
                         if (j == keyss || j == keyss - 1 || j == keyss - 2) {
                             to_be_append_location_scc.push(task["Tapes"][j]);
                         }
@@ -1100,7 +1097,7 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek) {
                     };
                 }
                 else if (destination == "PCC") {
-                    for (j = 0; j < numberOfTapes; ++j) {
+                    for (let j = 0; j < numberOfTapes; ++j) {
                         if (!(j == keyss || j == keyss - 1 || j == keyss - 2)) {
                             to_be_append_location_scc.push(task["Tapes"][j]);
                         }
@@ -1119,7 +1116,7 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek) {
             else if (numberOfMon % 5 == 4) {
                 let keyss = 4;
                 if (destination == "SCC") {
-                    for (j = 0; j < numberOfTapes; ++j) {
+                    for (let j = 0; j < numberOfTapes; ++j) {
                         if (j == keyss || j == keyss - 1 || j == keyss - 2) {
                             to_be_append_location_scc.push(task["Tapes"][j]);
                         }
@@ -1129,7 +1126,7 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek) {
                     };
                 }
                 else if (destination == "PCC") {
-                    for (j = 0; j < numberOfTapes; ++j) {
+                    for (let j = 0; j < numberOfTapes; ++j) {
                         if (!(j == keyss || j == keyss - 1 || j == keyss - 2)) {
                             to_be_append_location_scc.push(task["Tapes"][j]);
                         }
@@ -1167,7 +1164,7 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek) {
             do {
                 date = Number(date) - date_index * 7;
                 if (Number(date) < 1) {
-                    for (k = 0; k < months.length; ++k) {
+                    for (let k = 0; k < months.length; ++k) {
                         if (months[k] == month) {
                             month = months[k - 1];
                             date = datesOfMonths[k - 1] + Number(date)
@@ -1178,12 +1175,12 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek) {
                 if (Number(date) == 1 && month == "Jun") {
                     let keys = 3;
                     if (destination == "SCC") {
-                        for (j = 0; j < numberOfTapes; ++j) {
+                        for (let j = 0; j < numberOfTapes; ++j) {
                             to_be_append_location_scc.push(task["Tapes"][j]);
                         };
                     }
                     else if (destination == "PCC") {
-                        for (j = 0; j < numberOfTapes; ++j) {
+                        for (let j = 0; j < numberOfTapes; ++j) {
                             to_be_append_location_pcc.push(task["Tapes"][j]);
                         };
                     };
@@ -1192,30 +1189,30 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek) {
                 if (Number(date) == 18 && month == "May") {
                     let keyss = 3;
                     if (destination == "SCC") {
-                        for (j = 0; j < numberOfTapes; ++j) {
+                        for (let j = 0; j < numberOfTapes; ++j) {
                             if (j == keyss) { to_be_append_location_pcc.push(task["Tapes"][j]); }
                             else { to_be_append_location_scc.push(task["Tapes"][j]); }
                         };
                     }
                     else if (destination == "PCC") {
-                        for (j = 0; j < numberOfTapes; ++j) {
+                        for (let j = 0; j < numberOfTapes; ++j) {
                             if (j != keyss) { to_be_append_location_pcc.push(task["Tapes"][j]); }
                             else { to_be_append_location_scc.push(task["Tapes"][j]); }
                         };
                     };
                     location_form = true;
                 }
-                for (k = 0; k < months.length; ++k) {
+                for (let k = 0; k < months.length; ++k) {
                     if (months[k] == month) {
                         const keyss = (k + 1) % 3;
                         if (Number(date) + 7 > datesOfMonths[k]) {
                             if (destination == "SCC") {
-                                for (j = 0; j < numberOfTapes; ++j) {
+                                for (let j = 0; j < numberOfTapes; ++j) {
                                     to_be_append_location_scc.push(task["Tapes"][j]);
                                 };
                             }
                             else if (destination == "PCC") {
-                                for (j = 0; j < numberOfTapes; ++j) {
+                                for (let j = 0; j < numberOfTapes; ++j) {
                                     to_be_append_location_pcc.push(task["Tapes"][j]);
                                 };
                             };
@@ -1223,13 +1220,13 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek) {
                         }
                         else if (Number(date) + 14 < datesOfMonths[k] && Number(date) + 21 > datesOfMonths[k]) {
                             if (destination == "SCC") {
-                                for (j = 0; j < numberOfTapes; ++j) {
+                                for (let j = 0; j < numberOfTapes; ++j) {
                                     if (j == keyss) { to_be_append_location_pcc.push(task["Tapes"][j]); }
                                     else { to_be_append_location_scc.push(task["Tapes"][j]); }
                                 };
                             }
                             else if (destination == "PCC") {
-                                for (j = 0; j < numberOfTapes; ++j) {
+                                for (let j = 0; j < numberOfTapes; ++j) {
                                     if (j != keyss) { to_be_append_location_pcc.push(task["Tapes"][j]); }
                                     else { to_be_append_location_scc.push(task["Tapes"][j]); }
                                 };
@@ -1251,7 +1248,7 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek) {
     };
 
     const numberOfData_3 = Object.keys(data_3).length;
-    for (i = 0; i < numberOfData_3; ++i) {
+    for (let i = 0; i < numberOfData_3; ++i) {
         let task = data_3[i];
         let rules = task["Rules"].split("/");
         let rule = rules[0];
@@ -1261,7 +1258,7 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek) {
         if (rule == "constant") {
             let numberOfTapes = Object.keys(task["Tapes"]).length;
             var to_be_append_location = [];
-            for (j = 0; j < numberOfTapes; ++j) {
+            for (let j = 0; j < numberOfTapes; ++j) {
                 to_be_append_location.push(task["Tapes"][j])
             };
             append_location(task["Title"], to_be_append_location, location_path, "PCC");
@@ -1276,7 +1273,7 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek) {
                 let numberOfTapes = Object.keys(task["Tapes"]).length;
                 let keyss = 3;
                 if (destination == "SCC") {
-                    for (j = 0; j < numberOfTapes; ++j) {
+                    for (let j = 0; j < numberOfTapes; ++j) {
                         if (j == keyss || j == keyss - 1) {
                             to_be_append_location_scc.push(task["Tapes"][j]);
                         }
@@ -1286,7 +1283,7 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek) {
                     };
                 }
                 else if (destination == "PCC") {
-                    for (j = 0; j < numberOfTapes; ++j) {
+                    for (let j = 0; j < numberOfTapes; ++j) {
                         if (!(j == keyss || j == keyss - 1)) {
                             to_be_append_location_scc.push(task["Tapes"][j]);
                         }
@@ -1310,7 +1307,7 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek) {
                 let numberOfTapes = Object.keys(task["Tapes"]).length;
                 let keyss = 0;
                 if (destination == "SCC") {
-                    for (j = 0; j < numberOfTapes; ++j) {
+                    for (let j = 0; j < numberOfTapes; ++j) {
                         if (j == keyss || j == keyss + 3) {
                             to_be_append_location_scc.push(task["Tapes"][j]);
                         }
@@ -1320,7 +1317,7 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek) {
                     };
                 }
                 else if (destination == "PCC") {
-                    for (j = 0; j < numberOfTapes; ++j) {
+                    for (let j = 0; j < numberOfTapes; ++j) {
                         if (!(j == keyss || j == keyss + 3)) {
                             to_be_append_location_scc.push(task["Tapes"][j]);
                         }
@@ -1344,7 +1341,7 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek) {
                 let numberOfTapes = Object.keys(task["Tapes"]).length;
                 let keyss = 1;
                 if (destination == "SCC") {
-                    for (j = 0; j < numberOfTapes; ++j) {
+                    for (let j = 0; j < numberOfTapes; ++j) {
                         if (j == keyss || j == keyss - 1) {
                             to_be_append_location_scc.push(task["Tapes"][j]);
                         }
@@ -1354,7 +1351,7 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek) {
                     };
                 }
                 else if (destination == "PCC") {
-                    for (j = 0; j < numberOfTapes; ++j) {
+                    for (let j = 0; j < numberOfTapes; ++j) {
                         if (!(j == keyss || j == keyss - 1)) {
                             to_be_append_location_scc.push(task["Tapes"][j]);
                         }
@@ -1378,7 +1375,7 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek) {
                 let numberOfTapes = Object.keys(task["Tapes"]).length;
                 let keyss = 2;
                 if (destination == "SCC") {
-                    for (j = 0; j < numberOfTapes; ++j) {
+                    for (let j = 0; j < numberOfTapes; ++j) {
                         if (j == keyss || j == keyss - 1) {
                             to_be_append_location_scc.push(task["Tapes"][j]);
                         }
@@ -1388,7 +1385,7 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek) {
                     };
                 }
                 else if (destination == "PCC") {
-                    for (j = 0; j < numberOfTapes; ++j) {
+                    for (let j = 0; j < numberOfTapes; ++j) {
                         if (!(j == keyss || j == keyss - 1)) {
                             to_be_append_location_scc.push(task["Tapes"][j]);
                         }
@@ -1429,7 +1426,7 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek) {
                 var date = inputDate[0];
                 date = Number(date) - date_index * 7;
                 if (Number(date) < 1) {
-                    for (k = 0; k < months.length; ++k) {
+                    for (let k = 0; k < months.length; ++k) {
                         if (months[k] == month) {
                             month = months[k - 1];
                             date = datesOfMonths[k - 1] + Number(date)
@@ -1437,12 +1434,10 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek) {
                     };
                     date_index = 0;
                 };
-                // console.log("Date: "+date);
-                // console.log("Month: "+month);
                 if (date == "01" && month == "Jun") {
                     let keyss = 5;
                     if (destination == "SCC") {
-                        for (j = 0; j < numberOfTapes; ++j) {
+                        for (let j = 0; j < numberOfTapes; ++j) {
                             if (j == keyss) {
                                 to_be_append_location_pcc.push(task["Tapes"][j]);
                             }
@@ -1452,7 +1447,7 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek) {
                         };
                     }
                     else if (destination == "PCC") {
-                        for (j = 0; j < numberOfTapes; ++j) {
+                        for (let j = 0; j < numberOfTapes; ++j) {
                             if (j != keyss) {
                                 to_be_append_location_pcc.push(task["Tapes"][j]);
                             }
@@ -1470,26 +1465,25 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek) {
                             let keyss = k + 1;
                             if (keyss == 13) { keyss = 0 };
                             if (destination == "SCC") {
-                                for (j = 0; j < numberOfTapes; ++j) {
+                                for (let j = 0; j < numberOfTapes; ++j) {
                                     if (j == keyss) {
                                         to_be_append_location_pcc.push(task["Tapes"][0][j]);
                                     }
                                     else {
                                         to_be_append_location_scc.push(task["Tapes"][0][j]);
                                     }
-                                };
+                                }
                             }
                             else if (destination == "PCC") {
-                                console.log(k);
-                                for (j = 0; j < numberOfTapes; ++j) {
+                                for (let j = 0; j < numberOfTapes; ++j) {
                                     if (j != keyss) {
                                         to_be_append_location_pcc.push(task["Tapes"][0][j]);
                                     }
                                     else {
                                         to_be_append_location_scc.push(task["Tapes"][0][j]);
                                     }
-                                };
-                            };
+                                }
+                            }
                             location_form = true;
                         }
                     }
@@ -1505,8 +1499,6 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek) {
             while (!location_form)
         }
     };
-    // console.log(delivery_scc);
-    // console.log(delivery_pcc);
     var oriJson = fs.readFileSync(delivery_path, 'utf8');
     oriJson = JSON.parse(oriJson);
     var to_append_1 = { ToScc: delivery_scc };
