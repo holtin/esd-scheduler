@@ -112,7 +112,6 @@ app.post('/', function (req, res) { // Access the parse results as req.body
     res.json(req.body);
 });
 
-
 function sortTodo() {
     var final = fs.readFileSync(todoPath, 'utf8');
     final = JSON.parse(final);
