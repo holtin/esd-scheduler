@@ -153,7 +153,7 @@ function append(task) {
 
 
 function filtering(data, inputDate, firstWeek, loaded_task) {
-    var phs = require("./json/ph.json");
+    var phs = require(phPath);
     const fs = require('fs');
     const numberOfData = Object.keys(data).length;
     const date = inputDate[0];
@@ -164,9 +164,9 @@ function filtering(data, inputDate, firstWeek, loaded_task) {
     const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
     if (loaded_task == 0) {
-        var reset = fs.readFileSync('./json/ToDoList.json', 'utf8');
+        var reset = fs.readFileSync(todoPath, 'utf8');
         reset = [{ "tasks": [] }];
-        fs.writeFileSync("./json/ToDoList.json", JSON.stringify(reset), 'utf8');
+        fs.writeFileSync(todoPath, JSON.stringify(reset), 'utf8');
     };
 
     var datesOfMonths = [];
@@ -192,10 +192,10 @@ function filtering(data, inputDate, firstWeek, loaded_task) {
             console.log(rules);
             //Eliminating the selected one-off Tasks
             if (task["Rules"][task["Rules"].length - 1] == "@") {
-                var OOJson = fs.readFileSync('./oneOff.json', 'utf8');
+                var OOJson = fs.readFileSync(oneOffPath, 'utf8');
                 OOJson = JSON.parse(OOJson);
                 OOJson.splice(i, 1);
-                fs.writeFileSync('./oneOff.json', JSON.stringify(OOJson), 'utf8');
+                fs.writeFileSync(oneOffPath, JSON.stringify(OOJson), 'utf8');
             };
             continue;
         };
@@ -439,10 +439,10 @@ function filtering(data, inputDate, firstWeek, loaded_task) {
         };
         //Eliminating the selected one-off Tasks
         if (valid && task["Rules"][task["Rules"].length - 1] == "@") {
-            var OOJson = fs.readFileSync('./json/oneOff.json', 'utf8');
+            var OOJson = fs.readFileSync(oneOffPath, 'utf8');
             OOJson = JSON.parse(OOJson);
             OOJson.splice(i, 1);
-            fs.writeFileSync("./json/oneOff.json", JSON.stringify(OOJson), 'utf8');
+            fs.writeFileSync(oneOffPath, JSON.stringify(OOJson), 'utf8');
 
         };
         //Append the task to ToDoList.json
