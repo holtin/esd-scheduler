@@ -60,7 +60,7 @@
         "JobName": "Perform \"Special Operation Arrangement\" of File Upload to Judiciary'sPassive Gateway",
         "Server": "m5ppc01",
         "Remarks": "(Remarks : Re:COPM 10.7)",
-        "Rules": "ph/a1;?ph/b1!=week/6;"
+        "Rules": "SC2"
     },
     {
         "StartTime": "9:00",
@@ -134,7 +134,7 @@
     },
     {
         "StartTime": "10:00",
-        "JobName": "Check Daily DB backup on SCC Data Protector Manager DB-VALIDPRO-u5ddb01-FRI   □ DB-NONPRO-u5ddb0a_db0b_FRI   □ Oracle8 NP-U5DDB-ORACLE-FRI   □ IDB SCC-DP-IDB-FRI   □ Time completed at : _____:_____",
+        "JobName": "Check Daily DB backup on SCC Data Protector Manager DB-VALIDPRO-u5ddb01-FRI   □\rDB-NONPRO-u5ddb0a_db0b_FRI   □\rOracle8 NP-U5DDB-ORACLE-FRI   □\rIDB SCC-DP-IDB-FRI   □\rTime completed at : _____:_____",
         "Server": "remote to m5dpc01",
         "Remarks": "",
         "Rules": "daily"
@@ -200,7 +200,7 @@
         "JobName": "Offsite the previous Month-End Backup tape to SCC & update \"Production Tape Location.xls\"",
         "Server": "",
         "Remarks": "",
-        "Rules": "month/01;"
+        "Rules": "month/01,02,03,04,05,06,07;?week/0,2,3,4,5,6;"
     },
     {
         "StartTime": "10:00",

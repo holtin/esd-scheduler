@@ -172,7 +172,7 @@ function filtering(data, inputDate, firstWeek, loaded_task) {
     if (year % 4 == 0) { datesOfMonths = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]; }
     else { datesOfMonths = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]; };
 
-    for (i = 0; i < Object.keys(phs).length; ++i) {
+    for (let i = 0; i < Object.keys(phs).length; ++i) {
         if ((phs[i]["date"] == date && phs[i]["month"] == month) || day == "0") {
             ph = true;
             break;
@@ -205,7 +205,7 @@ function filtering(data, inputDate, firstWeek, loaded_task) {
                 const weeklyRules = subrules[j].substring(5,).split(",");
                 const numberOfRules = weeklyRules.length;
                 for (let k = 0; k < numberOfRules; ++k) {
-                    if (weeklyRules[k] == day) {
+                    if (parseInt(weeklyRules[k]) == parseInt(day)) {
                         valid = true;
                         break;
                     };
@@ -215,7 +215,7 @@ function filtering(data, inputDate, firstWeek, loaded_task) {
                 const monthlyRules = subrules[j].substring(6,).split(",");
                 const numberOfRules = monthlyRules.length;
                 for (let k = 0; k < numberOfRules; ++k) {
-                    if (parseInt(monthlyRules[k]) == date) {
+                    if (parseInt(monthlyRules[k]) == parseInt(date)) {
                         valid = true;
                         break;
                     };
@@ -299,7 +299,7 @@ function filtering(data, inputDate, firstWeek, loaded_task) {
                     const weeklyRules = subConstraints[j].substring(5,).split(",");
                     const numberOfRules = weeklyRules.length;
                     for (let k = 0; k < numberOfRules; ++k) {
-                        if (weeklyRules[k] == day) {
+                        if (parseInt(weeklyRules[k]) == parseInt(day)) {
                             valid = false;
                             break;
                         };
@@ -309,7 +309,7 @@ function filtering(data, inputDate, firstWeek, loaded_task) {
                     const monthlyRules = subConstraints[j].substring(6,).split(",");
                     const numberOfRules = monthlyRules.length;
                     for (let k = 0; k < numberOfRules; ++k) {
-                        if (monthlyRules[k] == date) {
+                        if (parseInt(monthlyRules[k]) == parseInt(date)) {
                             valid = false;
                             break;
                         };
@@ -368,70 +368,70 @@ function filtering(data, inputDate, firstWeek, loaded_task) {
         };
         //Speical Cases
         if (include == "SC1") {
-            if (date == "2" && date != "28" && month != "Jan") {
+            if (day == 2 && date != 28 && month != "Jan") {
                 valid = true;
             }
-            else if (date == "29" && month == "Jan") {
+            else if (date == 29 && month == "Jan") {
                 valid = true;
             }
         };
         //2Jan 29Jan 6Apr 14Apr 2May 26Jun 2Jul 3Oct 28Dec
         if (include == "SC2") {
-            if ((date == "02" || date == "29") & month == "Jan") {
+            if ((date == 2 || date == 29) & month == "Jan") {
                 valid = true;
             }
-            else if ((date == "06" || date == "14") & month == "Apr") {
+            else if ((date == 6 || date == 14) & month == "Apr") {
                 valid = true;
             }
-            else if ((date == "02") & month == "May") {
+            else if ((date == 2) & month == "May") {
                 valid = true;
             }
-            else if ((date == "26") & month == "Jun") {
+            else if ((date == 26) & month == "Jun") {
                 valid = true;
             }
-            else if ((date == "02") & month == "Jul") {
+            else if ((date == 2) & month == "Jul") {
                 valid = true;
             }
-            else if ((date == "03") & month == "Oct") {
+            else if ((date == 3) & month == "Oct") {
                 valid = true;
             }
-            else if ((date == "28") & month == "AUG") {
+            else if ((date == 28) & month == "Aug") {
                 valid = true;
             }
         };
         //27Jan 24Feb 30Mar 27Apr 1Jun 29Jun 27Jul 31Aug 28Sep 26Oct 30Nov 28Dec
         if (include == "SC3") {
-            if ((date == "27") & month == "Jan") {
+            if ((date == 27) & month == "Jan") {
                 valid = true;
             }
-            else if ((date == "24") & month == "Feb") {
+            else if ((date == 24) & month == "Feb") {
                 valid = true;
             }
-            else if ((date == "30") & month == "Mar") {
+            else if ((date == 30) & month == "Mar") {
                 valid = true;
             }
-            else if ((date == "27") & month == "Apr") {
+            else if ((date == 27) & month == "Apr") {
                 valid = true;
             }
-            else if ((date == "01" || date == "29") & month == "Jun") {
+            else if ((date == 1 || date == 29) & month == "Jun") {
                 valid = true;
             }
-            else if ((date == "27") & month == "Jul") {
+            else if ((date == 27) & month == "Jul") {
                 valid = true;
             }
-            else if ((date == "31") & month == "Aug") {
+            else if ((date == 31) & month == "Aug") {
                 valid = true;
             }
-            else if ((date == "28") & month == "SEP") {
+            else if ((date == 28) & month == "SEP") {
                 valid = true;
             }
-            else if ((date == "26") & month == "Oct") {
+            else if ((date == 26) & month == "Oct") {
                 valid = true;
             }
-            else if ((date == "30") & month == "Nov") {
+            else if ((date == 30) & month == "Nov") {
                 valid = true;
             }
-            else if ((date == "28") & month == "Dec") {
+            else if ((date == 28) & month == "Dec") {
                 valid = true;
             }
         };
