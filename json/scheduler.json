@@ -28,7 +28,7 @@
         "Rules": "month/02;"
     },
     {
-        "StartTime": "8:15",
+        "StartTime": "8:40",
         "JobName": "Check the status of 4 LOs' Health Check Monitoring PC",
         "Server": "TDOA",
         "Remarks": "(Remarks :   Re: Operation Notice 041/10)",

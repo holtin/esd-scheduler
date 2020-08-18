@@ -30,7 +30,9 @@ const stockCheckList_resultPath = './public/doc/Stock Check List.docx';
 const collection_resultPath = './public/doc/Collection Form.docx';
 const sccCheckList_resultPath = './public/doc/SCC Attendance Check List.docx';
 
-var forms = [];
+var forms = []; 
+
+
 
 app.use(express.static(__dirname + "/public"));
 app.listen(port);
@@ -225,7 +227,7 @@ function filtering(data, inputDate, firstWeek, loaded_task) {
                 const yearlyRules = subrules[j].substring(5,).split(",")
                 const numberOfRules = yearlyRules.length;
                 for (let k = 0; k < numberOfRules; ++k) {
-                    if (yearlyRules[k].substring(0, 2) == date && yearlyRules[k].substring(2, 5) == month && (yearlyRules[k].substring(5,) == year || !yearlyRules[k].substring(5,))) {
+                    if (yearlyRules[k].substring(0, 2) == date && yearlyRules[k].substring(2, 5) == month && yearlyRules[k].substring(5,) == year) {
                         valid = true;
                         break;
                     };
@@ -319,7 +321,7 @@ function filtering(data, inputDate, firstWeek, loaded_task) {
                     const yearlyRules = subConstraints[j].substring(5,).split(",")
                     const numberOfRules = yearlyRules.length;
                     for (let k = 0; k < numberOfRules; ++k) {
-                        if (yearlyRules[k].substring(0, 2) == date && yearlyRules[k].substring(2,) == month && (yearlyRules[k].substring(5,) == year || !yearlyRules[k].substring(5,))) {
+                        if (yearlyRules[k].substring(0, 2) == date && yearlyRules[k].substring(2,) == month && yearlyRules[k].substring(5,) == year) {
                             valid = false;
                             break;
                         };
@@ -1163,6 +1165,7 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek) {
             do {
                 date = Number(date) - date_index * 7;
                 if (Number(date) < 1) {
+                    if(month=="Jan"){break};
                     for (let k = 0; k < months.length; ++k) {
                         if (months[k] == month) {
                             month = months[k - 1];
@@ -1425,6 +1428,7 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek) {
                 var date = inputDate[0];
                 date = Number(date) - date_index * 7;
                 if (Number(date) < 1) {
+                    if(month == "Jan"){break};
                     for (let k = 0; k < months.length; ++k) {
                         if (months[k] == month) {
                             month = months[k - 1];
@@ -1433,7 +1437,7 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek) {
                     };
                     date_index = 0;
                 };
-                if (date == "01" && month == "Jun") {
+                if (Number(date) == 1 && month == "Jun") {
                     let keyss = 5;
                     if (destination == "SCC") {
                         for (let j = 0; j < numberOfTapes; ++j) {
@@ -1498,6 +1502,7 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek) {
             while (!location_form)
         }
     };
+      
     var oriJson = fs.readFileSync(delivery_path, 'utf8');
     oriJson = JSON.parse(oriJson);
     var to_append_1 = { ToScc: delivery_scc };
