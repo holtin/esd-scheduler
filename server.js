@@ -1163,7 +1163,11 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek) {
             var location_form = false;
             var date_index = 0;
             do {
-                date = Number(date) - date_index * 7;
+                console.log("month: " + month);
+                console.log("date: " + date);
+                if(date_index != 0){
+                    date = Number(date) - 7;
+                };
                 if (Number(date) < 1) {
                     if(month=="Jan"){break};
                     for (let k = 0; k < months.length; ++k) {
@@ -1426,7 +1430,9 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek) {
             var date_index = 0;
             do {
                 var date = inputDate[0];
-                date = Number(date) - date_index * 7;
+                if(date_index != 0){
+                    date = Number(date) - 7;
+                };
                 if (Number(date) < 1) {
                     if(month == "Jan"){break};
                     for (let k = 0; k < months.length; ++k) {
