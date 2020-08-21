@@ -1151,7 +1151,7 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek) {
             var month = inputDate[1];
             if (day != "1") {
                 if (day == "0") {
-                    date = Number(date) + 1;
+                    date = Number(date) - 6;
                 }
                 else {
                     date = Number(date) + 1 - day;
@@ -1220,7 +1220,7 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek) {
                             };
                             location_form = true;
                         }
-                        else if (Number(date) + 14 < datesOfMonths[k] && Number(date) + 21 > datesOfMonths[k]) {
+                        else if (Number(date) + 14 <= datesOfMonths[k] && Number(date) + 21 > datesOfMonths[k]) {
                             if (destination == "SCC") {
                                 for (let j = 0; j < numberOfTapes; ++j) {
                                     if (j == keyss) { to_be_append_location_pcc.push(task["Tapes"][j]); }
@@ -1411,7 +1411,7 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek) {
             var month = inputDate[1];
             if (day != "1") {
                 if (day == "0") {
-                    date = Number(date) + 1;
+                    date = Number(date) - 6;
                 }
                 else {
                     date = Number(date) + 1 - day;
