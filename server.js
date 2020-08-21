@@ -1173,7 +1173,7 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek) {
                     for (let k = 0; k < months.length; ++k) {
                         if (months[k] == month) {
                             month = months[k - 1];
-                            date = datesOfMonths[k - 1] + Number(date)
+                            date = datesOfMonths[k - 1] - Number(date)
                         }
                     };
                     date_index = 0;
@@ -1431,18 +1431,18 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek) {
             do {
                 var date = inputDate[0];
                 if(date_index != 0){
-                    date = Number(date) - 7;
-                };
+                    date = Number(date) - date_index * 7;
+                }
                 if (Number(date) < 1) {
                     if(month == "Jan"){break};
                     for (let k = 0; k < months.length; ++k) {
                         if (months[k] == month) {
                             month = months[k - 1];
-                            date = datesOfMonths[k - 1] + Number(date)
+                            date = datesOfMonths[k - 1] - Number(date)
                         }
                     };
                     date_index = 0;
-                };
+                }
                 if (Number(date) == 1 && month == "Jun") {
                     let keyss = 5;
                     if (destination == "SCC") {
@@ -1505,7 +1505,7 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek) {
                     ++date_index;
                 }
             }
-            while (!location_form)
+            while (!location_form);
         }
     };
       
