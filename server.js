@@ -30,9 +30,8 @@ const stockCheckList_resultPath = './public/doc/Stock Check List.docx';
 const collection_resultPath = './public/doc/Collection Form.docx';
 const sccCheckList_resultPath = './public/doc/SCC Attendance Check List.docx';
 
-var forms = []; 
-
-
+var forms = [];
+const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
 app.use(express.static(__dirname + "/public"));
 app.listen(port);
@@ -48,7 +47,7 @@ app.post('/', function (req, res) { // Access the parse results as req.body
     //var options = {
     //    convertTo: 'pdf' //can be docx, txt, ...
     //};
-    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    console.log(typeof date.day);
     let dateArray = [date.day, months[date.month - 1], date.year, date.weekday]; //[date, month, year, day]
     forms = [];
     if (date.weekday == 0) forms.push(stockCheckList_resultPath.split("/")[3]);
@@ -162,17 +161,14 @@ function filtering(data, inputDate, firstWeek, loaded_task) {
     const year = inputDate[2];
     const day = inputDate[3];
     var ph = false;
-    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-
+    var datesOfMonths = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    if (year % 4 == 0) datesOfMonths = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    
     if (loaded_task == 0) {
         var reset = fs.readFileSync(todoPath, 'utf8');
         reset = [{ "tasks": [] }];
         fs.writeFileSync(todoPath, JSON.stringify(reset), 'utf8');
     };
-
-    var datesOfMonths = [];
-    if (year % 4 == 0) { datesOfMonths = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]; }
-    else { datesOfMonths = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]; };
 
     for (let i = 0; i < Object.keys(phs).length; ++i) {
         if ((phs[i]["date"] == date && phs[i]["month"] == month) || day == "0") {
@@ -1165,11 +1161,11 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek) {
             do {
                 console.log("month: " + month);
                 console.log("date: " + date);
-                if(date_index != 0){
+                if (date_index != 0) {
                     date = Number(date) - 7;
                 };
                 if (Number(date) < 1) {
-                    if(month=="Jan"){break};
+                    if (month == "Jan") { break };
                     for (let k = 0; k < months.length; ++k) {
                         if (months[k] == month) {
                             month = months[k - 1];
@@ -1429,12 +1425,11 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek) {
             var location_form = false;
             var date_index = 0;
             do {
-                var date = inputDate[0];
-                if(date_index != 0){
+                if (date_index != 0) {
                     date = Number(date) - date_index * 7;
                 }
                 if (Number(date) < 1) {
-                    if(month == "Jan"){break};
+                    if (month == "Jan") { break };
                     for (let k = 0; k < months.length; ++k) {
                         if (months[k] == month) {
                             month = months[k - 1];
@@ -1508,7 +1503,7 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek) {
             while (!location_form);
         }
     };
-      
+
     var oriJson = fs.readFileSync(delivery_path, 'utf8');
     oriJson = JSON.parse(oriJson);
     var to_append_1 = { ToScc: delivery_scc };
@@ -1517,3 +1512,55 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek) {
     oriJson.push(to_append_2);
     fs.writeFileSync(delivery_path, JSON.stringify(oriJson), 'utf8');
 };
+
+// new functions
+
+function shiftLastMonday(dateArray) {
+    let date = dateArray[0];
+    let month = dateArray[1];
+    let year = dateArray[2];
+    let day = dateArray[3];
+
+    if (day != "1") {
+        if (day == "0") {
+            date = Number(date) - 6;
+        }
+        else {
+            date = Number(date) + 1 - day;
+        }
+    };
+    if (date == "25" && month == "May") continue; // special case to be hard-coded
+
+    if (Number(date) < 1) { // shifting to last month
+        if (month == "Jan") {
+            month = months[11];
+            year--;
+        }
+        for (let k = 0; k < months.length; ++k) {
+            if (months[k] == month) {
+                month = months[k - 1];
+                date = datesOfMonths[k - 1] - Number(date);
+            }
+        }
+        date_index = 0;
+    }
+
+return dateArray;
+}
+
+function shiftUsefulMonday(dateArray, tapeType) {
+    if (tapeType == "V5") {
+
+    }
+    else if (tapeType == "VRMS") {
+
+    }
+    else { // PPS
+
+    }
+}
+
+
+function numberOfMondaysInMonth(month) {
+    return 0;
+}
