@@ -32,6 +32,7 @@ const sccCheckList_resultPath = './public/doc/SCC Attendance Check List.docx';
 
 var forms = [];
 const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+const datesOfMonths=[31,29,31,30,31,30,31,31,30,31,30,31];
 
 app.use(express.static(__dirname + "/public"));
 app.listen(port);
@@ -1515,6 +1516,27 @@ function formFiltering(data_1, data_2, data_3, inputDate, firstWeek) {
 
 // new functions
 
+function shiftUsefulMonday(dateArray, tapeType) {
+    let newDateArray = shiftLastMonday(dateArray);
+    let date = newDateArray[0];
+    let month = newDateArray[1];
+    let year = newDateArray[2];
+    let day = newDateArray[3];
+    if (tapeType == "V5") {
+        // Mon after / on 2nd day of every month  (The coming Monday and after the 2nd day of every month)
+        if (date == "1") {
+            
+        }
+    }
+    else if (tapeType == "VRMS") {
+        
+    }
+    else { // PPS
+        // The next day after last Sun of every month (e.g. if the last Sunday of May is 31st May, then should offsite tapes on 1st Jun)
+        
+    }
+}
+
 function shiftLastMonday(dateArray) {
     let date = dateArray[0];
     let month = dateArray[1];
@@ -1529,38 +1551,46 @@ function shiftLastMonday(dateArray) {
             date = Number(date) + 1 - day;
         }
     };
-    if (date == "25" && month == "May") continue; // special case to be hard-coded
-
     if (Number(date) < 1) { // shifting to last month
         if (month == "Jan") {
             month = months[11];
             year--;
         }
-        for (let k = 0; k < months.length; ++k) {
-            if (months[k] == month) {
-                month = months[k - 1];
-                date = datesOfMonths[k - 1] - Number(date);
+        for (let i = 0; i < months.length; ++i) {
+            if (months[i] == month) {
+                month = months[i - 1];
+                date = datesOfMonths[i - 1] + Number(date);
             }
         }
-        date_index = 0;
     }
+    let d = [date, month, year, "1"];
+    return d;
+};
 
-return dateArray;
-}
+function numberOfMondaysInMonth(dateArray) {
+    let d = shiftLastMonday(dateArray);
+    let date = d[0];
+    let month = d[1];
+    let total_dates = 0;
+    let numberOfMonday = 0;
 
-function shiftUsefulMonday(dateArray, tapeType) {
-    if (tapeType == "V5") {
-
-    }
-    else if (tapeType == "VRMS") {
-
-    }
-    else { // PPS
-
-    }
-}
-
-
-function numberOfMondaysInMonth(month) {
-    return 0;
-}
+    for (let i = 0; i < months.length; ++i) {
+        if (months[i] == month) {
+            total_dates = datesOfMonths[i];
+        }
+    };
+    while(date >= 1){
+        console.log("A: "+date);
+        date -= 7;
+        numberOfMonday++;
+    };
+    date = Number(d[0]) + 7;
+    while(Number(date) <= total_dates){
+        console.log("B: "+date);
+        date += 7;
+        numberOfMonday++;
+    };
+    return numberOfMonday;
+};
+input_date = ["11", "Nov", "2020", "3"];
+console.log(numberOfMondaysInMonth(input_date));
