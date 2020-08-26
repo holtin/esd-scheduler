@@ -1592,5 +1592,3 @@ function numberOfMondaysInMonth(dateArray) {
     };
     return numberOfMonday;
 };
-input_date = ["11", "Nov", "2020", "3"];
-console.log(numberOfMondaysInMonth(input_date));
