@@ -1,1 +1,17 @@
-[]
+[
+      {
+        "StartTime": "9:00",
+        "JobName": "Update the escalation contact list of EMSD for urgent fault",
+        "Server": "",
+        "Remarks": "",
+        "Rules": "year/14-Jan-2020;"
+    },
+    {
+        "StartTime": "9:00",
+        "JobName": "Update the escalation contact list of EMSD for urgent fault",
+        "Server": "",
+        "Remarks": "",
+        "Rules": "year/1-Sep-2020;"
+    }
+  
+]
